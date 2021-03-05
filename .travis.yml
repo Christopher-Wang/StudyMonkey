@@ -5,10 +5,5 @@ deploy:
   app: study-monkey
 notifications:
   email:
-    recipients:
-      - michael.patsula@gmail.com
-      - christophetran01@gmail.com
-      - thomaselmoleung@gmail.com
-      - ranilkumar13@gmail.com
     on_success: never
     on_failure: never

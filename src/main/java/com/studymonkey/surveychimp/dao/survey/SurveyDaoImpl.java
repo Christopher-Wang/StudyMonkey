@@ -1,8 +1,6 @@
 package com.studymonkey.surveychimp.dao.survey;
 
-import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import com.studymonkey.surveychimp.entity.survey.Survey;
-import com.studymonkey.surveychimp.mapper.QuestionRowMapper;
 import com.studymonkey.surveychimp.mapper.SurveyRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
@@ -58,11 +56,14 @@ public class SurveyDaoImpl implements SurveyDao {
 
     @Override
     public void updateSurvey(Survey survey) {
-        final String sql = "update survey set name=:question, description=:questionType, survey_status_id=:status where id=:surveyId";
+        final String sql = "update survey set name=:name, description=:description, survey_status_id=:status where id=:surveyId";
+
+        System.out.println("UPDATING SURVEY");
+        System.out.println("THE SURVEY ID " + survey.getId());
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("surveyId", survey.getSurveyId())
+                .addValue("surveyId", survey.getId())
                 .addValue("name", survey.getName())
                 .addValue("description", survey.getDescription())
                 .addValue("status", survey.getStatus());
@@ -71,10 +72,10 @@ public class SurveyDaoImpl implements SurveyDao {
 
     @Override
     public void executeUpdateSurvey(Survey survey) {
-        final String sql = "update question set question=:question, question_type=:questionType where survey_id=:surveyId and question_order=:questionOrder";
+        final String sql = "update survey set name=:name, description=:description, survey_status_id=:status where id=:surveyId";
 
         Map<String,Object> map=new HashMap<String,Object>();
-        map.put("surveyId", survey.getSurveyId());
+        map.put("surveyId", survey.getId());
         map.put("name", survey.getName());
         map.put("description", survey.getDescription());
         map.put("status", survey.getStatus());

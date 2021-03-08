@@ -32,7 +32,7 @@ public class SurveyQuestionsRowsMapper implements ResultSetExtractor<List<Survey
                 survey = new SurveyQuestions();
                 rowCount = 0;
 
-                survey.setSurveyId(surveyId);
+                survey.setId(surveyId);
                 survey.setName(resultSet.getString("name"));
                 survey.setDescription(resultSet.getString("description"));
                 survey.setStatus(SurveyStatus.values()[resultSet.getInt("survey_status_id")]);

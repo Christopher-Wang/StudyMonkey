@@ -2,17 +2,17 @@ package com.studymonkey.surveychimp.entity.survey;
 
 public class Survey {
 
-    private int surveyId;
+    private int id;
     private String name;
     private String description;
     private SurveyStatus status;
 
-    public int getSurveyId() {
-        return surveyId;
+    public int getId() {
+        return id;
     }
 
-    public void setSurveyId(int surveyId) {
-        this.surveyId = surveyId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -31,8 +31,9 @@ public class Survey {
         this.description = description;
     }
 
-    public SurveyStatus getStatus() {
-        return status;
+    public int getStatus() {
+        //return status;
+        return status.getValue();
     }
 
     public void setStatus(SurveyStatus status) {

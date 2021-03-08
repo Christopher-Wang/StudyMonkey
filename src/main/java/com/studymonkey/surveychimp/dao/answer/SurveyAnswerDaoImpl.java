@@ -52,7 +52,7 @@ public class SurveyAnswerDaoImpl implements SurveyAnswerDao {
 
     @Override
     public Answer getAnswer(int surveyId, int userId, int questionOrder) {
-        final String sql = "select * from question_answer where survey_id=:surveyId and client_id=:userId and question_order=:questionOrder";
+        final String sql = "select * from question_answer where survey_id=:surveyId and client_id=:userId and question_order_id=:questionOrder";
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
@@ -65,27 +65,27 @@ public class SurveyAnswerDaoImpl implements SurveyAnswerDao {
 
     @Override
     public void insertMcAnswer(McAnswer answer) {
-        final String sql = "insert into question_answer(survey_id, question_order, client_id, mc_option_id) values(:surveyId,:questionOrder,:question,:questionType)";
+        final String sql = "insert into question_answer(survey_id, question_order_id, client_id, mc_option_id) values(:surveyId,:questionOrder,:client_id,:mc_option_id)";
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("surveyId", answer.getSurveyId())
                 .addValue("questionOrder", answer.getQuestionOrder())
-                .addValue("userId", answer.getUserId())
-                .addValue("answer", answer.getMcOptionIdAnswer());
+                .addValue("client_id", answer.getUserId())
+                .addValue("mc_option_id", answer.getMcOptionIdAnswer());
         template.update(sql,param, holder);
     }
 
     @Override
     public void insertTextAnswer(TextAnswer answer) {
-        final String sql = "insert into question_answer(survey_id, question_order, client_id, text_answer) values(:surveyId,:questionOrder,:question,:questionType)";
+        final String sql = "insert into question_answer(survey_id, question_order_id, client_id, text_answer) values(:surveyId,:questionOrder,:client_id,:text_answer)";
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("surveyId", answer.getSurveyId())
                 .addValue("questionOrder", answer.getQuestionOrder())
-                .addValue("userId", answer.getUserId())
-                .addValue("answer", answer.getQuestionAnswer());
+                .addValue("client_id", answer.getUserId())
+                .addValue("text_answer", answer.getQuestionAnswer());
         template.update(sql,param, holder);
     }
 }

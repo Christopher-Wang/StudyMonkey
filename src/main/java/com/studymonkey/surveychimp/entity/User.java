@@ -1,5 +1,11 @@
 package com.studymonkey.surveychimp.entity;
 
+/**
+ * This class stores the data of a user that uses the application.
+ *
+ * Note: the userID is auto incremented by the database, therefore it is not used
+ * when inserting the record into the database.
+ */
 public class User {
 
     private String userID;

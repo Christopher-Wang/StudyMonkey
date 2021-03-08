@@ -1,5 +1,11 @@
 package com.studymonkey.surveychimp.entity.survey;
 
+/**
+ * A survey's details
+ *
+ * Note: the ID is auto incremented by the database, therefore it is not used
+ * when inserting the record into the database.
+ */
 public class Survey {
 
     private int surveyId;

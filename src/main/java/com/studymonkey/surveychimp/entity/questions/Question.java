@@ -1,11 +1,10 @@
 package com.studymonkey.surveychimp.entity.questions;
 
-import java.util.List;
-
 public class Question {
     private int questionOrder;
     private int surveyId;
     private String question;
+    private QuestionType questionType;
 
     public int getQuestionOrder() {
         return questionOrder;
@@ -29,5 +28,13 @@ public class Question {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
     }
 }

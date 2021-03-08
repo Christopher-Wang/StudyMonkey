@@ -28,13 +28,24 @@ public class SurveyAnswerDaoImpl implements SurveyAnswerDao {
     }
 
     @Override
-    public List<Answer> findAllAnswersForSurvey(int surveyId, int userId) {
+    public List<Answer> findAllAnswersOfUserForSurvey(int surveyId, int userId) {
         final String sql = "select * from question_answer where survey_id=:surveyId and client_id=:userId";
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("surveyId", surveyId)
                 .addValue("userId", userId);
+
+        return template.query(sql,param, new SurveyAnswerRowMapper());
+    }
+
+    @Override
+    public List<Answer> findAllAnswersForSurvey(int surveyId) {
+        final String sql = "select * from question_answer where survey_id=:surveyId";
+
+        KeyHolder holder = new GeneratedKeyHolder();
+        SqlParameterSource param = new MapSqlParameterSource()
+                .addValue("surveyId", surveyId);
 
         return template.query(sql,param, new SurveyAnswerRowMapper());
     }

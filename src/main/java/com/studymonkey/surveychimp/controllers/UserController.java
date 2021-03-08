@@ -24,5 +24,44 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping(value = "/{id}")
+    public User getUser(@PathVariable int id) {
+        return userService.getUser(id);
+    }
 
+    /*
+    Example:
+    http://localhost:8080/users/addUser
+    {
+        "userName": "chris1",
+        "userEmail": "chris1@gmail.com"
+    }
+     */
+    @PostMapping(value = "/addUser")
+    public void addUser(@RequestBody User user) {
+        userService.insertUser(user);
+    }
+
+    /*
+    Example:
+    http://localhost:8080/users/updateUser
+    {
+        "id": 1,
+        "userName": "newchris1",
+        "userEmail": "chris1@gmail.com"
+    }
+     */
+    @PutMapping(value = "/updateUser")
+    public void updateUser(@RequestBody User user) {
+        userService.updateUser(user);
+    }
+
+    /*
+    Example:
+    http://localhost:8080/users/deleteUser/2
+     */
+    @DeleteMapping(value = "/deleteUser/{id}")
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
+    }
 }

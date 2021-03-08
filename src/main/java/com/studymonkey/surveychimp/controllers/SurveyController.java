@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import com.studymonkey.surveychimp.entity.survey.Survey;
+import com.studymonkey.surveychimp.entity.survey.SurveyQuestions;
+import com.studymonkey.surveychimp.service.SurveyQuestionService;
 import com.studymonkey.surveychimp.service.SurveyService;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +16,9 @@ public class SurveyController {
 
     @Resource
     SurveyService surveyService;
+
+    @Resource
+    SurveyQuestionService surveyQuestionService;
 
     /*
     Example:
@@ -66,4 +71,12 @@ public class SurveyController {
     public void deleteSurvey(@PathVariable int id) {
         surveyService.deleteSurvey(id);
     }
+
+    // Not tested
+    @GetMapping(value = "/surveyQuestions/{id}")
+    public SurveyQuestions getSurveyQuestions(@PathVariable int id) {
+        return surveyQuestionService.findSurvey(id);
+    }
+
+
 }

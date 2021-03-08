@@ -3,11 +3,10 @@ package com.studymonkey.surveychimp.dao.survey;
 import com.studymonkey.surveychimp.entity.questions.Question;
 import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import com.studymonkey.surveychimp.entity.survey.CompletedSurvey;
-import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.survey.SurveyQuestions;
 import com.studymonkey.surveychimp.mapper.CompletedSurveyRowMapper;
 import com.studymonkey.surveychimp.mapper.SurveyQuestionsRowMapper;
-import com.studymonkey.surveychimp.mapper.SurveyRowMapper;
+import com.studymonkey.surveychimp.mapper.SurveyQuestionsRowsMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -15,7 +14,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Column;
 import java.util.List;
 
 @Component
@@ -29,7 +27,7 @@ public class SurveyQuestionsImpl implements SurveyQuestionsDao {
 
     @Override
     public List<SurveyQuestions> findAll() {
-        return template.query("select * from survey left join question q on survey.id = q.survey_id", new SurveyQuestionsRowMapper());
+        return template.query("select * from survey left join question q on survey.id = q.survey_id", new SurveyQuestionsRowsMapper());
     }
 
     @Override
@@ -40,7 +38,7 @@ public class SurveyQuestionsImpl implements SurveyQuestionsDao {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("surveyId", surveyId);
 
-        return template.queryForObject(sql,param, new SurveyQuestionsRowMapper());
+        return template.query(sql, param, new SurveyQuestionsRowMapper());
     }
 
     @Override

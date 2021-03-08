@@ -1,6 +1,7 @@
 package com.studymonkey.surveychimp.mapper;
 
 import com.studymonkey.surveychimp.entity.questions.Question;
+import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;
@@ -14,6 +15,7 @@ public class QuestionRowMapper implements RowMapper<Question> {
         question.setSurveyId(resultSet.getInt("survey_id"));
         question.setQuestionOrder(resultSet.getInt("question_order"));
         question.setQuestion(resultSet.getString("question"));
+        question.setQuestionType(QuestionType.getQuestionTypeFromValue(resultSet.getInt("question_type")));
 
         return question;
     }

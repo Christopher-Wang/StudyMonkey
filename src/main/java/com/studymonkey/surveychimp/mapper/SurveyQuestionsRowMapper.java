@@ -43,44 +43,4 @@ public class SurveyQuestionsRowMapper implements ResultSetExtractor<SurveyQuesti
         return survey;
     }
 
-    /*
-    public List<SurveyQuestions> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-
-        HashMap<Integer, SurveyQuestions> surveys = new HashMap<>();
-        List<Question> questions = new ArrayList<Question>();
-
-        SurveyQuestions survey = null;
-        Integer surveyId = null;
-        int rowCount = 0;
-        while(resultSet.next()) {
-
-
-            if(!surveys.containsKey(resultSet.getInt("id"))) {
-                surveys.put(surveyId, survey);
-                surveyId = resultSet.getInt("id");
-                survey = new SurveyQuestions();
-                rowCount = 0;
-
-                survey.setSurveyId(surveyId);
-                survey.setName(resultSet.getString("name"));
-                survey.setDescription(resultSet.getString("description"));
-                survey.setStatus(SurveyStatus.values()[resultSet.getInt("survey_status_id")]);
-            }
-
-            Question question = new Question();
-            question.setQuestionOrder(resultSet.getInt("question_order"));
-            question.setQuestion(resultSet.getString("question"));
-            question.setQuestionType(QuestionType.values()[resultSet.getInt("question_type_id")]);
-
-            questions.add(question);
-        }
-        survey.setQuestions(questions);
-
-        List<SurveyQuestions> surveyQuestionsList = new ArrayList<SurveyQuestions>();
-        for(SurveyQuestions surveyQuestions : surveys.values()) {
-            surveyQuestionsList.add(surveyQuestions);
-        }
-
-        return surveyQuestionsList;
-    }*/
 }

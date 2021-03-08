@@ -9,3 +9,17 @@ notifications:
     on_failure: never
 before_install:
   - chmod +x mvnw
+services:
+  - postgresql
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+addons:
+  postgresql: "11"
+  apt:
+    packages:
+      - postgresql-11
+      - postgresql-client-11
+env:
+  global:
+    - PGPORT=5433
+    - PGUSER=travis

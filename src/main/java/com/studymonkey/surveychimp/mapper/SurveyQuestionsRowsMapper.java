@@ -22,7 +22,6 @@ public class SurveyQuestionsRowsMapper implements ResultSetExtractor<List<Survey
 
         SurveyQuestions survey = null;
         Integer surveyId = null;
-        int rowCount = 0;
         while (resultSet.next()) {
 
 
@@ -30,7 +29,6 @@ public class SurveyQuestionsRowsMapper implements ResultSetExtractor<List<Survey
                 surveys.put(surveyId, survey);
                 surveyId = resultSet.getInt("id");
                 survey = new SurveyQuestions();
-                rowCount = 0;
 
                 survey.setSurveyId(surveyId);
                 survey.setName(resultSet.getString("name"));
@@ -44,7 +42,6 @@ public class SurveyQuestionsRowsMapper implements ResultSetExtractor<List<Survey
             question.setQuestionType(QuestionType.values()[resultSet.getInt("question_type_id")]);
 
             questions.add(question);
-            rowCount++;
         }
         survey.setQuestions(questions);
 

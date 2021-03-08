@@ -10,21 +10,29 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class SurveyQuestionsRowMapper implements ResultSetExtractor<SurveyQuestions> {
+public class SurveyQuestionsRowsMapper implements ResultSetExtractor<List<SurveyQuestions>> {
 
     @Override
-    public SurveyQuestions extractData(ResultSet resultSet) throws SQLException, DataAccessException {
-
-        SurveyQuestions survey = new SurveyQuestions();
+    public List<SurveyQuestions> extractData(ResultSet resultSet) throws SQLException, DataAccessException {
+        HashMap<Integer, SurveyQuestions> surveys = new HashMap<>();
         List<Question> questions = new ArrayList<Question>();
 
+        SurveyQuestions survey = null;
+        Integer surveyId = null;
         int rowCount = 0;
-        while(resultSet.next()) {
+        while (resultSet.next()) {
 
-            if(rowCount == 0) {
-                survey.setId(resultSet.getInt("id"));
+
+            if (!surveys.containsKey(resultSet.getInt("id"))) {
+                surveys.put(surveyId, survey);
+                surveyId = resultSet.getInt("id");
+                survey = new SurveyQuestions();
+                rowCount = 0;
+
+                survey.setSurveyId(surveyId);
                 survey.setName(resultSet.getString("name"));
                 survey.setDescription(resultSet.getString("description"));
                 survey.setStatus(SurveyStatus.values()[resultSet.getInt("survey_status_id")]);
@@ -40,6 +48,12 @@ public class SurveyQuestionsRowMapper implements ResultSetExtractor<SurveyQuesti
         }
         survey.setQuestions(questions);
 
-        return survey;
+        List<SurveyQuestions> surveyQuestionsList = new ArrayList<SurveyQuestions>();
+        for (SurveyQuestions surveyQuestions : surveys.values()) {
+            surveyQuestionsList.add(surveyQuestions);
+        }
+
+        return surveyQuestionsList;
     }
+
 }

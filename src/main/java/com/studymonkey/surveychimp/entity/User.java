@@ -8,7 +8,7 @@ package com.studymonkey.surveychimp.entity;
  */
 public class User {
 
-    private String userID;
+    private int id;
     private String userName;
     private String userEmail;
 
@@ -20,12 +20,12 @@ public class User {
         this.userEmail = userEmail;
     }
 
-    public String getUserID() {
-        return userID;
+    public int getId() {
+        return this.id;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -47,7 +47,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "userID='" + userID + '\'' +
+                "userID='" + id + '\'' +
                 ", userName='" + userName + '\'' +
                 ", userEmail='" + userEmail + '\'' +
                 '}';

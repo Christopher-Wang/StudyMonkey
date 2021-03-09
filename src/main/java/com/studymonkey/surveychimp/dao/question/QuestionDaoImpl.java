@@ -36,14 +36,13 @@ public class QuestionDaoImpl implements QuestionDao {
 
     @Override
     public void insertQuestion(Question question) {
-        final String sql = "insert into question(survey_id, question_order, question, question_type) values(:surveyId,:questionOrder,:question,:questionType)";
+        final String sql = "insert into question(survey_id, question, question_type) values(:surveyId,:question,:questionType)";
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("surveyId", question.getSurveyId())
-                .addValue("questionOrder", question.getQuestionOrder())
                 .addValue("question", question.getQuestion())
-                .addValue("questionType", QuestionType.MULTIPLE_CHOICE);
+                .addValue("questionType", question.getQuestionType().getValue());
         template.update(sql,param, holder);
     }
 
@@ -79,7 +78,7 @@ public class QuestionDaoImpl implements QuestionDao {
                 .addValue("surveyId", question.getSurveyId())
                 .addValue("questionOrder", question.getQuestionOrder())
                 .addValue("question", question.getQuestion())
-                .addValue("questionType", QuestionType.MULTIPLE_CHOICE);
+                .addValue("questionType", question.getQuestionType().getValue());
         template.update(sql,param, holder);
     }
 
@@ -105,10 +104,9 @@ public class QuestionDaoImpl implements QuestionDao {
     @Override
     public void deleteQuestion(int surveyId, int questionOrder) {
         final String sql = "delete from question where survey_id=:surveyId and question_order=:questionOrder";
-
         Map<String,Object> map=new HashMap<String,Object>();
         map.put("surveyId", surveyId);
-        map.put("questionId", questionOrder);
+        map.put("questionOrder", questionOrder);
 
         template.execute(sql,map,new PreparedStatementCallback<Object>() {
             @Override

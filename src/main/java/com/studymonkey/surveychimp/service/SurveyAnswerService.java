@@ -22,8 +22,12 @@ public class SurveyAnswerService {
         return answerDao.findAll();
     }
 
-    public List<Answer> findAllAnswersForSurvey(int surveyId, int userId) {
-        return answerDao.findAllAnswersForSurvey(surveyId, userId);
+    public List<Answer> findAllAnswersOfUserForSurvey(int surveyId, int userId) {
+        return answerDao.findAllAnswersOfUserForSurvey(surveyId, userId);
+    }
+
+    public List<Answer> findAllAnswersForSurvey(int surveyId) {
+        return answerDao.findAllAnswersForSurvey(surveyId);
     }
 
     public Answer getAnswer(int surveyId, int userId, int questionOrder) {

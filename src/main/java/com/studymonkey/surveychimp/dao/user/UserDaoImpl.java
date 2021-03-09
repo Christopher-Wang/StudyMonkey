@@ -60,7 +60,7 @@ public class UserDaoImpl implements UserDao {
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("userId", user.getUserID())
+                .addValue("userId", user.getId())
                 .addValue("userName", user.getUserName())
                 .addValue("userEmail", user.getUserEmail());
         template.update(sql,param, holder);
@@ -71,7 +71,7 @@ public class UserDaoImpl implements UserDao {
         final String sql = "update client set name=:userName, email=:userEmail where id=:userId";
 
         Map<String,Object> map=new HashMap<String,Object>();
-        map.put("userId", user.getUserID());
+        map.put("userId", user.getId());
         map.put("userName", user.getUserName());
         map.put("userEmail", user.getUserEmail());
 

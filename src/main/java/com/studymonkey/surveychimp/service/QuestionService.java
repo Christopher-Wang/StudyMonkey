@@ -2,13 +2,9 @@ package com.studymonkey.surveychimp.service;
 
 import com.studymonkey.surveychimp.dao.question.QuestionDao;
 import com.studymonkey.surveychimp.dao.question.QuestionDaoImpl;
-import com.studymonkey.surveychimp.dao.survey.SurveyDao;
-import com.studymonkey.surveychimp.dao.user.UserDaoImpl;
 import com.studymonkey.surveychimp.entity.questions.Question;
-import com.studymonkey.surveychimp.entity.survey.Survey;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Component

@@ -43,7 +43,7 @@ public class SurveyDaoImpl implements SurveyDao {
     }
 
     @Override
-    public void insertSurvey(Survey survey) {
+    public List<Map<String, Object>> insertSurvey(Survey survey) {
         final String sql = "insert into survey(name,description,survey_status_id) values(:name,:description,:status)";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -52,6 +52,8 @@ public class SurveyDaoImpl implements SurveyDao {
                 .addValue("description", survey.getDescription())
                 .addValue("status", survey.getStatus());
         template.update(sql,param, holder);
+
+        return holder.getKeyList();
     }
 
     @Override

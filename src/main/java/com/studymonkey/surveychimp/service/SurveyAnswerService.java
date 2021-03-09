@@ -8,6 +8,7 @@ import com.studymonkey.surveychimp.entity.answers.TextAnswer;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class SurveyAnswerService {
@@ -34,8 +35,8 @@ public class SurveyAnswerService {
         return answerDao.getAnswer(surveyId, userId, questionOrder);
     }
 
-    public void insertMcAnswer(McAnswer answer) {
-        answerDao.insertMcAnswer(answer);
+    public List<Map<String, Object>> insertMcAnswer(McAnswer answer) {
+        return answerDao.insertMcAnswer(answer);
     }
     public void insertTextAnswer(TextAnswer answer) {
         answerDao.insertTextAnswer(answer);

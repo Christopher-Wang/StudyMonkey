@@ -12,6 +12,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class SurveyAnswerDaoImpl implements SurveyAnswerDao {
@@ -64,7 +65,7 @@ public class SurveyAnswerDaoImpl implements SurveyAnswerDao {
     }
 
     @Override
-    public void insertMcAnswer(McAnswer answer) {
+    public List<Map<String, Object>> insertMcAnswer(McAnswer answer) {
         final String sql = "insert into question_answer(survey_id, question_order_id, client_id, mc_option_id) values(:surveyId,:questionOrder,:client_id,:mc_option_id)";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -74,6 +75,8 @@ public class SurveyAnswerDaoImpl implements SurveyAnswerDao {
                 .addValue("client_id", answer.getUserId())
                 .addValue("mc_option_id", answer.getMcOptionIdAnswer());
         template.update(sql,param, holder);
+
+        return holder.getKeyList();
     }
 
     @Override

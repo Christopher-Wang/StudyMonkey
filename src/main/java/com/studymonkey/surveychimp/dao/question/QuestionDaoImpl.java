@@ -70,7 +70,7 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public void updateQuestion(Question question) {
+    public List<Map<String, Object>> updateQuestion(Question question) {
         final String sql = "update question set question=:question, question_type=:questionType where survey_id=:surveyId and question_order=:questionOrder";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -80,6 +80,8 @@ public class QuestionDaoImpl implements QuestionDao {
                 .addValue("question", question.getQuestion())
                 .addValue("questionType", question.getQuestionType().getValue());
         template.update(sql,param, holder);
+
+        return holder.getKeyList();
     }
 
     @Override

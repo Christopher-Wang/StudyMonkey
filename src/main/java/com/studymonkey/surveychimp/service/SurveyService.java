@@ -2,13 +2,11 @@ package com.studymonkey.surveychimp.service;
 
 import com.studymonkey.surveychimp.dao.survey.SurveyDao;
 import com.studymonkey.surveychimp.dao.survey.SurveyDaoImpl;
-import com.studymonkey.surveychimp.dao.user.UserDaoImpl;
-import com.studymonkey.surveychimp.entity.User;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class SurveyService {
@@ -27,8 +25,8 @@ public class SurveyService {
         return surveyDao.findSurvey(surveyId);
     }
 
-    public void insertSurvey(Survey survey) {
-        surveyDao.insertSurvey(survey);
+    public List<Map<String, Object>> insertSurvey(Survey survey) {
+        return surveyDao.insertSurvey(survey);
     }
 
     public void updateSurvey(Survey survey) {

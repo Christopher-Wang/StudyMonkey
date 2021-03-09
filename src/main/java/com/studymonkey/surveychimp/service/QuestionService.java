@@ -6,6 +6,7 @@ import com.studymonkey.surveychimp.entity.questions.Question;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class QuestionService {
@@ -24,8 +25,8 @@ public class QuestionService {
         return questionDao.findQuestion(surveryId,questionOrder);
     }
 
-    public void insertQuestion(Question question) {
-        questionDao.insertQuestion(question);
+    public List<Map<String, Object>> insertQuestion(Question question) {
+        return questionDao.insertQuestion(question);
     }
 
     public void updateQuestion(Question question) {

@@ -35,9 +35,6 @@
 </nav>
 
 <style>
-    /* Essentially resetting the CSS */
-
-
     nav {
         background-color: #162b32;
         font-family: "Helvetica", "Ariel", sans-serif;

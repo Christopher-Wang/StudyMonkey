@@ -6,6 +6,7 @@
 </script>
 
 <style>
+	/* Essentially resetting the CSS */
 	:global(body) {
 		margin: 0;
 		padding: 0;
@@ -21,7 +22,6 @@
 	}
 </style>
 
-<!--<Nav {segment}/>-->
 <Navbar/>
 <main>
 	<slot></slot>

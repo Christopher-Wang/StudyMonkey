@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class UserService {
@@ -26,8 +27,8 @@ public class UserService {
         return userDao.findUser(userId);
     }
 
-    public void insertUser(User user) {
-        userDao.insertUser(user);
+    public List<Map<String, Object>> insertUser(User user) {
+        return userDao.insertUser(user);
     }
 
     public void updateUser(User user) {

@@ -1,10 +1,8 @@
 package com.studymonkey.surveychimp.dao.question;
 
-import com.studymonkey.surveychimp.entity.User;
 import com.studymonkey.surveychimp.entity.questions.Question;
 import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import com.studymonkey.surveychimp.mapper.QuestionRowMapper;
-import com.studymonkey.surveychimp.mapper.UserRowMapper;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -35,7 +33,7 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public void insertQuestion(Question question) {
+    public List<Map<String, Object>> insertQuestion(Question question) {
         final String sql = "insert into question(survey_id, question, question_type) values(:surveyId,:question,:questionType)";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -43,7 +41,9 @@ public class QuestionDaoImpl implements QuestionDao {
                 .addValue("surveyId", question.getSurveyId())
                 .addValue("question", question.getQuestion())
                 .addValue("questionType", question.getQuestionType().getValue());
+
         template.update(sql,param, holder);
+        return holder.getKeyList();
     }
 
     @Override
@@ -70,7 +70,7 @@ public class QuestionDaoImpl implements QuestionDao {
     }
 
     @Override
-    public void updateQuestion(Question question) {
+    public List<Map<String, Object>> updateQuestion(Question question) {
         final String sql = "update question set question=:question, question_type=:questionType where survey_id=:surveyId and question_order=:questionOrder";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -80,6 +80,8 @@ public class QuestionDaoImpl implements QuestionDao {
                 .addValue("question", question.getQuestion())
                 .addValue("questionType", question.getQuestionType().getValue());
         template.update(sql,param, holder);
+
+        return holder.getKeyList();
     }
 
     @Override

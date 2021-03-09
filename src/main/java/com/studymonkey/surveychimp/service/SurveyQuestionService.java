@@ -7,8 +7,8 @@ import com.studymonkey.surveychimp.entity.survey.CompletedSurvey;
 import com.studymonkey.surveychimp.entity.survey.SurveyQuestions;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class SurveyQuestionService {
@@ -31,8 +31,8 @@ public class SurveyQuestionService {
         return surveyQuestionsDao.getSurveyAndAnswers(surveryId,userId);
     }
 
-    public void insertQuestion(SurveyQuestions survey) {
-        surveyQuestionsDao.insertSurvey(survey);
+    public List<Map<String, Object>> insertQuestion(SurveyQuestions survey) {
+        return surveyQuestionsDao.insertSurvey(survey);
     }
 
 }

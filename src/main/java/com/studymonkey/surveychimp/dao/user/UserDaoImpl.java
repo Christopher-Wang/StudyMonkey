@@ -43,7 +43,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void insertUser(User user) {
+    public List<Map<String, Object>> insertUser(User user) {
         final String sql = "insert into client(name, email) values(:userName,:userEmail)";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -52,6 +52,7 @@ public class UserDaoImpl implements UserDao {
                 .addValue("userEmail", user.getUserEmail());
         template.update(sql,param, holder);
 
+        return holder.getKeyList();
     }
 
     @Override

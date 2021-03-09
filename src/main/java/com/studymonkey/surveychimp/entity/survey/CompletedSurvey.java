@@ -4,7 +4,7 @@ import com.studymonkey.surveychimp.entity.answers.Answer;
 
 import java.util.List;
 
-public class CompletedSurvey extends Survey {
+public class CompletedSurvey extends SurveyQuestions {
 
     private List<Answer> answers;
 

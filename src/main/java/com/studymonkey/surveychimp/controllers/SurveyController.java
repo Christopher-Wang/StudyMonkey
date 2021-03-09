@@ -1,6 +1,7 @@
 package com.studymonkey.surveychimp.controllers;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -39,8 +40,8 @@ public class SurveyController {
     }
      */
     @PostMapping(value = "/createSurvey")
-    public void createSurvey(@RequestBody Survey survey) {
-        surveyService.insertSurvey(survey);
+    public List<Map<String, Object>> createSurvey(@RequestBody Survey survey) {
+        return surveyService.insertSurvey(survey);
     }
 
     /*

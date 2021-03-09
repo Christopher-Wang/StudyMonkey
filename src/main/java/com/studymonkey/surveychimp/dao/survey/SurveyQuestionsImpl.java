@@ -15,6 +15,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Map;
 
 @Component
 public class SurveyQuestionsImpl implements SurveyQuestionsDao {
@@ -54,7 +55,7 @@ public class SurveyQuestionsImpl implements SurveyQuestionsDao {
     }
 
     @Override
-    public void insertSurvey(SurveyQuestions survey) {
+    public List<Map<String, Object>> insertSurvey(SurveyQuestions survey) {
         final String sql = "insert into survey(name,description,survey_status_id) values(:name,:description,:status)";
 
         KeyHolder holder = new GeneratedKeyHolder();
@@ -75,6 +76,7 @@ public class SurveyQuestionsImpl implements SurveyQuestionsDao {
                     .addValue("questionType", QuestionType.MULTIPLE_CHOICE);
             template.update(sql2,param, holder);
         }
+        return null;
     }
 
 }

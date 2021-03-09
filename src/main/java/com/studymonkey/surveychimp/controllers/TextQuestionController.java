@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 
 @RestController
-@RequestMapping("question")
-public class QuestionController {
+@RequestMapping("textQuestion")
+public class TextQuestionController {
 
     @Resource
     QuestionService questionService;

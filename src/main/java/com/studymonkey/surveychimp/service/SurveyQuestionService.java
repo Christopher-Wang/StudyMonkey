@@ -7,7 +7,6 @@ import com.studymonkey.surveychimp.entity.survey.CompletedSurvey;
 import com.studymonkey.surveychimp.entity.survey.SurveyQuestions;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 @Component

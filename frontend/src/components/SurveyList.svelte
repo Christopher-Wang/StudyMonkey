@@ -13,15 +13,15 @@
 <div>
     {#each response as res}
         <Box>
-            <label><strong>Survey Name:</strong> {res.name} </label><br>
-            <label><strong>Survey Description:</strong> {res.description} </label><br>
-            <label><strong>Survey Id:</strong> {res.id} </label><br>
+            <h4><strong>Survey Name:</strong> {res.name} </h4>
+            <h4><strong>Survey Description:</strong> {res.description} </h4>
+            <h4><strong>Survey Id:</strong> {res.id} </h4>
             {#if res.status == 1}
-                <label><strong>Survey Status:</strong> CLOSED </label>
+                <h4><strong>Survey Status:</strong> CLOSED </h4>
             {:else}
-                <label><strong>Survey Status:</strong> OPEN </label>
+                <h4><strong>Survey Status:</strong> OPEN </h4>
             {/if}
-            <br/>
+
         </Box>
     {/each}
 </div>

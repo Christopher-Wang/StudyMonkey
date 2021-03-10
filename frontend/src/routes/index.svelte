@@ -4,7 +4,7 @@
 
 <script>
     import natureBkg from 'images/Pine.jpg';
-    import {goto} from '@sapper/app'
+    import {goto} from '@sapper/app';
 
     function handleCreateClick() {
         goto('/survey_creator');

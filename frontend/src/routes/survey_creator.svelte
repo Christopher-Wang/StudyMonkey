@@ -3,24 +3,26 @@
 </svelte:head>
 
 <script>
-    import Questions from "../components/Questions.svelte";
-    let surveyName = "Survey-#0";
+    import SurveyCreator from "../components/SurveyCreator.svelte";
+    import {goto} from '@sapper/app';
+    
+    let surveyName = "Your Survey Name";
+    function handleRegisterSurvey() {
+        alert("here");
+        goto('/question_creator');
+    }
 </script>
 
 <h1>Survey Creation</h1>
 <div>
-    <h3>Survey Name: <input
-            placeholder="What needs to be done?"
-            bind:value={surveyName}
-    ></h3>
+    <h3>Survey Name: <input bind:value={surveyName}></h3>
     <br>
-    <label>Sample: {surveyName}</label>
 </div>
 <br>
 
-<div><button>Add Question</button></div>
-
-<Questions/>
+<div>
+    <button on:click={handleRegisterSurvey}>Register Survey</button>
+</div>
 
 <style>
     div, h1{

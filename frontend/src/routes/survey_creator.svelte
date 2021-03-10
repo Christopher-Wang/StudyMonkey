@@ -5,26 +5,32 @@
 <script>
     import SurveyCreator from "../components/SurveyCreator.svelte";
     import {goto} from '@sapper/app';
-    
-    let surveyName = "Your Survey Name";
+
+    const url = 'http://localhost:8080/survey/createSurvey';
+    const survey = {name: "", description: "", status:"CLOSED"};
+    let x = JSON.stringify(survey);
     function handleRegisterSurvey() {
-        goto('/question_creator');
+        const options = {method: "POST", body: JSON.stringify(survey), headers: {'Content-Type': 'application/json'}};
+        fetch(url, options).then(res => res.json()).then(res => console.log(res));
     }
+
+
 </script>
 
 <h1>Survey Creation</h1>
-<div>
-    <h3>Survey Name: <input bind:value={surveyName}></h3>
+
+<form>
+    <h3>Survey Name: <input placeholder="Enter a name" bind:value={survey.name}></h3>
+    <h3>Survey Description: <input placeholder="Enter a description for your survey"
+                                   bind:value={survey.description}></h3>
+    <p>{survey.name} + {survey.description}</p>
+    <p>{x}</p>
     <br>
-</div>
-<br>
 
-<div>
-    <button on:click={handleRegisterSurvey}>Register Survey</button>
-</div>
-
+</form>
+<button on:click={handleRegisterSurvey}>Register Survey</button>
 <style>
-    div, h1{
+    form, h1 {
         text-align: center;
     }
 

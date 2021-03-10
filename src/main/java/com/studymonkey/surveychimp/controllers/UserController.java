@@ -16,14 +16,25 @@ public class UserController {
     @Resource
     UserService userService;
 
+    /*
+    Example:
+    http://localhost:8080/users/allUsers
+     */
     @GetMapping(value = "/allUsers")
     public List<User> getAllUsers() {
         return userService.findAll();
     }
 
-    @GetMapping(value = "/{id}")
-    public User getUser(@PathVariable int id) {
-        return userService.getUser(id);
+    /*
+    Example:
+    http://localhost:8080/users/getUser
+    {
+        "id": 1
+    }
+     */
+    @GetMapping(value = "/getUser")
+    public User getUser(@RequestBody User user) {
+        return userService.getUser(user.getId());
     }
 
     /*
@@ -55,10 +66,13 @@ public class UserController {
 
     /*
     Example:
-    http://localhost:8080/users/deleteUser/2
+    http://localhost:8080/users/deleteUser
+    {
+        "id": 6
+    }
      */
-    @DeleteMapping(value = "/deleteUser/{id}")
-    public void deleteUser(@PathVariable int id) {
-        userService.deleteUser(id);
+    @DeleteMapping(value = "/deleteUser")
+    public void deleteUser(@RequestBody User user) {
+        userService.deleteUser(user.getId());
     }
 }

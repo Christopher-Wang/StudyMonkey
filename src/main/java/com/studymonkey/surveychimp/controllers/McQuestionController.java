@@ -18,9 +18,18 @@ public class McQuestionController {
     @Resource
     SurveyMcQuestionService surveyMcQuestionService;
 
+    /*
+    Example:
+    http://localhost:8080/mcQuestion/findQuestion
+
+    {
+        "surveyId": 2,
+        "questionOrder": 16
+    }
+     */
     @GetMapping("findQuestion")
-    public Question findQuestion(@RequestParam(name = "surveryId") int surveryId, @RequestParam(name = "questionOrder") int questionOrder) {
-        return surveyMcQuestionService.findMcQuestion(surveryId, questionOrder);
+    public Question findQuestion(@RequestBody Question question) {
+        return surveyMcQuestionService.findMcQuestion(question.getSurveyId(), question.getQuestionOrder());
     }
 
     /*
@@ -42,12 +51,12 @@ public class McQuestionController {
     Example:
     http://localhost:8080/mcQuestion/updateQuestion
     {
-        "surveyId": 2,
-        "question": "LSDSDS",
+        "surveyId": 5,
+        "question": "Hee hee question 2 UPDATED",
         "questionType": "MULTIPLE_CHOICE",
-        "mcOption": ["Moe"],
+        "mcOption": ["UPDATED option text"],
         "questionOrder": 15,
-        "optionId": 5
+        "optionId": 26
     }
     */
     @PutMapping("updateQuestion")
@@ -59,9 +68,17 @@ public class McQuestionController {
         return ResponseEntity.ok(HttpStatus.ACCEPTED);
     }
 
-    @DeleteMapping("deleteAllQuestion")
-    public void deleteQuestion(@RequestParam(name = "surveyId") int surveyId, @RequestParam(name = "questionOrder") int questionOrder) {
-        surveyMcQuestionService.deleteMcQuestion(surveyId, questionOrder);
+    /*
+    Example:
+    http://localhost:8080/mcQuestion/deleteQuestion
+    {
+        "surveyId": 5,
+        "questionOrder": 26
+    }
+     */
+    @DeleteMapping("deleteQuestion")
+    public void deleteQuestion(@RequestBody Question question) {
+        surveyMcQuestionService.deleteMcQuestion(question.getSurveyId(), question.getQuestionOrder());
     }
 
 }

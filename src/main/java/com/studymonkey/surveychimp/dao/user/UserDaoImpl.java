@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()
-                .addValue("userId", userId);
+                .addValue("id", userId);
 
         return template.queryForObject(sql,param, new UserRowMapper());
     }

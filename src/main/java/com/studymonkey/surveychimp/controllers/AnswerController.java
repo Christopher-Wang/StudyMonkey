@@ -3,6 +3,7 @@ package com.studymonkey.surveychimp.controllers;
 import com.studymonkey.surveychimp.entity.answers.Answer;
 import com.studymonkey.surveychimp.entity.answers.McAnswer;
 import com.studymonkey.surveychimp.entity.answers.TextAnswer;
+import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.service.SurveyAnswerService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +18,10 @@ public class AnswerController {
     @Resource
     SurveyAnswerService surveyAnswerService;
 
+    /*
+    Example:
+    http://localhost:8080/answers/allAnswers
+     */
     @GetMapping(value = "/allAnswers")
     public List<Answer> getAllAnswers() {
         return surveyAnswerService.findAll();
@@ -24,11 +29,14 @@ public class AnswerController {
 
     /*
     Example:
-    http://localhost:8080/answers/surveyAnswers/2
+    http://localhost:8080/answers/surveyAnswers
+    {
+        "id": 5
+    }
      */
-    @GetMapping(value = "/surveyAnswers/{id}")
-    public List<Answer> getSurveyAnswers(@PathVariable int id) {
-        return surveyAnswerService.findAllAnswersForSurvey(id);
+    @GetMapping(value = "/surveyAnswers")
+    public List<Answer> getSurveyAnswers(@RequestBody Survey survey) {
+        return surveyAnswerService.findAllAnswersForSurvey(survey.getId());
     }
 
     /*

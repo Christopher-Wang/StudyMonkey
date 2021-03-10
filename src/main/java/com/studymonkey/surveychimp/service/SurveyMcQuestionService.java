@@ -40,7 +40,7 @@ public class SurveyMcQuestionService implements McQuestionDao {
 
     @Override
     public void executeUpdateMcQuestion(McQuestion question) {
-
+        // Currently not needed since updateMcQuestion() does the same thing.
     }
 
     @Override

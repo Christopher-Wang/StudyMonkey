@@ -59,10 +59,10 @@ public class SurveyController {
     }
 
     // This was not tested yet. Not needed for now
-    @PutMapping(value = "/executeUpdateSurvey")
-    public void executeUpdateSurvey(@RequestBody Survey survey) {
-        surveyService.executeUpdateSurvey(survey);
-    }
+//    @PutMapping(value = "/executeUpdateSurvey")
+//    public void executeUpdateSurvey(@RequestBody Survey survey) {
+//        surveyService.executeUpdateSurvey(survey);
+//    }
 
     /*
     Example:
@@ -73,7 +73,10 @@ public class SurveyController {
         surveyService.deleteSurvey(id);
     }
 
-    // Not tested
+    /*
+    Example:
+    http://localhost:8080/survey/surveyQuestions/5
+     */
     @GetMapping(value = "/surveyQuestions/{id}")
     public SurveyQuestions getSurveyQuestions(@PathVariable int id) {
         return surveyQuestionService.findSurvey(id);

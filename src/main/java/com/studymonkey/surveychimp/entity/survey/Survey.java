@@ -38,7 +38,6 @@ public class Survey {
     }
 
     public int getStatus() {
-        //return status;
         return status.getValue();
     }
 

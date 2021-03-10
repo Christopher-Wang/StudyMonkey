@@ -33,7 +33,8 @@ public class SurveyQuestionsRowMapper implements ResultSetExtractor<SurveyQuesti
             Question question = new Question();
             question.setQuestionOrder(resultSet.getInt("question_order"));
             question.setQuestion(resultSet.getString("question"));
-            question.setQuestionType(QuestionType.values()[resultSet.getInt("question_type_id")]);
+            question.setSurveyId(resultSet.getInt("survey_id"));
+            question.setQuestionType(QuestionType.values()[resultSet.getInt("question_type") -1]);
 
             questions.add(question);
             rowCount++;

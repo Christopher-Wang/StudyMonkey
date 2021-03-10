@@ -4,23 +4,24 @@
 
 <script>
     import QuestionCreator from "../components/QuestionCreator.svelte";
-    let surveyName = "PlaceHolder";
+    import {surveyId} from "../stores.js";
 </script>
 
 <h1>Survey Creation</h1>
 <div>
-    <h3>Survey Name: <input bind:value={surveyName}></h3>
+    <h2>Create a set of questions and answers for the survey></h2>
+    <h3>Survey ID: {$surveyId} </h3>
     <br>
 </div>
 <br>
 
 <div>
-    <button>Create Survey</button>
+    <button>Add Question</button>
 </div>
 
 <QuestionCreator/>
 <style>
-    h1{
+    div, h1{
         text-align: center;
     }
 </style>

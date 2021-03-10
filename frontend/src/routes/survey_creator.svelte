@@ -9,11 +9,21 @@
 
 <h1>Survey Creation</h1>
 <div>
-    <input
+    <h3>Survey Name: <input
             placeholder="What needs to be done?"
             bind:value={surveyName}
-    >
-    <p>Sample: {surveyName}</p>
+    ></h3>
+    <br>
+    <label>Sample: {surveyName}</label>
 </div>
+<br>
+
+<div><button>Add Question</button></div>
 
 <Questions/>
+
+<style>
+    div, h1{
+        text-align: center;
+    }
+</style>

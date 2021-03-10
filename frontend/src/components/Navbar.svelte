@@ -38,7 +38,6 @@
     nav {
         background-color: #162b32;
         font-family: "Helvetica", "Ariel", sans-serif;
-
     }
 
     .Logo {

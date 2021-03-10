@@ -8,7 +8,6 @@
     
     let surveyName = "Your Survey Name";
     function handleRegisterSurvey() {
-        alert("here");
         goto('/question_creator');
     }
 </script>
@@ -27,5 +26,16 @@
 <style>
     div, h1{
         text-align: center;
+    }
+
+    button {
+        background-color: #ff4838;
+        color: white;
+        padding: 10px;
+        border-radius: 20px;
+        border-color: white;
+        border-width: 2px;
+        font-weight: 500;
+        font-size: large;
     }
 </style>

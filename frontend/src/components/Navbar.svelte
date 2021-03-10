@@ -23,7 +23,7 @@
     <div class="navVals">
         <ul class="navbarList">
             <li class="logoItem">
-                <a href="/" class="Logo" alt="Survey Chimp">Survey Chimp</a>
+                <a href="/" class="Logo" alt="Study Monkey">Study Monkey</a>
             </li>
             {#each navBarItems as navItem}
                 <li class="menuItems">

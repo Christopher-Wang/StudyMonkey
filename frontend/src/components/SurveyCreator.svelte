@@ -14,4 +14,5 @@
     div, p{
         text-align: center;
     }
+    
 </style>

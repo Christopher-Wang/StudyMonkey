@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Survey Chimp</title>
+	<title>Study Monkey</title>
 </svelte:head>
 
 <script>
@@ -13,7 +13,7 @@
 
 
 <div class="homeBody">
-    <h1>Survey Chimp!</h1>
+    <h1>Study Monkey!</h1>
     <p>Let's make a quick survey to get going!</p>
     <button on:click={handleCreateClick}>Create Survey</button>
 </div>

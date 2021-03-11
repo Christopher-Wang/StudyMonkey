@@ -12,6 +12,7 @@ import com.studymonkey.surveychimp.service.SurveyService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/survey")
 public class SurveyController {
 

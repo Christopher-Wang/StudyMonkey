@@ -11,7 +11,6 @@ import com.studymonkey.surveychimp.service.SurveyQuestionService;
 import com.studymonkey.surveychimp.service.SurveyService;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/survey")
 public class SurveyController {

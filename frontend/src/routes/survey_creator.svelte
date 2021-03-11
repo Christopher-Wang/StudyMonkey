@@ -46,6 +46,7 @@
         margin: 0 auto;
         width: 155px;
     }
+    
     button {
         text-align: center;
         background-color: #ff4838;

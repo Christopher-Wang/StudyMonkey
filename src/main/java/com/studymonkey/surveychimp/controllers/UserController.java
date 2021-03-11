@@ -8,7 +8,7 @@ import javax.annotation.Resource;
 import com.studymonkey.surveychimp.entity.User;
 import com.studymonkey.surveychimp.service.UserService;
 import org.springframework.web.bind.annotation.*;
-
+@CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/users")
 public class UserController {

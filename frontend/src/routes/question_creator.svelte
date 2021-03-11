@@ -42,7 +42,6 @@
 
 <h1>Survey Creation</h1>
 <div>
-    <div bind:value={question.surveyId} value={$surveyId}></div>
     <h2>Create a set of questions and answers for the survey with ID {$surveyId}</h2>
     <form>
         <h3>Enter a Question below and select a type: </h3> 
@@ -70,14 +69,14 @@
             </button>
             {#if ("mcOption" in question) && (question.mcOption.length > 0)}
             <button on:click={submitQuestion}>
-                Submit Question
+                Submit
             </button>
             {/if}
         {/if}
 
         {#if question.questionType == TEXT}
             <button on:click={submitQuestion}>
-                Submit Question
+                Submit
             </button>
         {/if}
 

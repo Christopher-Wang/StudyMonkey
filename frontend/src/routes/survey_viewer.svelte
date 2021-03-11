@@ -5,20 +5,27 @@
 <script>
     import natureBkg from 'images/Pine.jpg';
     import {goto} from '@sapper/app';
+    import SurveyList from "../components/SurveyList.svelte";
+
+    function handleHomeClick() {
+        
+    }
+
 </script>
 
 
 <div class="homeBody">
     <h1>Study Monkey!</h1>
-    <p>Let's make a quick survey to get going!</p>
-    <button on:click={() => goto('/survey_creator')}>Create Survey</button>
-    <button on:click={() => goto('/survey_viewer')}>View Surveys</button>
 </div>
 
-<figure>
-    <img alt="Nature" src={natureBkg}>
-    <figcaption>This can be some other content!</figcaption>
-</figure>
+
+<div class = "surveyContainer">
+    <h2 id="SurveyListHeader"> List of Surveys </h2>
+    <SurveyList/>
+    <button on:click={() => goto('/')}>
+        Home
+    </button>
+</div>
 
 
 <style>
@@ -52,8 +59,8 @@
         color: white;
         margin-top: 0px;;
     }
-
     button {
+        text-align: center;
         background-color: #ff4838;
         color: white;
         padding: 10px;

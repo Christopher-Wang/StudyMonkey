@@ -32,9 +32,9 @@
 </script>
 
 <main>
-    <h1>What is Survey Chimp?</h1>
+    <h1>What is Study Monkey?</h1>
     <h3>
-        Survey Chimp is the survey creation tool developed by team {@html teamName}.
+        Study Monkey is the survey creation tool developed by team {@html teamName}.
     </h3>
     <h3>Who are we?</h3>
     <ul>

@@ -12,6 +12,7 @@ import com.studymonkey.surveychimp.service.SurveyService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/survey")
 public class SurveyController {
 
@@ -58,26 +59,27 @@ public class SurveyController {
         surveyService.updateSurvey(survey);
     }
 
-    // This was not tested yet. Not needed for now
-    @PutMapping(value = "/executeUpdateSurvey")
-    public void executeUpdateSurvey(@RequestBody Survey survey) {
-        surveyService.executeUpdateSurvey(survey);
+    /*
+    Example:
+    http://localhost:8080/survey/deleteSurvey
+    {
+        "id": 9
+    }
+     */
+    @DeleteMapping(value = "/deleteSurvey")
+    public void deleteSurvey(@RequestBody Survey survey) {
+        surveyService.deleteSurvey(survey.getId());
     }
 
     /*
     Example:
-    http://localhost:8080/survey/deleteSurvey/4
+    http://localhost:8080/survey/surveyQuestions
+    {
+        "id": 2
+    }
      */
-    @DeleteMapping(value = "/deleteSurvey/{id}")
-    public void deleteSurvey(@PathVariable int id) {
-        surveyService.deleteSurvey(id);
+    @GetMapping(value = "/surveyQuestions")
+    public SurveyQuestions getSurveyQuestions(@RequestBody Survey survey) {
+        return surveyQuestionService.findSurvey(survey.getId());
     }
-
-    // Not tested
-    @GetMapping(value = "/surveyQuestions/{id}")
-    public SurveyQuestions getSurveyQuestions(@PathVariable int id) {
-        return surveyQuestionService.findSurvey(id);
-    }
-
-
 }

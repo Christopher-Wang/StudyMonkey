@@ -57,7 +57,7 @@ public class McQuestionDaoImpl implements McQuestionDao {
 
     @Override
     public Question findMcQuestion(int surveyId, int questionOrder) {
-        final String sql = "select * from question left join mc_option mo on question.survey_id = mo.survey_id and question.question_order = mo.question_order where survey_id=:surveyId AND question_order=:questionOrder";
+        final String sql = "select * from question left join mc_option mo on question.survey_id = mo.survey_id and question.question_order = mo.question_order_id where question.survey_id=:surveyId AND question_order=:questionOrder";
 
         KeyHolder holder = new GeneratedKeyHolder();
         SqlParameterSource param = new MapSqlParameterSource()

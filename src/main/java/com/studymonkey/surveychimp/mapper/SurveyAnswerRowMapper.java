@@ -20,27 +20,23 @@ public class SurveyAnswerRowMapper implements RowMapper<Answer> {
 
         String text = resultSet.getString("text_answer");
         if(!resultSet.wasNull()) {
-            //TextAnswer textAnswer = (TextAnswer) answer;
-
             TextAnswer textAnswer = new TextAnswer();
             textAnswer.setSurveyId(answer.getSurveyId());
             textAnswer.setQuestionOrder(answer.getQuestionOrder());
             textAnswer.setUserId(answer.getUserId());
-
             textAnswer.setQuestionAnswer(text);
+
             return textAnswer;
         }
 
         int mcOptionId = resultSet.getInt("mc_option_id");
         if(!resultSet.wasNull()) {
-            //McAnswer mcAnswer = (McAnswer) answer; Note: WHY doesn't this work?
-
             McAnswer mcAnswer = new McAnswer();
             mcAnswer.setSurveyId(answer.getSurveyId());
             mcAnswer.setQuestionOrder(answer.getQuestionOrder());
             mcAnswer.setUserId(answer.getUserId());
-
             mcAnswer.setMcOptionIdAnswer(mcOptionId);
+
             return mcAnswer;
         }
 

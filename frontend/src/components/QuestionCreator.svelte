@@ -7,20 +7,6 @@
     }
 </script>
 
-
-
-<!--<div>-->
-<!--    <h2>What type of answer would you like for this question?</h2>-->
-<!--    <label>-->
-<!--        <input type=radio bind:group={answerType} value={"MULTIPLE_CHOICE"}>-->
-<!--        Multiple Choice-->
-<!--    </label>-->
-<!--    <label>-->
-<!--        <input type=radio bind:group={answerType} value={"TEXT"}>-->
-<!--        Text-->
-<!--    </label>-->
-<!--</div>-->
-
 <div class="mcQuestion">
     <label>
         Question: <input type="text">
@@ -50,7 +36,5 @@
     div, p{
         text-align: center;
     }
-
-
 </style>
 

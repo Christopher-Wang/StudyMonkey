@@ -9,15 +9,24 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("textQuestion")
 public class TextQuestionController {
 
     @Resource
     QuestionService questionService;
 
+    /*
+    Example:
+    http://localhost:8080/textQuestion/findQuestion
+    {
+        "surveyId": 2,
+        "questionOrder": 3
+    }
+     */
     @GetMapping("findQuestion")
-    public Question findQuestion(@RequestParam(name = "surveryId") int surveryId, @RequestParam(name = "questionOrder") int questionOrder) {
-        return questionService.findQuestion(surveryId, questionOrder);
+    public Question findQuestion(@RequestBody Question question) {
+        return questionService.findQuestion(question.getSurveyId(), question.getQuestionOrder());
     }
 
     /*
@@ -34,13 +43,31 @@ public class TextQuestionController {
         return questionService.insertQuestion(question);
     }
 
+    /*
+    Example:
+    http://localhost:8080/textQuestion/updateQuestion
+    {
+        "questionOrder": 28,
+        "surveyId": 5,
+        "question": "What is your name?",
+        "questionType": "TEXT"
+    }
+     */
     @PutMapping("updateQuestion")
     public void updateQuestion(@RequestBody Question question) {
         questionService.updateQuestion(question);
     }
 
+    /*
+    Example:
+    http://localhost:8080/textQuestion/deleteQuestion
+    {
+        "surveyId": 5,
+        "questionOrder": 28
+    }
+     */
     @DeleteMapping("deleteQuestion")
-    public void deleteQuestion(@RequestParam(name = "surveyId") int surveyId, @RequestParam(name = "questionOrder") int questionOrder) {
-        questionService.deleteQuestion(surveyId, questionOrder);
+    public void deleteQuestion(@RequestBody Question question) {
+        questionService.deleteQuestion(question.getSurveyId(), question.getQuestionOrder());
     }
 }

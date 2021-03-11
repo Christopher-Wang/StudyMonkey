@@ -16,26 +16,25 @@ public class McQuestionRowMapper implements RowMapper<McQuestion> {
         McQuestion question = new McQuestion();
         List<String> mcOptions = new ArrayList<String>();
 
-        int rowCount = 0;
-        while(resultSet.next()) {
-
+        // Without this, it will always skip the first row.
+        if (resultSet.isFirst()) {
             //Set the question text
-            if(rowCount == 0) {
-                question.setSurveyId(resultSet.getInt("survey_id"));
-                question.setQuestionOrder(resultSet.getInt("question_order"));
-                question.setQuestion(resultSet.getString(2));
-                question.setQuestionType(QuestionType.getQuestionTypeFromValue(resultSet.getInt("question_type")));
-                question.setOptionId(resultSet.getInt("id"));
-            }
+            question.setSurveyId(resultSet.getInt("survey_id"));
+            question.setQuestionOrder(resultSet.getInt("question_order"));
+            question.setQuestion(resultSet.getString(2));
+            question.setQuestionType(QuestionType.getQuestionTypeFromValue(resultSet.getInt("question_type")));
+            question.setOptionId(resultSet.getInt("id"));
 
-            //Gather the MC options
-            String option = resultSet.getString(7);
-
+            String option = resultSet.getString(8);
             mcOptions.add(option);
-            rowCount++;
+        }
+
+        while(resultSet.next()) {
+            //Gather the MC options
+            String option = resultSet.getString(8);
+            mcOptions.add(option);
         }
         question.setMcOption(mcOptions);
-
         return question;
     }
 }

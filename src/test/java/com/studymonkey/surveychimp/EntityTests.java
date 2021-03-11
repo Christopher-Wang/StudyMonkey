@@ -1,5 +1,4 @@
 package com.studymonkey.surveychimp;
-//import static org.junit.Assert.*;
 
 import com.studymonkey.surveychimp.entity.answers.Answer;
 import com.studymonkey.surveychimp.entity.questions.McQuestion;

@@ -1,3 +1,6 @@
+<!-- This page is currently a template for the Question. It is a playground for other developers to play around with some
+svelte features. -->
+
 <script>
     let answerType = "TEXT";
     let survey_id;
@@ -8,7 +11,7 @@
 </script>
 
 
-
+<!--This code can be used as a template for determining question type using checkboxes-->
 <!--<div>-->
 <!--    <h2>What type of answer would you like for this question?</h2>-->
 <!--    <label>-->
@@ -50,7 +53,5 @@
     div, p{
         text-align: center;
     }
-
-
 </style>
 

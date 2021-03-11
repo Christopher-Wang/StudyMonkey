@@ -13,8 +13,6 @@
         const options = {method: "POST", body: JSON.stringify(survey), headers: {'Content-Type': 'application/json'}};
         let response = fetch(url, options).then(res => res.json()).then(res => surveyId.set(res[0].id)).then(goto("/question_creator"));
     }
-
-
 </script>
 
 <h1>Survey Creation</h1>
@@ -26,10 +24,10 @@
     <p>Entered Survey Name: {survey.name} </p>
     <p>Entered Survey Description: {survey.description} </p>
     <br>
-    <button on:click={handleRegisterSurvey}>Register Survey</button>
 </form>
-
-
+<div>
+    <button on:click={handleRegisterSurvey}>Register Survey</button>
+</div>>
 <style>
     form, h1 {
         text-align: center;
@@ -44,7 +42,12 @@
         height: 100px;
     }
 
+    div{
+        margin: 0 auto;
+        width: 155px;
+    }
     button {
+        text-align: center;
         background-color: #ff4838;
         color: white;
         padding: 10px;

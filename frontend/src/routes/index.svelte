@@ -12,6 +12,7 @@
     <h1>Study Monkey!</h1>
     <p>Let's make a quick survey to get going!</p>
     <button on:click={() => goto('/survey_creator')}>Create Survey</button>
+    <button on:click={() => goto('/question_creator')}>Create Questions</button>
     <button on:click={() => goto('/survey_viewer')}>View Surveys</button>
 </div>
 

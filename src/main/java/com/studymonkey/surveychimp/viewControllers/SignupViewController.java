@@ -25,6 +25,9 @@ public class SignupViewController {
     @ResponseBody
     @PostMapping("createAccount")
     public Account create(@ModelAttribute Account account) {
-        return repository.save(account);
+        if (!account.getUserName().equals("") && !account.getUserEmail().equals(""))
+            return repository.save(account);
+        else
+            return null;
     }
 }

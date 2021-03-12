@@ -3,10 +3,8 @@ package com.studymonkey.surveychimp.service;
 import com.studymonkey.surveychimp.dao.user.UserDao;
 import com.studymonkey.surveychimp.dao.user.UserDaoImpl;
 import com.studymonkey.surveychimp.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 

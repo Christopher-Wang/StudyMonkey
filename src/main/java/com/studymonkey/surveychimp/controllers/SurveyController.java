@@ -79,7 +79,19 @@ public class SurveyController {
     }
      */
     @GetMapping(value = "/surveyQuestions")
-    public SurveyQuestions getSurveyQuestions(@RequestBody Survey survey) {
+    public SurveyQuestions getSurveyQuestions(){//@RequestBody Survey survey) {
+        return surveyQuestionService.findSurvey(2);//survey.getId());
+    }
+
+    /*
+    Example:
+    http://localhost:8080/survey/surveyQuestions
+    {
+        "id": 2
+    }
+     */
+    @PostMapping(value = "/surveyQuestions")
+    public SurveyQuestions postSurveyQuestions(@RequestBody Survey survey) {
         return surveyQuestionService.findSurvey(survey.getId());
     }
 }

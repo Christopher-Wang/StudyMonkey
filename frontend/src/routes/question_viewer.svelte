@@ -3,7 +3,7 @@
 </svelte:head>
 
 <script>
-    import SurveyList from "../components/SurveyList.svelte";
+    import QuestionList from "../components/QuestionList.svelte";
 </script>
 
 
@@ -12,8 +12,7 @@
 </div>
 
 <div class = "surveyContainer">
-    <h2 id="SurveyListHeader"> List of Surveys </h2>
-    <SurveyList/>
+    <QuestionList/>
 </div>
 
 
@@ -23,17 +22,12 @@
         padding: 1em;
         margin: 0 auto;
         background-color: #162b32;
-        height: 100PX;
+        height: 200px;
     }
 
     .surveyContainer {
         margin: 60px auto;
         width: 530px;
-    }
-
-
-    #SurveyListHeader {
-        font-weight: bold;
     }
 
     h1 {

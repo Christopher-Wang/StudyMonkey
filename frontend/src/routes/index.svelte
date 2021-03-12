@@ -5,33 +5,18 @@
 <script>
     import natureBkg from 'images/Pine.jpg';
     import {goto} from '@sapper/app';
-    import SurveyList from "../components/SurveyList.svelte";
-
-    let getList = false;
-
-    function handleCreateClick() {
-        goto('/survey_creator');
-    }
 </script>
 
 
 <div class="homeBody">
     <h1>Study Monkey!</h1>
     <p>Let's make a quick survey to get going!</p>
-    <button on:click={handleCreateClick}>Create Survey</button>
-    <button on:click="{() => getList = true}">View Surveys</button>
+    <button on:click={() => goto('/survey_creator')}>Create Survey</button>
+    <button on:click={() => goto('/survey_viewer')}>View Surveys</button>
 </div>
-
-{#if getList}
-<div class = "surveyContainer">
-    <h2 id="SurveyListHeader"> List of Surveys </h2>
-    <SurveyList/>
-</div>
-{/if}
-
 
 <figure>
-    <img alt="Nature" src="{natureBkg}">
+    <img alt="Nature" src={natureBkg}>
     <figcaption>This can be some other content!</figcaption>
 </figure>
 
@@ -43,16 +28,6 @@
         margin: 0 auto;
         background-color: #162b32;
         height: 200px;
-    }
-
-    .surveyContainer {
-        margin: 60px auto;
-        width: 530px;
-    }
-
-
-    #SurveyListHeader {
-        font-weight: bold;
     }
 
     h1 {

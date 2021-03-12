@@ -27,7 +27,7 @@
 </form>
 <div>
     <button on:click={handleRegisterSurvey}>Register Survey</button>
-</div>>
+</div>
 <style>
     form, h1 {
         text-align: center;
@@ -46,6 +46,7 @@
         margin: 0 auto;
         width: 155px;
     }
+    
     button {
         text-align: center;
         background-color: #ff4838;

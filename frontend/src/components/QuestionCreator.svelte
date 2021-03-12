@@ -2,8 +2,8 @@
     import {surveyId, MULTIPLE_CHOICE, TEXT} from "../stores.js";
 
 
-    const TEXT_URL = 'http://localhost:8080/textQuestion/addQuestion';
-    const MULTIPLE_CHOICE_URL = 'http://localhost:8080/mcQuestion/addQuestion';
+    const TEXT_URL = 'https://study-monkey.herokuapp.com/textQuestion/addQuestion';
+    const MULTIPLE_CHOICE_URL = 'https://study-monkey.herokuapp.com/mcQuestion/addQuestion';
 
    
     let question = {surveyId: 0, question: "", questionType: ""};

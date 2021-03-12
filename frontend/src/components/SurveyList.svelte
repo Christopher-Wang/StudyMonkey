@@ -4,7 +4,7 @@
     import Box from "./Box.svelte";
     import {surveyId} from "../stores.js";
 
-    const url = 'http://localhost:8080/survey/surveyList';
+    const url = 'https://study-monkey.herokuapp.com/survey/surveyList';
     let response = "";
     onMount(() => {
         fetch(url).then(res => res.json()).then(res => response = res);

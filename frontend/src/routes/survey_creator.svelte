@@ -6,7 +6,7 @@
     import {goto} from '@sapper/app';
     import {surveyId} from "../stores.js";
 
-    const url = 'http://localhost:8080/survey/createSurvey';
+    const url = 'https://study-monkey.herokuapp.com/survey/createSurvey';
     const survey = {name: "", description: "", status: "CLOSED"};
 
     function handleRegisterSurvey() {

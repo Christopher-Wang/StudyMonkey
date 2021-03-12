@@ -78,7 +78,7 @@
 
 
 <style>
-    div, h1{
+    div{
         text-align: center;
     }
 

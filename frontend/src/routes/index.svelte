@@ -30,16 +30,6 @@
         height: 200px;
     }
 
-    .surveyContainer {
-        margin: 60px auto;
-        width: 530px;
-    }
-
-
-    #SurveyListHeader {
-        font-weight: bold;
-    }
-
     h1 {
         color: white;
         text-transform: uppercase;

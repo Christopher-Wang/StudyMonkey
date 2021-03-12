@@ -38,12 +38,6 @@
         margin-bottom: 0px;
     }
 
-    p {
-        color: white;
-        margin-top: 0px;;
-    }
-
-
     @media (min-width: 640px) {
         .homeBody {
             max-width: none;

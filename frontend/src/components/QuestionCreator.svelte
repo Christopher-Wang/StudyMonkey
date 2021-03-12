@@ -2,8 +2,8 @@
     import {surveyId, MULTIPLE_CHOICE, TEXT} from "../stores.js";
 
 
-    const TEXT_URL = 'http://localhost:8080/textQuestion/addQuestion';
-    const MULTIPLE_CHOICE_URL = 'http://localhost:8080/mcQuestion/addQuestion';
+    const TEXT_URL = 'https://study-monkey.herokuapp.com/textQuestion/addQuestion';
+    const MULTIPLE_CHOICE_URL = 'https://study-monkey.herokuapp.com/mcQuestion/addQuestion';
 
    
     let question = {surveyId: 0, question: "", questionType: ""};
@@ -24,11 +24,11 @@
         question.mcOption[question.mcOption.length] = `Option ${question.mcOption.length + 1}`;
     }
 
-    function submitQuestion(){
+    async function submitQuestion(){
         //Temporary persistent state hack that needs to be fixed in the following sprint
         question.surveyId = document.getElementById("surveyId").value;
         const options = {method: "POST", body: JSON.stringify(question), headers: {'Content-Type': 'application/json'}};
-        let response = fetch(url, options).then(res => res.json()).then(res => surveyId.set(res[0].id));
+        let response = await fetch(url, options).then(res => res.json());
     }
 
 </script>
@@ -60,14 +60,14 @@
                 Add Option
             </button>
             {#if ("mcOption" in question) && (question.mcOption.length > 0)}
-            <button on:click={submitQuestion}>
+            <button type="button" on:click={submitQuestion}>
                 Submit
             </button>
             {/if}
         {/if}
 
         {#if question.questionType == TEXT}
-            <button on:click={submitQuestion}>
+            <button type="button" on:click={submitQuestion}>
                 Submit
             </button>
         {/if}

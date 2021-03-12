@@ -3,7 +3,7 @@
     import Box from "./Box.svelte";
     import {surveyId, MULTIPLE_CHOICE, TEXT} from "../stores.js";
 
-    const url = 'http://localhost:8080/survey/surveyQuestions';
+    const url = 'https://study-monkey.herokuapp.com/survey/surveyQuestions';
     
     async function test() {
         //Temporary persistent state hack that needs to be fixed in the following sprint

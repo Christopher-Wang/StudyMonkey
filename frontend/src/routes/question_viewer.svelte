@@ -22,7 +22,7 @@
         padding: 1em;
         margin: 0 auto;
         background-color: #162b32;
-        height: 200px;
+        height: 100px;
     }
 
     .surveyContainer {
@@ -42,29 +42,7 @@
         color: white;
         margin-top: 0px;;
     }
-    button {
-        text-align: center;
-        background-color: #ff4838;
-        color: white;
-        padding: 10px;
-        border-radius: 20px;
-        border-color: white;
-        border-width: 2px;
-        font-weight: 500;
-        font-size: large;
-    }
 
-    figure {
-        padding-top: 20px;
-        margin: 0 auto;
-        text-align: center;
-    }
-
-    img {
-        width: 100%;
-        max-width: 500px;
-        margin: 0 0 1em 0;
-    }
 
     @media (min-width: 640px) {
         .homeBody {

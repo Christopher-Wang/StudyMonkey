@@ -25,7 +25,7 @@ public class SignupViewController {
     @ResponseBody
     @PostMapping("createAccount")
     public Account create(@ModelAttribute Account account) {
-        if (!account.getUserName().equals("") && !account.getUserEmail().equals(""))
+        if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals(""))
             return repository.save(account);
         else
             return null;

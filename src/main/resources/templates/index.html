@@ -9,24 +9,34 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <div class="navbar-header">
-            <a class="navbar-brand" href="home">StudyMonkey</a>
+            <a class="navbar-brand" href="/home">StudyMonkey</a>
             </div>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Login</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Survey
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                            <li><a class="dropdown-item" href="/surveyV2">Survey Creation</a></li>
+                            <li><a class="dropdown-item" href="/surveyV2/surveyList">View Survey</a></li>
+                            <li><a class="dropdown-item" href="#">Add Questions</a></li>
+                        </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="signup">Sign up</a>
+                        <a class="nav-link" href="/home">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Sign up</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="https://github.com/Christopher-Wang/StudyMonkey">Github</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about">About</a>
+                        <a class="nav-link" href="/about">About</a>
                     </li>
                 </ul>
             </div>

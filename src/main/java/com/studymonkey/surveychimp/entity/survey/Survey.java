@@ -21,10 +21,6 @@ public class Survey {
     private String description;
     private SurveyStatus status;
 
-    public Survey (SurveyStatus status){
-        this.status = status;
-    }
-
     public Survey() {
     }
 
@@ -54,11 +50,17 @@ public class Survey {
 
     public int getStatus() {
         if(status == null){
+            // Default case if the survey doesnt have a status set
             return SurveyStatus.CLOSED.getValue();
         }
         return status.getValue();
     }
 
+    /**
+     * Helper method to set the status from an int value. Used to map the int value returned
+     * by a radio button in the UI.
+     * @param status the status of the survey
+     */
     public void setStatus(int status) {
         this.setStatus(SurveyStatus.values()[status]);
     }

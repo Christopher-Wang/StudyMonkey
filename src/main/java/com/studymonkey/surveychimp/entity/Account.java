@@ -1,5 +1,7 @@
 package com.studymonkey.surveychimp.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -23,15 +25,20 @@ public class Account {
     private Long id;
     private String username;
     private String email;
+    @JsonIgnore // no returning password
     private byte[] password;
 
     public Account() {
     }
 
-    public Account(String username, String email, String password) throws NoSuchAlgorithmException {
+    public Account(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.password = getSHA(password);
+        try {
+            this.password = getSHA(password);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println(e.toString());
+        }
     }
 
     public Long getId() {
@@ -62,6 +69,7 @@ public class Account {
         return password;
     }
 
+    @JsonIgnore
     public String getHexPassword() {
         return toHexString(password);
     }
@@ -72,7 +80,7 @@ public class Account {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "Account{" +
                 "userID='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +

@@ -21,15 +21,4 @@ public class LoginViewController {
         model.addAttribute("account", new Account());
         return "login";
     }
-
-    @PostMapping("authenticate")
-    public String login(@ModelAttribute Account account, Model model) {
-        if(repository.findByUsernameAndPassword(account.getUsername(), account.getHexPassword()) != null) {
-            System.out.println("Success");
-            return "index";
-        } else {
-            System.out.println("Failure");
-            return "index";
-        }
-    }
 }

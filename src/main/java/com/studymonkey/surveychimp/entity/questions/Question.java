@@ -1,25 +1,30 @@
 package com.studymonkey.surveychimp.entity.questions;
 
-public class Question {
-    private int questionOrder;
-    private int surveyId;
+import com.studymonkey.surveychimp.entity.survey.Survey;
+
+import javax.persistence.*;
+import java.util.List;
+@Entity
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+public abstract class Question {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @ManyToOne
+    @JoinColumn(name = "surveyId")
+    private Survey survey;
+
     private String question;
+
     private QuestionType questionType;
 
-    public int getQuestionOrder() {
-        return questionOrder;
-    }
+    public Question(){}
 
-    public void setQuestionOrder(int questionOrder) {
-        this.questionOrder = questionOrder;
-    }
-
-    public int getSurveyId() {
-        return surveyId;
-    }
-
-    public void setSurveyId(int surveyId) {
-        this.surveyId = surveyId;
+    public Question(String question, QuestionType questionType){
+        this.question = question;
+        this.questionType = questionType;
     }
 
     public String getQuestion() {
@@ -36,5 +41,21 @@ public class Question {
 
     public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
+    }
+
+    public Survey getSurvey() {
+        return survey;
+    }
+
+    public void setSurvey(Survey survey) {
+        this.survey = survey;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

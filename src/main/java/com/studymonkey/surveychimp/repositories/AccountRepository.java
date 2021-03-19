@@ -25,4 +25,10 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findByUsername(@Param("name") String name);
 
     Account findByUsernameAndEmail(String username, String email);
+
+    @Query(
+            value = "SELECT * FROM account WHERE account.user_name = :name and account.password = :password",
+            nativeQuery=true
+    )
+    Account findByUsernameAndPassword(@Param("name") String name, @Param("password") String password);
 }

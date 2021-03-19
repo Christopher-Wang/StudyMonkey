@@ -24,10 +24,11 @@ public class LoginViewController {
 
     @PostMapping("authenticate")
     public String login(@ModelAttribute Account account, Model model) {
-        System.out.println(repository.findAll());
-        if(repository.findByUsername(account.getUsername()) != null) {
+        if(repository.findByUsernameAndPassword(account.getUsername(), account.getHexPassword()) != null) {
+            System.out.println("Success");
             return "index";
         } else {
+            System.out.println("Failure");
             return "index";
         }
     }

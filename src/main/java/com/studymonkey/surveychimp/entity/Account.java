@@ -2,14 +2,12 @@ package com.studymonkey.surveychimp.entity;
 
 import javax.persistence.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.studymonkey.surveychimp.security.Security;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
@@ -18,6 +16,7 @@ import java.security.NoSuchAlgorithmException;
  * Note: the userID is auto incremented by the database, therefore it is not used
  * when inserting the record into the database.
  */
+
 @Entity(name="Account")
 @Table(name="account")
 public class Account {
@@ -37,7 +36,7 @@ public class Account {
         this.username = username;
         this.email = email;
         try {
-            this.password = getSHA(password);
+            this.password = Security.getSHA(password);
         } catch (NoSuchAlgorithmException e) {
             System.out.println(e.toString());
         }
@@ -52,7 +51,7 @@ public class Account {
     }
 
     public String getUsername() {
-        return username;
+        return this.username;
     }
 
     public void setUsername(String username) {
@@ -73,11 +72,11 @@ public class Account {
 
     @JsonIgnore
     public String getHexPassword() {
-        return toHexString(password);
+        return Security.toHexString(password);
     }
 
     public void setPassword(String password) throws NoSuchAlgorithmException {
-        this.password = getSHA(password);
+        this.password = Security.getSHA(password);
     }
 
     @Override
@@ -87,28 +86,6 @@ public class Account {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 '}';
-    }
-
-    // Reference: https://www.geeksforgeeks.org/sha-256-hash-in-java/
-    public byte[] getSHA(String input) throws NoSuchAlgorithmException {
-        // Static getInstance method is called with hashing SHA
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        // digest() method called
-        // to calculate message digest of an input
-        // and return array of byte
-        return md.digest(input.getBytes(StandardCharsets.UTF_8));
-    }
-
-    public String toHexString(byte[] hash) {
-        // Convert byte array into signum representation
-        BigInteger number = new BigInteger(1, hash);
-        // Convert message digest into hex value
-        StringBuilder hexString = new StringBuilder(number.toString(16));
-        // Pad with leading zeros
-        while (hexString.length() < 32) {
-            hexString.insert(0, '0');
-        }
-        return hexString.toString();
     }
 }
 

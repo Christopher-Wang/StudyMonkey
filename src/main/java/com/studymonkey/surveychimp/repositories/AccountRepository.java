@@ -19,7 +19,7 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findById(long id);
 
     @Query(
-            value = "SELECT * FROM account WHERE account.user_name = :name",
+            value = "SELECT * FROM account WHERE account.username = :name",
             nativeQuery=true
     )
     Account findByUsername(@Param("name") String name);
@@ -27,7 +27,7 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findByUsernameAndEmail(String username, String email);
 
     @Query(
-            value = "SELECT * FROM account WHERE account.user_name = :name and account.password = :password",
+            value = "SELECT * FROM account WHERE account.username = :name and account.password = :password",
             nativeQuery=true
     )
     Account findByUsernameAndPassword(@Param("name") String name, @Param("password") String password);

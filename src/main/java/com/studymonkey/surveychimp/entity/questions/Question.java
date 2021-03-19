@@ -1,9 +1,10 @@
 package com.studymonkey.surveychimp.entity.questions;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 
 import javax.persistence.*;
-
+import java.util.List;
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Question {
@@ -12,6 +13,7 @@ public abstract class Question {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "surveyId")
     private Survey survey;

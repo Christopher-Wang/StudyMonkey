@@ -1,5 +1,6 @@
 package com.studymonkey.surveychimp.entity.survey;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.studymonkey.surveychimp.entity.questions.Question;
 
 import javax.persistence.*;
@@ -17,8 +18,9 @@ public class Survey {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "survey")
+    private long id;
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "survey")
     private List<Question> questions;
     private String name;
     private String description;
@@ -36,15 +38,15 @@ public class Survey {
         this.questions = questions;
     }
 
-    public void addQuestions(Question question) {
+    public void addQuestion(Question question) {
         this.questions.add(question);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

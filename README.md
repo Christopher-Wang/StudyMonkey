@@ -1,4 +1,5 @@
 # StudyMonkey
+[![Build Status](https://travis-ci.com/Christopher-Wang/StudyMonkey.svg?branch=master)](https://travis-ci.com/Christopher-Wang/StudyMonkey)
 
 Team: 
 * Michael Patsula

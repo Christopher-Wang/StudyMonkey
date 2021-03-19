@@ -1,9 +1,9 @@
 package com.studymonkey.surveychimp.entity.survey;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.studymonkey.surveychimp.entity.questions.Question;
+
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * A survey's details
@@ -17,11 +17,25 @@ public class Survey {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    private List<Question> questions;
     private String name;
     private String description;
     private SurveyStatus status;
 
     public Survey() {
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public void addQuestions(Question question) {
+        this.questions.add(question);
     }
 
     public int getId() {

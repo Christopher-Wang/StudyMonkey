@@ -1,9 +1,8 @@
 package com.studymonkey.surveychimp;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.repositories.AccountRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -12,11 +11,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,16 +33,6 @@ public class LoginViewControllerTest {
     public void setup() throws Exception {
         account = new Account("username", "test1@gmail.com", "password");
         repository.save(account);
-        /*this.mockMvc.perform(post("/signup/createAccount")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .param("username", account.getUsername())
-                .param("email", account.getEmail())
-                .param("password", "test1").accept(MediaType.APPLICATION_JSON)
-        )
-                .andExpect(status().isCreated())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.username").exists());
-        */
-        System.out.println(repository.findAll());
     }
 
     @Test

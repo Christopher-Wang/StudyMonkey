@@ -1,4 +1,4 @@
-package com.studymonkey.surveychimp.controller;
+package com.studymonkey.surveychimp.controllers;
 
 import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.repositories.AccountRepository;

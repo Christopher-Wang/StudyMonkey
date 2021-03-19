@@ -25,7 +25,7 @@ public class LoginViewController {
     @PostMapping("authenticate")
     public String login(@ModelAttribute Account account, Model model) {
         System.out.println(repository.findAll());
-        if(repository.findByUsername(account.getUserName()) != null) {
+        if(repository.findByUsername(account.getUsername()) != null) {
             return "index";
         } else {
             return "index";

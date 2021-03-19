@@ -25,8 +25,6 @@ public class QuestionController {
         this.surveyRepository = surveyRepository;
     }
 
-
-
     @GetMapping("/question/{id}")
     @ResponseBody
     public Survey getQuestion(@PathVariable long id) {

@@ -1,16 +1,4 @@
-:root {
-    --primary-color: #B22222;
-    --background-color: #000;
-    --secondary-background-color: #333;
 
-
-    --primary-color2: #e9faff;
-    --secondary-color2: #42a0d7;
-
-    --primary-color3: #393939;
-    --secondary-color3: #222222;
-    --third-color3: #00ad5f;
-}
 
 .container-login100 {
     width: 100%;

@@ -15,4 +15,6 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     // Spring JPA built in
     // GET request example: http://localhost:8080/accountApi/2
     Account findById(long id);
+
+    Account findByUsernameAndEmail(String username, String email);
 }

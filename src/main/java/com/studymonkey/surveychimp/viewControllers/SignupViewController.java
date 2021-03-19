@@ -2,6 +2,7 @@ package com.studymonkey.surveychimp.viewControllers;
 
 import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.repositories.AccountRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "signup")
 public class SignupViewController {
 
-    public final AccountRepository repository;
+    private final AccountRepository repository;
 
     SignupViewController(AccountRepository repository) {
         this.repository = repository;
@@ -23,11 +24,12 @@ public class SignupViewController {
     }
 
     @ResponseBody
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("createAccount")
     public Account create(@ModelAttribute Account account) {
-        if (!account.getUserName().equals("") && !account.getUserEmail().equals(""))
+        if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals(""))
             return repository.save(account);
         else
-            return null;
+            throw new RuntimeException();
     }
 }

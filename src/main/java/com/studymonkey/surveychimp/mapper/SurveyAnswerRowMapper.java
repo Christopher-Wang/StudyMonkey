@@ -14,7 +14,7 @@ public class SurveyAnswerRowMapper implements RowMapper<Answer> {
     public Answer mapRow(ResultSet resultSet, int i) throws SQLException {
 
         Answer answer = new Answer();
-        answer.setSurveyId(resultSet.getInt("survey_id"));
+        answer.setSurveyId(resultSet.getLong("survey_id"));
         answer.setQuestionOrder(resultSet.getInt("question_order_id"));
         answer.setUserId(resultSet.getInt("client_id"));
 

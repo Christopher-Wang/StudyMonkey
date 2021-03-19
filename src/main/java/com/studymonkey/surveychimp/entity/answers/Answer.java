@@ -21,21 +21,21 @@ public class Answer implements Serializable {
     @Id
     @Column (
             name="question_order_id",
-            columnDefinition="integer"
+            columnDefinition="long"
     )
     private long questionOrder;
 
     @Id
     @Column (
             name="survey_id",
-            columnDefinition="integer"
+            columnDefinition="long"
     )
     private long surveyId;
 
     @Id
     @Column(
             name="client_id",
-            columnDefinition="integer"
+            columnDefinition="long"
     )
     private long userId;
 
@@ -43,7 +43,7 @@ public class Answer implements Serializable {
         return questionOrder;
     }
 
-    public void setQuestionOrder(int questionId) {
+    public void setQuestionOrder(long questionId) {
         this.questionOrder = questionId;
     }
 
@@ -51,7 +51,7 @@ public class Answer implements Serializable {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 
@@ -59,7 +59,7 @@ public class Answer implements Serializable {
         return surveyId;
     }
 
-    public void setSurveyId(int surveyId) {
+    public void setSurveyId(long surveyId) {
         this.surveyId = surveyId;
     }
 }

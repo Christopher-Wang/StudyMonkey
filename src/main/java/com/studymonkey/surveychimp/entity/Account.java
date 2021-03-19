@@ -1,9 +1,6 @@
 package com.studymonkey.surveychimp.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * This class stores the data of a user that uses the application.
@@ -11,7 +8,8 @@ import javax.persistence.Id;
  * Note: the userID is auto incremented by the database, therefore it is not used
  * when inserting the record into the database.
  */
-@Entity
+@Entity(name="Account")
+@Table(name="account")
 public class Account {
 
     @Id

@@ -1,11 +1,45 @@
 package com.studymonkey.surveychimp.entity.answers;
 
-public class Answer {
-    private int questionOrder;
-    private int surveyId;
-    private int userId;
+import javax.persistence.*;
+import java.io.Serializable;
 
-    public int getQuestionOrder() {
+@Entity(name="Answer")
+@Table(name="question_answer")
+public class Answer implements Serializable {
+
+    @SequenceGenerator(
+            name="question_answer_sequence",
+            sequenceName= "question_answer_sequence",
+            allocationSize= 1
+    )
+    @GeneratedValue (
+            strategy= GenerationType.SEQUENCE,
+            generator= "question_answer_sequence"
+    )
+    private long id;
+
+    @Id
+    @Column (
+            name="question_order_id",
+            columnDefinition="integer"
+    )
+    private long questionOrder;
+
+    @Id
+    @Column (
+            name="survey_id",
+            columnDefinition="integer"
+    )
+    private long surveyId;
+
+    @Id
+    @Column(
+            name="client_id",
+            columnDefinition="integer"
+    )
+    private long userId;
+
+    public long getQuestionOrder() {
         return questionOrder;
     }
 
@@ -13,7 +47,7 @@ public class Answer {
         this.questionOrder = questionId;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
@@ -21,7 +55,7 @@ public class Answer {
         this.userId = userId;
     }
 
-    public int getSurveyId() {
+    public long getSurveyId() {
         return surveyId;
     }
 

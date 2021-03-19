@@ -3,6 +3,7 @@ package com.studymonkey.surveychimp.entity.survey;
 import com.studymonkey.surveychimp.entity.questions.Question;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,13 +18,14 @@ public class Survey {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "survey")
     private List<Question> questions;
     private String name;
     private String description;
     private SurveyStatus status;
 
     public Survey() {
+        this.questions = new ArrayList<Question>();
     }
 
     public List<Question> getQuestions() {

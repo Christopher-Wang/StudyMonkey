@@ -8,6 +8,6 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "surveyApi", path = "surveyApi")
 public interface SurveyRepository extends CrudRepository<Survey, Long> {
-
+    Survey findById(long it);
     List<Survey> findAll();
 }

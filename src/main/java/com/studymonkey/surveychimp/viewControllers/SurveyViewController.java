@@ -1,12 +1,10 @@
 package com.studymonkey.surveychimp.viewControllers;
 
 import com.studymonkey.surveychimp.entity.survey.Survey;
-import com.studymonkey.surveychimp.entity.survey.SurveyStatus;
 import com.studymonkey.surveychimp.repositories.SurveyRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 
@@ -50,10 +48,8 @@ public class SurveyViewController {
      * @param model the model of the system
      * @return the view to the home page if successful or the view to the error page otherwise
      */
-
     @PostMapping("surveycreation")
     public String surveyCreation ( @ModelAttribute("survey") Survey survey) {
-        System.out.println("name: "+ survey.getName() + " des: " + survey.getDescription() + " id: "+ survey.getId() + " status: "+ survey.getStatus());
         if (!survey.getName().equals("") && !survey.getDescription().equals("")) {
             repository.save(survey);
             return "index";

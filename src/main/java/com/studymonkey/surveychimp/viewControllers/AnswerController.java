@@ -3,6 +3,7 @@ package com.studymonkey.surveychimp.viewControllers;
 import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.answers.Answer;
 import com.studymonkey.surveychimp.entity.answers.AnswerType;
+import com.studymonkey.surveychimp.entity.answers.McAnswer;
 import com.studymonkey.surveychimp.entity.answers.TextAnswer;
 import com.studymonkey.surveychimp.entity.questions.Question;
 import com.studymonkey.surveychimp.repositories.AnswerRepository;
@@ -16,14 +17,11 @@ import org.springframework.web.bind.annotation.*;
 public class AnswerController {
 
     private final QuestionRepository questionRepository;
-    private final SurveyRepository surveyRepository;
     private final AnswerRepository answerRepository;
 
     public AnswerController(QuestionRepository questionRepository,
-                            SurveyRepository surveyRepository,
                             AnswerRepository answerRepository) {
         this.questionRepository = questionRepository;
-        this.surveyRepository = surveyRepository;
         this.answerRepository = answerRepository;
     }
 
@@ -37,15 +35,29 @@ public class AnswerController {
         Answer ans = this.answerRepository.findById(id);
         return ans;
     }
-    
+
     /*
     Example:
     curl -X POST http://localhost:8080/answer/textAnswer/2 -H 'Content-type:application/json' -d '{"answerType": "TEXT", "questionAnswer": "my ANSWER"}'
      */
-    @PostMapping("/textAnswer/{id}")
+    @PostMapping("/textAnswer/{questionId}")
     @ResponseBody
-    public Question postTextAnswer(@PathVariable long id, @RequestBody TextAnswer ans) {
-        Question q = this.questionRepository.findById(id);
+    public Question postTextAnswer(@PathVariable long questionId, @RequestBody TextAnswer ans) {
+        Question q = this.questionRepository.findById(questionId);
+
+        ans.setQuestion(q);
+        q.addAnswer(ans);
+
+        this.answerRepository.save(ans);
+        this.questionRepository.save(q);
+
+        return q;
+    }
+
+    @PostMapping("/McAnswer/{questionId}")
+    @ResponseBody
+    public Question postMcAnswer(@PathVariable long questionId, @RequestBody McAnswer ans) {
+        Question q = this.questionRepository.findById(questionId);
 
         ans.setQuestion(q);
         q.addAnswer(ans);

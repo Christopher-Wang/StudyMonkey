@@ -1,6 +1,8 @@
 package com.studymonkey.surveychimp.entity.questions;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 
 
@@ -10,6 +12,7 @@ public class McOption {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "questionId")
     private McQuestion question;

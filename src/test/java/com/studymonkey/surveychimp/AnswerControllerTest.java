@@ -37,15 +37,6 @@ public class AnswerControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
 
-        // Then create the question
-        //Object o = new Object();
-//        this.mockMvc.perform(MockMvcRequestBuilders
-//                .post("/question/question/{id}", 1)
-//                .content(asJsonString("Hello"))
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .accept(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk());
-
         mockMvc.perform(post("/question")
                 .param("surveyId","1")
                 .param("question.question","?")
@@ -82,6 +73,16 @@ public class AnswerControllerTest {
                 .content(asJsonString(ans))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void getQuestionAnswers() throws Exception {
+
+        McAnswer ans = new McAnswer(AnswerType.MULTIPLE_CHOICE, 1);
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/answer/questionAnswers/2"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

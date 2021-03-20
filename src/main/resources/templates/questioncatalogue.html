@@ -61,6 +61,7 @@
                     <p class="card-text">
                         <span class="card-text" th:text="${question.questionType}"/></p>
                 <a th:href="@{/answer(questionId=${question.id})}" class="btn btn-primary">Answer Question</a>
+                <a th:href="@{/answer/questionAnswers/{questionId}(questionId=${question.id})}" class="btn btn-primary">View all answers</a>
                 </div>
             </div>
         </div>

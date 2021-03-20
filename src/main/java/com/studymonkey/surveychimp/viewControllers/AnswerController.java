@@ -32,7 +32,7 @@ public class AnswerController {
     }
 
     /*
-    Example: curl -i -X GET -H "Content-Type:application/json" http://localhost:8080/answer/answer/3
+    Example: curl -i -X GET -H "Content-Type:application/json" http://localhost:8080/answer/3
      */
     @GetMapping("/{id}")
     @ResponseBody
@@ -41,11 +41,22 @@ public class AnswerController {
         return ans;
     }
 
-    /**
-     * Example Request: http://localhost:8080/answer
-     * @param model the model of the system
-     * @return the view for creating an answer
+    /*
+    Example: curl -i -X GET -H "Content-Type:application/json" http://localhost:8080/answer/questionAnswers/2
      */
+    @GetMapping("questionAnswers/{questionId}")
+    @ResponseBody
+    public List<Answer> getQuestionAnswers(@PathVariable long questionId) {
+        Question q = this.questionRepository.findById(questionId);
+
+        if (q == null) {
+            return null;
+        }
+
+        List<Answer> answers= q.getAnswers();
+        return answers;
+    }
+
     @GetMapping
     public String answerForm(@RequestParam(value = "questionId") Long questionId, Model model) {
         Question q = this.questionRepository.findById(questionId).get();
@@ -53,7 +64,6 @@ public class AnswerController {
         model.addAttribute("question", q);
         return "answercreate";
     }
-
 
     // This may be referenced later in case we want to do SPA.
     /*

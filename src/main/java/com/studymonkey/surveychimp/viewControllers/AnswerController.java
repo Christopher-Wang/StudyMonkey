@@ -25,11 +25,10 @@ public class AnswerController {
         this.answerRepository = answerRepository;
     }
 
-
     /*
     Example: curl -i -X GET -H "Content-Type:application/json" http://localhost:8080/answer/answer/3
      */
-    @GetMapping("/answer/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     public Answer getAnswer(@PathVariable long id) {
         Answer ans = this.answerRepository.findById(id);
@@ -54,6 +53,9 @@ public class AnswerController {
         return q;
     }
 
+    /*
+    curl -X POST http://localhost:8080/answer/McAnswer/2 -H 'Content-type:application/json' -d '{"answerType": "MULTIPLE_CHOICE", "mcOptionIdAnswer": 1}'
+     */
     @PostMapping("/McAnswer/{questionId}")
     @ResponseBody
     public Question postMcAnswer(@PathVariable long questionId, @RequestBody McAnswer ans) {

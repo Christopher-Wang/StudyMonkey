@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 
 import javax.persistence.*;
-import java.util.List;
+
 @Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Question {

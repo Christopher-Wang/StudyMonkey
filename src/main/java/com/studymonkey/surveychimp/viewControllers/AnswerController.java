@@ -6,11 +6,17 @@ import com.studymonkey.surveychimp.entity.answers.AnswerType;
 import com.studymonkey.surveychimp.entity.answers.McAnswer;
 import com.studymonkey.surveychimp.entity.answers.TextAnswer;
 import com.studymonkey.surveychimp.entity.questions.Question;
+import com.studymonkey.surveychimp.entity.survey.Survey;
+import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.repositories.AnswerRepository;
 import com.studymonkey.surveychimp.repositories.QuestionRepository;
 import com.studymonkey.surveychimp.repositories.SurveyRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "answer")
@@ -35,22 +41,61 @@ public class AnswerController {
         return ans;
     }
 
+    /**
+     * Example Request: http://localhost:8080/answer
+     * @param model the model of the system
+     * @return the view for creating an answer
+     */
+    @GetMapping
+    public String answerForm(@RequestParam(value = "questionId") Long questionId, Model model) {
+        Question q = this.questionRepository.findById(questionId).get();
+
+        model.addAttribute("question", q);
+        return "answercreate";
+    }
+
+
+    // This may be referenced later in case we want to do SPA.
     /*
     Example:
     curl -X POST http://localhost:8080/answer/textAnswer/2 -H 'Content-type:application/json' -d '{"answerType": "TEXT", "questionAnswer": "my ANSWER"}'
      */
+//    @PostMapping("/textAnswer/{questionId}")
+//    @ResponseBody
+//    public Question postTextAnswer(@PathVariable long questionId, @RequestBody TextAnswer ans) {
+//        Question q = this.questionRepository.findById(questionId);
+//
+//        ans.setQuestion(q);
+//        q.addAnswer(ans);
+//
+//        this.answerRepository.save(ans);
+//        this.questionRepository.save(q);
+//
+//        return q;
+//    }
+
     @PostMapping("/textAnswer/{questionId}")
-    @ResponseBody
-    public Question postTextAnswer(@PathVariable long questionId, @RequestBody TextAnswer ans) {
+    public String postTextAnswer(@PathVariable long questionId, @RequestParam(value = "questionAnswer") String ans, Model model) {
         Question q = this.questionRepository.findById(questionId);
 
-        ans.setQuestion(q);
-        q.addAnswer(ans);
+        TextAnswer textAns = new TextAnswer(AnswerType.TEXT, ans);
 
-        this.answerRepository.save(ans);
+        textAns.setQuestion(q);
+        q.addAnswer(textAns);
+
+        this.answerRepository.save(textAns);
         this.questionRepository.save(q);
 
-        return q;
+        Survey survey  = q.getSurvey();
+        if(survey != null){
+            List<Question> questionList = survey.getQuestions();
+            model.addAttribute("surveyId", survey.getId());
+            model.addAttribute("questionList", questionList);
+            return "questioncatalogue";
+        }
+        else {
+            return "error";
+        }
     }
 
     /*

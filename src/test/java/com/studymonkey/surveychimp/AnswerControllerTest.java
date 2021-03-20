@@ -56,14 +56,20 @@ public class AnswerControllerTest {
 
     @Test
     public void addTextAnswer() throws Exception {
+        // Keeping this test, in case we want to do SPA instead.
 
-        TextAnswer ans = new TextAnswer(AnswerType.TEXT, "This is my answer");
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .post("/answer/textAnswer/{questionId}", 2)
-                .content(asJsonString(ans))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
-                .andDo(print())
+//        TextAnswer ans = new TextAnswer(AnswerType.TEXT, "This is my answer");
+//        this.mockMvc.perform(MockMvcRequestBuilders
+//                .post("/answer/textAnswer/{questionId}", 2)
+//                .content(asJsonString(ans))
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andDo(print())
+//                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/answer/textAnswer/2")
+                .param("questionAnswer","This is my answer to the question!")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
     }
 

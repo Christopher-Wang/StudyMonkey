@@ -23,10 +23,15 @@ public class AccountController {
 
     @GetMapping()
     @ResponseBody
-    public ResponseEntity authenticate(@RequestParam(name="username") String username, @RequestParam(name="password") String password) {
+    public ResponseEntity authenticate(@RequestParam(name="username") String username, @RequestParam(name="password") String password) throws NoSuchAlgorithmException {
+        System.out.println(username + " " + Security.toHexString(Security.getSHA(password)));
+        if(username == null || password == null) {
+            return ResponseEntity.badRequest().build();
+        }
+
         Account account = null;
         try {
-            account = repository.findByUsernameAndPassword(username, Security.toHexString(Security.getSHA(password)));
+            account = repository.findByUsernameAndPassword(username, Security.getSHA(password));
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }

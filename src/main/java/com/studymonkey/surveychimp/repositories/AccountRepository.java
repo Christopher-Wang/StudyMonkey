@@ -1,6 +1,7 @@
 package com.studymonkey.surveychimp.repositories;
 
 import com.studymonkey.surveychimp.entity.Account;
+import javassist.bytecode.ByteArray;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -27,8 +28,8 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     Account findByUsernameAndEmail(String username, String email);
 
     @Query(
-            value = "SELECT * FROM account WHERE account.username = :name and account.password = :password",
+            value = "SELECT * FROM account a WHERE a.username = :name and a.password = :password",
             nativeQuery=true
     )
-    Account findByUsernameAndPassword(@Param("name") String name, @Param("password") String password);
+    Account findByUsernameAndPassword(@Param("name") String name, @Param("password") byte[] password);
 }

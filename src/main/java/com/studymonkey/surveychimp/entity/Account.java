@@ -26,6 +26,11 @@ public class Account {
     private Long id;
     private String username;
     private String email;
+
+    @Column (
+            name="password",
+            columnDefinition="bytea"
+    )
     @JsonIgnore // no returning password
     private byte[] password;
 

@@ -39,11 +39,18 @@ public class AnswerControllerTest {
 
         // Then create the question
         //Object o = new Object();
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .post("/question/question/{id}", 1)
-                .content(asJsonString("Hello"))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON))
+//        this.mockMvc.perform(MockMvcRequestBuilders
+//                .post("/question/question/{id}", 1)
+//                .content(asJsonString("Hello"))
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk());
+
+        mockMvc.perform(post("/question")
+                .param("surveyId","1")
+                .param("question.question","?")
+                .param("question.questionType","TEXT")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
     }
 

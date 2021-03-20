@@ -21,21 +21,21 @@ public class Answer implements Serializable {
     @Id
     @Column (
             name="question_order_id",
-            columnDefinition="long"
+            columnDefinition="integer"
     )
     private long questionOrder;
 
     @Id
     @Column (
             name="survey_id",
-            columnDefinition="long"
+            columnDefinition="integer"
     )
     private long surveyId;
 
     @Id
     @Column(
             name="client_id",
-            columnDefinition="long"
+            columnDefinition="integer"
     )
     private long userId;
 

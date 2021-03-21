@@ -5,7 +5,9 @@ import com.studymonkey.surveychimp.entity.answers.Answer;
 import com.studymonkey.surveychimp.entity.answers.AnswerType;
 import com.studymonkey.surveychimp.entity.answers.McAnswer;
 import com.studymonkey.surveychimp.entity.answers.TextAnswer;
+import com.studymonkey.surveychimp.entity.questions.McQuestion;
 import com.studymonkey.surveychimp.entity.questions.Question;
+import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.repositories.AnswerRepository;
@@ -61,8 +63,22 @@ public class AnswerController {
     public String answerForm(@RequestParam(value = "questionId") Long questionId, Model model) {
         Question q = this.questionRepository.findById(questionId).get();
 
-        model.addAttribute("question", q);
-        return "answercreate";
+        if (q.getQuestionType() == QuestionType.TEXT) {
+            model.addAttribute("question", q);
+            return "textanswercreate";
+        }
+        else if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
+
+            Question question = (McQuestion) this.questionRepository.findById(questionId).get();
+            McQuestion mcQuestion = (McQuestion) question;
+
+            model.addAttribute("question", q);
+            model.addAttribute("mcOptions", mcQuestion.getMcOption());
+
+            // Return the view for mc answer
+        }
+
+        return "The question type couldn't be identified";
     }
 
     // This may be referenced later in case we want to do SPA.

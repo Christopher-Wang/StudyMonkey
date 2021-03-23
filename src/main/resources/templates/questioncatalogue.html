@@ -47,32 +47,21 @@
 </nav>
 
 <div class="container">
-    <h2 class="m-3">List of surveys</h2>
+    <h2 class="m-3">List of Questions</h2>
     <div class="row row-cols-1 row-cols-md-3 g-3">
-        <div class="col" th:each="survey : ${surveyList}">
+        <div class="col" th:each="question : ${questionList}">
             <div class="card">
                 <div class="card-header text-muted">
-                    <h6 class="card-text">Survey Id:
-                        <span class="card-text" th:text="${survey.id}"/></h6>
+                    <h6 class="card-text">Question Id:
+                        <span class="card-text" th:text="${question.id}"/></h6>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><strong>
-                        <span class="card-title" th:text="${survey.name}"/></strong></h5>
+                        <span class="card-title" th:text="${question.question}"/></strong></h5>
                     <p class="card-text">
-                        <span class="card-text" th:text="${survey.description}"/></p>
-                    <span th:if="${survey.status!=null && survey.status == 0}">
-            </span>
-                    <a th:href="@{/question(surveyId=${survey.id})}" class="btn btn-primary">Add Questions</a>
-                    <a th:href="@{/question/questionList(surveyId=${survey.id})}" class="btn btn-primary">View Questions</a>
-                </div>
-                <div class="card-footer">
-                    <div th:if="${survey.status!=null}">
-                        <div th:switch="${survey.status}">
-                            <h6 th:case=1 class="text-muted">Survey Status: CLOSED </h6>
-                            <h6 th:case=0>Survey Status: OPEN </h6>
-                            <h6 th:case="*">Survey Status: Unknown</h6>
-                        </div>
-                    </div>
+                        <span class="card-text" th:text="${question.questionType}"/></p>
+                <a th:href="@{/answer(questionId=${question.id})}" class="btn btn-primary">Answer Question</a>
+                <a th:href="@{/answer/questionAnswers/{questionId}(questionId=${question.id})}" class="btn btn-primary">View all answers</a>
                 </div>
             </div>
         </div>

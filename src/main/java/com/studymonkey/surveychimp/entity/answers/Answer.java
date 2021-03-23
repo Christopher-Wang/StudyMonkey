@@ -1,31 +1,67 @@
 package com.studymonkey.surveychimp.entity.answers;
 
-public class Answer {
-    private int questionOrder;
-    private int surveyId;
-    private int userId;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.studymonkey.surveychimp.entity.Account;
+import com.studymonkey.surveychimp.entity.questions.Question;
+import com.studymonkey.surveychimp.entity.survey.Survey;
 
-    public int getQuestionOrder() {
-        return questionOrder;
+import javax.persistence.*;
+
+@Entity
+@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
+
+public abstract class Answer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "questionId")
+    private Question question;
+
+//    @OneToOne
+//    private Account account;
+
+    private AnswerType answerType;
+
+    public Answer() {}
+
+    public Answer(AnswerType answerType) {
+//        this.account = account;
+        this.answerType = answerType;
     }
 
-    public void setQuestionOrder(int questionId) {
-        this.questionOrder = questionId;
+    public long getId() {
+        return id;
     }
 
-    public int getUserId() {
-        return userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public Question getQuestion() {
+        return question;
     }
 
-    public int getSurveyId() {
-        return surveyId;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
-    public void setSurveyId(int surveyId) {
-        this.surveyId = surveyId;
+//    public Account getAccount() {
+//        return account;
+//    }
+//
+//    public void setAccount(Account account) {
+//        this.account = account;
+//    }
+
+    public AnswerType getAnswerType() {
+        return answerType;
+    }
+
+    public void setAnswerType(AnswerType answerType) {
+        this.answerType = answerType;
     }
 }

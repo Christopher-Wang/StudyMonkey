@@ -68,12 +68,12 @@ public class AnswerController {
             return "textanswercreate";
         }
         else if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
+            // This code here is currently a placeholder for when the MC feature will be added
 
             Question question = (McQuestion) this.questionRepository.findById(questionId).get();
-            McQuestion mcQuestion = (McQuestion) question;
 
             model.addAttribute("question", q);
-            model.addAttribute("mcOptions", mcQuestion.getMcOption());
+            model.addAttribute("mcOptions", ((McQuestion) question).getMcOption());
 
             // Return the view for mc answer
         }

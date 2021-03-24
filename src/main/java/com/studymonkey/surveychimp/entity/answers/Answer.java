@@ -1,65 +1,67 @@
 package com.studymonkey.surveychimp.entity.answers;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.studymonkey.surveychimp.entity.Account;
+import com.studymonkey.surveychimp.entity.questions.Question;
+import com.studymonkey.surveychimp.entity.survey.Survey;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity(name="Answer")
-@Table(name="question_answer")
-public class Answer implements Serializable {
+@Entity
+@Inheritance(strategy= InheritanceType.TABLE_PER_CLASS)
 
-    @SequenceGenerator(
-            name="question_answer_sequence",
-            sequenceName= "question_answer_sequence",
-            allocationSize= 1
-    )
-    @GeneratedValue (
-            strategy= GenerationType.SEQUENCE,
-            generator= "question_answer_sequence"
-    )
+public abstract class Answer {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Id
-    @Column (
-            name="question_order_id",
-            columnDefinition="integer"
-    )
-    private long questionOrder;
+    @JsonBackReference
+    @ManyToOne
+    @JoinColumn(name = "questionId")
+    private Question question;
 
-    @Id
-    @Column (
-            name="survey_id",
-            columnDefinition="integer"
-    )
-    private long surveyId;
+//    @OneToOne
+//    private Account account;
 
-    @Id
-    @Column(
-            name="client_id",
-            columnDefinition="integer"
-    )
-    private long userId;
+    private AnswerType answerType;
 
-    public long getQuestionOrder() {
-        return questionOrder;
+    public Answer() {}
+
+    public Answer(AnswerType answerType) {
+//        this.account = account;
+        this.answerType = answerType;
     }
 
-    public void setQuestionOrder(long questionId) {
-        this.questionOrder = questionId;
+    public long getId() {
+        return id;
     }
 
-    public long getUserId() {
-        return userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public Question getQuestion() {
+        return question;
     }
 
-    public long getSurveyId() {
-        return surveyId;
+    public void setQuestion(Question question) {
+        this.question = question;
     }
 
-    public void setSurveyId(long surveyId) {
-        this.surveyId = surveyId;
+//    public Account getAccount() {
+//        return account;
+//    }
+//
+//    public void setAccount(Account account) {
+//        this.account = account;
+//    }
+
+    public AnswerType getAnswerType() {
+        return answerType;
+    }
+
+    public void setAnswerType(AnswerType answerType) {
+        this.answerType = answerType;
     }
 }

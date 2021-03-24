@@ -1,6 +1,7 @@
 package com.studymonkey.surveychimp;
 
 import com.studymonkey.surveychimp.entity.answers.Answer;
+import com.studymonkey.surveychimp.entity.questions.McOption;
 import com.studymonkey.surveychimp.entity.questions.McQuestion;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import org.junit.Before;
@@ -28,13 +29,13 @@ public class EntityTests {
 
     @Test
     public void testMcQuestion() {
-//        McQuestion mc = new McQuestion();
-//        ArrayList<String> list = new ArrayList<>();
-//        list.add("option 1");
-//        list.add("option 2");
-//        mc.setMcOption(list);
-//
-//        assertEquals("Check that mcOption was set properly", mc.getMcOption().size(),2);
+        McQuestion mc = new McQuestion();
+        ArrayList<McOption> list = new ArrayList<>();
+        list.add(new McOption("option 1"));
+        list.add(new McOption("option 2"));
+        mc.setMcOption(list);
+
+        assertEquals("Check that mcOption was set properly", mc.getMcOption().size(),2);
     }
 
     @Test

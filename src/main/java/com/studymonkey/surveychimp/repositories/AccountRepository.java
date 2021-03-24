@@ -1,7 +1,10 @@
 package com.studymonkey.surveychimp.repositories;
 
 import com.studymonkey.surveychimp.entity.Account;
+import javassist.bytecode.ByteArray;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 /*
@@ -16,5 +19,17 @@ public interface AccountRepository extends CrudRepository<Account, Long> {
     // GET request example: http://localhost:8080/accountApi/2
     Account findById(long id);
 
+    @Query(
+            value = "SELECT * FROM account WHERE account.username = :name",
+            nativeQuery=true
+    )
+    Account findByUsername(@Param("name") String name);
+
     Account findByUsernameAndEmail(String username, String email);
+
+    @Query(
+            value = "SELECT * FROM account a WHERE a.username = :name and a.password = :password",
+            nativeQuery=true
+    )
+    Account findByUsernameAndPassword(@Param("name") String name, @Param("password") byte[] password);
 }

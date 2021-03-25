@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class ViewController {
+    @GetMapping("/") // map request to method
+    public String DefaultPage() {
+        return "redirect:/login";
+    }
+
     @GetMapping("home") // map request to method
     public String homePage(Model model) {
         return "index";

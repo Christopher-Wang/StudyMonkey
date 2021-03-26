@@ -69,10 +69,7 @@
                 <div class="card-footer">
                     <div th:if="${survey.status!=null}">
                         <div th:switch="${survey.status}">
-                            <div th:case=1>
-                                <h6 style="display: inline-block" class="text-muted">Survey Status: CLOSED </h6>
-                                <a style="float:right" th:href="@{/metrics}" class="btn btn-secondary btn-sm">View Metrics</a>
-                            </div>
+                            <h6 th:case=1 style="display: inline-block" class="text-muted">Survey Status: CLOSED </h6>
                             <h6 th:case=0>Survey Status: OPEN </h6>
                             <h6 th:case="*">Survey Status: Unknown</h6>
                         </div>

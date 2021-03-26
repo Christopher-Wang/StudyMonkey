@@ -1,6 +1,5 @@
 package com.studymonkey.surveychimp.repositories;
 
-import com.studymonkey.surveychimp.entity.metrics.Metric;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.survey.SurveyStatus;
 import org.springframework.data.jpa.repository.Modifying;

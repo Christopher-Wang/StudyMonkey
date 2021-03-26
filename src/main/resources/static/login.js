@@ -15,7 +15,7 @@ var loginRequests = {
             timeout: 5000,
             success:function(data, requestStatus, xhrObject){
                 if(xhrObject.status == 200) {
-                    window.location.href = '/';
+                    window.location.href = '/home';
                 } else {
                     alert("invalid credentials");
                 }

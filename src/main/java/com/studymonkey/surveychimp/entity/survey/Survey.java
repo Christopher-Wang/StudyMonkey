@@ -74,6 +74,10 @@ public class Survey {
         return status.getValue();
     }
 
+    public SurveyStatus getStatusEnum() {
+        return status;
+    }
+
     /**
      * Helper method to set the status from an int value. Used to map the int value returned
      * by a radio button in the UI.
@@ -85,5 +89,15 @@ public class Survey {
 
     public void setStatus(SurveyStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Survey Creation - StudyMonkey</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="/home">StudyMonkey</a>
+        </div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Survey
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="surveyV2">Survey Creation</a></li>
+                        <li><a class="dropdown-item" href="surveyV2/surveyList">View Survey</a></li>
+                        <li><a class="dropdown-item" href="question">Add Questions</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="signup">Sign up</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="https://github.com/Christopher-Wang/StudyMonkey">Github</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="about">About</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <h2 class="m-3">Survey Creation</h2>
+    <form action="#" th:action="@{/surveyV2/survey}" th:object="${survey}" method="post">
+        <input type="hidden" th:value="${survey.id}" th:field="*{id}"/>
+        <div class="form-group m-3">
+            <label for="inputSurveyName">Name</label>
+            <input th:field="*{name}" type="text" class="form-control" id="inputSurveyName" placeholder="${survey.name}">
+        </div>
+        <div class="form-group m-3">
+            <label for="inputSurveyDescription">Description</label>
+            <input th:field="*{description}" type="text" class="form-control" id="inputSurveyDescription" placeholder="${survey.description}">
+        </div>
+        <div class="form-group m-3">
+            <label for="StatusOpen" class="form-check-label">Open</label>
+            <input th:field="*{status}" type="radio" class="form-check-input" id="StatusOpen" value=0>
+            <label for="StatusClosed" class="form-check-label">Closed</label>
+            <input th:field="*{status}" type="radio" class="form-check-input" id="StatusClosed" value=1>
+        </div>
+        <button type="submit" class="btn btn-primary m-3">Submit</button>
+    </form>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+</body>
+</html>

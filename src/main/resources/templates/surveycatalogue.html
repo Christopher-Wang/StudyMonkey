@@ -52,8 +52,9 @@
         <div class="col" th:each="survey : ${surveyList}">
             <div class="card">
                 <div class="card-header text-muted">
-                    <h6 class="card-text">Survey Id:
+                    <h6 style="display: inline-block" class="card-text">Survey Id:
                         <span class="card-text" th:text="${survey.id}"/></h6>
+                        <a style="float:right" th:href="@{/surveyV2/modifySurvey(surveyId=${survey.id})}" class="btn btn-secondary btn-sm">Edit</a>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><strong>
@@ -68,9 +69,15 @@
                 <div class="card-footer">
                     <div th:if="${survey.status!=null}">
                         <div th:switch="${survey.status}">
-                            <h6 th:case=1 class="text-muted">Survey Status: CLOSED </h6>
+                            <div th:case=1>
+                                <h6 style="display: inline-block" class="text-muted">Survey Status: CLOSED </h6>
+                                <a style="float:right" th:href="@{/metrics}" class="btn btn-secondary btn-sm">View Metrics</a>
+                            </div>
                             <h6 th:case=0>Survey Status: OPEN </h6>
                             <h6 th:case="*">Survey Status: Unknown</h6>
+                        </div>
+                        <div th:if="${survey.status==1}">
+
                         </div>
                     </div>
                 </div>

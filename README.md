@@ -24,10 +24,10 @@ Users fill out a survey that is a form generated based on the type of questions 
 
 
 ## Class Diagram
-(SurveyMonkeyClassDiagram.png)
+![](SurveyMonkeyClassDiagram.png)
 
 ## ER Diagram
-(ERDiagram.png)
+![](ERDiagram.png)
 
 ## Important Links
 Github: https://github.com/Christopher-Wang/StudyMonkey

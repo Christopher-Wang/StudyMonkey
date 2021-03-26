@@ -57,10 +57,10 @@ public class SurveyViewController {
      * @return the view to the home page if successful or the view to the error page otherwise
      */
     @PostMapping("survey")
-    public String surveyEdit (@ModelAttribute("survey") Survey survey) {
+    public String surveyEdit (@ModelAttribute("survey") Survey survey, Model model) {
         if (!survey.getName().equals("") && !survey.getDescription().equals("")) {
             repository.updateSurvey(survey.getName(),survey.getDescription(),survey.getStatusEnum(), survey.getId());
-            return "index";
+            return getSurveyList(model);
         } else {
             return "error";
         }

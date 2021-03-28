@@ -68,11 +68,19 @@ public class AnswerController {
             return null;
         }
 
-        List<Answer> answers = q.getAnswers();
+        if (q.getQuestionType() == QuestionType.TEXT) {
+            List<Answer> answers = q.getAnswers();
 
-        model.addAttribute("question", q);
-        model.addAttribute("answers", answers);
-        return "textanswers";
+            model.addAttribute("question", q);
+            model.addAttribute("answers", answers);
+            return "textanswers";
+        }
+        else if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
+            // return mc answer view
+            return "error";
+        }
+        
+        return "error";
     }
 
 

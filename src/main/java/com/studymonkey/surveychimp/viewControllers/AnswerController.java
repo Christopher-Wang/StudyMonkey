@@ -77,9 +77,8 @@ public class AnswerController {
         }
         else if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
             // return mc answer view
-            return "error";
         }
-        
+
         return "error";
     }
 

@@ -40,7 +40,6 @@ var mcOperations = {
 
                 let mcDeleteButtons = document.getElementsByClassName('mcDeleteButton');
                 mcDeleteButtons[mcDeleteButtons.length - 1].addEventListener("click", function () {
-                    console.log("button clicked");
                     this.parentElement.parentElement.remove();
                 });
             } else {
@@ -53,7 +52,6 @@ var mcOperations = {
 
                 let mcDeleteButtons = document.getElementsByClassName('mcDeleteButton');
                 mcDeleteButtons[mcDeleteButtons.length - 1].addEventListener("click", function (){
-                    console.log("button clicked");
                     this.parentElement.parentElement.remove();
                 });
             }
@@ -61,9 +59,7 @@ var mcOperations = {
             options = document.getElementsByClassName('mcOption');
             mcOperations.isLastMcOptionFilled = false;
             options[options.length - 1].addEventListener("keydown", function (){
-                console.log("keyDown");
                 if(!this.value.trim().length && !mcOperations.isLastMcOptionFilled) {
-                    console.log("Creating new field");
                     mcOperations.isLastMcOptionFilled = true;
                     mcOperations.appendNewMcOption();
                 }
@@ -111,7 +107,7 @@ var mcOperations = {
     }
     ,createQuestion: function() {
         let surveyId = document.getElementById('surveyId').value;
-        let question = document.getElementById('question').value;
+        let questionText = document.getElementById('question').value;
         let questionType = document.querySelector('#questionTypeSelector:checked').value;
 
         if(mcOperations.isMultipleChoiceQuestion()) {
@@ -119,15 +115,25 @@ var mcOperations = {
             console.log(questionMCOptions);
         }
 
+        let question = {
+            surveyId: surveyId,
+            question: questionText,
+            questionType: questionType
+        };
+
+        var buddyJson = JSON.stringify(BuddyInfo)
+
+        console.log(`Adding new buddy to address book ${bookID} with the following values ${buddyJson}`);
+
         $.ajax({type: 'POST',
-            url: `/question?username=${username}&password=${password}`,
+            dataType: 'json',
+            contentType: 'application/json',
+            data: buddyJson,
+            url: `/addressBooks/${bookID}`,
             timeout: 5000,
             success:function(data, requestStatus, xhrObject){
-                if(xhrObject.status == 200) {
-                    window.location.href = '/home';
-                } else {
-                    alert("invalid credentials");
-                }
+                console.log(data);
+                MoviePopup.getAddressBook(bookID);
             },
             error: function(xhrObj, textStatus, exception) { alert('Error!'); }
         });

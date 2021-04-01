@@ -2,6 +2,7 @@ package com.studymonkey.surveychimp.entity.survey;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.studymonkey.surveychimp.entity.questions.Question;
+import com.studymonkey.surveychimp.viewControllers.SurveyViewController;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,6 +29,13 @@ public class Survey {
 
     public Survey() {
         this.questions = new ArrayList<Question>();
+    }
+
+    public Survey(String name, String description, SurveyStatus status) {
+        this.questions = new ArrayList<Question>();
+        this.name = name;
+        this.description = description;
+        this.status = status;
     }
 
     public List<Question> getQuestions() {
@@ -74,6 +82,10 @@ public class Survey {
         return status.getValue();
     }
 
+    public SurveyStatus getStatusEnum() {
+        return status;
+    }
+
     /**
      * Helper method to set the status from an int value. Used to map the int value returned
      * by a radio button in the UI.
@@ -85,5 +97,15 @@ public class Survey {
 
     public void setStatus(SurveyStatus status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
     }
 }

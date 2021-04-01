@@ -52,7 +52,7 @@ public class SurveyViewController {
     }
 
     /**
-     * A put method to edit the survey
+     * A post method to edit the survey
      * @param survey the modifed survey
      * @return the view to the home page if successful or the view to the error page otherwise
      */

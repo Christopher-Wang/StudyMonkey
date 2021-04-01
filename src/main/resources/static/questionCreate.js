@@ -15,34 +15,51 @@ var mcOperations = {
         })
     }
     ,mcOptions: 0
+    ,isLastMcOptionFilled: false
     ,appendNewMcOption: function() {
         mcOperations.mcOptions += 1;
         if(mcOperations.mcOptions <= 1) {
             document.getElementById('mcOptions').insertAdjacentHTML("beforeend",
-                `<label for='mcOption'>Option${mcOperations.mcOptions}</label><input type='text' class='form-control mcOption' id='mcOption${mcOperations.mcOptions}' placeholder='Enter the option'>`);
+                `${mcOperations.appendMoreMcOptionLabel()}${mcOperations.appendMoreMcOptionInput()}`);
             mcOperations.appendNewMcOption();
         } else {
             let options = document.getElementsByClassName('mcOption');
+            let breakLine = "<br/>";
 
-            options[options.length - 1].insertAdjacentHTML("afterend",
-                `<br/><label for='mcOption${mcOperations.mcOptions}'>Option${mcOperations.mcOptions}</label><input type='text' class='form-control' id='mcOption${mcOperations.mcOptions}' placeholder='Enter the option'>`);
-
-            if(mcOperations.mcOptions > 2) {
-                options = document.getElementsByClassName('mcOption');
-
-                options[options.length - 1].insertAdjacentHTML("afterend", "<button type='button' class='btn btn-danger m-3'>Delete</button>");
+            if(mcOperations.mcOptions == 2) {
+                options[options.length - 1].insertAdjacentHTML("afterend",
+                    `${breakLine}${mcOperations.appendMoreMcOptionLabel()}${mcOperations.appendMoreMcOptionInput()}`);
+            } else if(mcOperations.mcOptions == 3){
+                let trashIcon = 'delete'
+                let deleteButton = `<button type='button' class='btn btn-danger'>${trashIcon}</button>`;
+                options[options.length - 1].insertAdjacentHTML("afterend",
+                    `${breakLine}${mcOperations.appendMoreMcOptionLabel()}<div class="input-group mcOptionGroup">${mcOperations.appendMoreMcOptionInput()}${deleteButton}</div>`);
+            } else {
+                let trashIcon = 'delete'
+                let deleteButton = `<button type='button' class='btn btn-danger'>${trashIcon}</button>`;
+                let optionGroups = document.getElementsByClassName('mcOptionGroup');
+                optionGroups[optionGroups.length - 1].insertAdjacentHTML("afterend",
+                    `${breakLine}${mcOperations.appendMoreMcOptionLabel()}<div class="input-group mcOptionGroup">${mcOperations.appendMoreMcOptionInput()}${deleteButton}</div>`);
             }
 
-            console.log(options[options.length - 1])
+            options = document.getElementsByClassName('mcOption');
+
+            mcOperations.isLastMcOptionFilled = false;
             options[options.length - 1].addEventListener("keydown", function (){
-                console.log("keydown")
-                if(!this.value.trim().length) {
+                console.log("keyDown");
+                if(!this.value.trim().length && !mcOperations.isLastMcOptionFilled) {
+                    console.log("Creating new field");
+                    mcOperations.isLastMcOptionFilled = true;
                     mcOperations.appendNewMcOption();
                 }
             });
         }
-
-
+    }
+    ,appendMoreMcOptionInput: function() {
+        return `<input type='text' class='form-control mcOption' id='mcOption${mcOperations.mcOptions}' placeholder='Enter the option'>`
+    }
+    ,appendMoreMcOptionLabel: function() {
+        return `<label htmlFor='mcOption${mcOperations.mcOptions}'>Option ${mcOperations.mcOptions}</label>`;
     }
     ,validateAndSubmit: function() {
         if(mcOperations.isMultipleChoiceQuestion()) {

@@ -1,6 +1,8 @@
 package com.studymonkey.surveychimp;
 
 import com.studymonkey.surveychimp.entity.answers.Answer;
+import com.studymonkey.surveychimp.entity.answers.AnswerType;
+import com.studymonkey.surveychimp.entity.answers.TextAnswer;
 import com.studymonkey.surveychimp.entity.questions.McOption;
 import com.studymonkey.surveychimp.entity.questions.McQuestion;
 import com.studymonkey.surveychimp.entity.survey.Survey;
@@ -20,11 +22,9 @@ public class EntityTests {
     }
 
     @Test
-    public void testAnswer() {
-//        Answer answer = new Answer();
-//        answer.setSurveyId(1);
-//
-//        assertEquals("Check that answer surveyId was set properly", answer.getSurveyId(), 1);
+    public void testTextAnswer() {
+        TextAnswer answer = new TextAnswer(AnswerType.TEXT, "This is my answer");
+        assertEquals("Check that answer was created properly", answer.getQuestionAnswer(), "This is my answer");
     }
 
     @Test

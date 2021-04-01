@@ -46,9 +46,9 @@ public class AnswerController {
     /*
     Example: curl -i -X GET -H "Content-Type:application/json" http://localhost:8080/answer/questionAnswers/2
      */
-    @GetMapping("questionAnswers/{questionId}")
+    @GetMapping("questionAnswersJSON/{questionId}")
     @ResponseBody
-    public List<Answer> getQuestionAnswers(@PathVariable long questionId) {
+    public List<Answer> getQuestionAnswersJSON(@PathVariable long questionId) {
         Question q = this.questionRepository.findById(questionId);
 
         if (q == null) {
@@ -58,6 +58,30 @@ public class AnswerController {
         List<Answer> answers= q.getAnswers();
         return answers;
     }
+
+    @GetMapping("/questionAnswers/{questionId}")
+    public String getQuestionAnswers(@PathVariable long questionId, Model model) {
+        Question q = this.questionRepository.findById(questionId);
+
+        if (q == null) {
+            System.out.println("Question does not exist");
+            return null;
+        }
+
+        if (q.getQuestionType() == QuestionType.TEXT) {
+            List<Answer> answers = q.getAnswers();
+
+            model.addAttribute("question", q);
+            model.addAttribute("answers", answers);
+            return "textanswers";
+        }
+        else if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
+            // return mc answer view
+        }
+
+        return "error";
+    }
+
 
     @GetMapping
     public String answerForm(@RequestParam(value = "questionId") Long questionId, Model model) {

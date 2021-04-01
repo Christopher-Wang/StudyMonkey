@@ -58,9 +58,9 @@
         </div>
         <div id="questionTypeSelector" class="form-group m-3">
             <label for="TEXT" class="form-check-label">Text</label>
-            <input th:field="*{question.questionType}" type="radio" class="form-check-input" id="TEXT" value="TEXT">
+            <input name="questionTypeRadio" th:field="*{question.questionType}" type="radio" class="form-check-input" id="TEXT" value="TEXT">
             <label for="MULTIPLE_CHOICE" class="form-check-label">Multiple Choice</label>
-            <input th:field="*{question.questionType}" type="radio" class="form-check-input" id="MULTIPLE_CHOICE" value="MULTIPLE_CHOICE">
+            <input name="questionTypeRadio" th:field="*{question.questionType}" type="radio" class="form-check-input" id="MULTIPLE_CHOICE" value="MULTIPLE_CHOICE">
         </div>
         <div class="m-3" id="mcOptions">
         </div>

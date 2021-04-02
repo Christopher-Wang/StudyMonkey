@@ -2,7 +2,8 @@ package com.studymonkey.surveychimp.entity.questions;
 
 public enum QuestionType {
     MULTIPLE_CHOICE(1),
-    TEXT(2);
+    TEXT(2),
+    RANGE(3);
 
     private final int value;
 
@@ -20,6 +21,8 @@ public enum QuestionType {
                 return QuestionType.MULTIPLE_CHOICE;
             case 2:
                 return QuestionType.TEXT;
+            case 3:
+                return QuestionType.RANGE;
         }
 
         return null;

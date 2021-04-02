@@ -28,7 +28,8 @@ public class SignupViewController {
         if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals("")) {
             repository.save(account);
             return "index";
-        } else
+        } else {
             throw new RuntimeException();
+        }
     }
 }

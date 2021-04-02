@@ -1,9 +1,6 @@
 package com.studymonkey.surveychimp.viewControllers;
 
-import com.studymonkey.surveychimp.entity.questions.McQuestion;
-import com.studymonkey.surveychimp.entity.questions.Question;
-import com.studymonkey.surveychimp.entity.questions.QuestionType;
-import com.studymonkey.surveychimp.entity.questions.TextQuestion;
+import com.studymonkey.surveychimp.entity.questions.*;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.repositories.QuestionRepository;
@@ -78,6 +75,9 @@ public class QuestionController {
                 if (s == null) return "error";
                 q = new McQuestion(q.getQuestion(), q.getQuestionType());
                 break;
+            case RANGE:
+                if (s == null) return "error";
+                q = new RangeQuestion(q.getQuestion(), 0, 10, q.getQuestionType());
             default:
                 if (s == null) return "error";
         }
@@ -85,7 +85,23 @@ public class QuestionController {
         s.addQuestion(q);
         this.questionRepository.save(q);
         this.surveyRepository.save(s);
+        if (type == QuestionType.RANGE) {
+            model.addAttribute("rangeQuestionWrapper", new QuestionWrapper(questionWrapper.getSurveyId(), q));
+            return "rangequestioncreate";
+        }
         model.addAttribute("questionWrapper", new QuestionWrapper(questionWrapper.getSurveyId(), new Question()));
+        return "questioncreate";
+    }
+
+    @PostMapping("setRangeQuestion")
+    public String setRangeQuestion(@ModelAttribute("rangeQuestionWrapper") QuestionWrapper rangeQuestionWrapper, Model model) {
+        if (rangeQuestionWrapper == null) {
+            System.out.println("haha is null");
+        }
+        Survey s = this.surveyRepository.findById(rangeQuestionWrapper.getSurveyId());
+        Question q = rangeQuestionWrapper.getQuestion();
+        this.questionRepository.save(q);
+        model.addAttribute("questionWrapper", new QuestionWrapper(rangeQuestionWrapper.getSurveyId(), new Question()));
         return "questioncreate";
     }
 }

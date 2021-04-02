@@ -149,14 +149,17 @@ var mcOperations = {
             data: questionWrapperJson,
             url: url,
             timeout: 5000,
-            success:function(data, requestStatus, xhrObject){
-                if(xhrObject.status == 200) {
+            statusCode: {
+                201: function(data, requestStatus, xhrObject) {
                     window.location.href = `/question?surveyId=${surveyId}`;
+                    console.log(data);
+                },
+                404: function(xhrObj, textStatus, exception) {
+                    alert(`Error!`);
+                },
+                500: function(xhrObj, textStatus, exception) {
+                    alert(`Error!`);
                 }
-                console.log(data);
-            },
-            error: function(xhrObj, textStatus, exception) {
-                alert(`Error!`);
             }
         });
         return(false);  // prevent default link action

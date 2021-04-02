@@ -47,12 +47,12 @@ public class QuestionController {
         this.questionRepository.save(q);
         this.surveyRepository.save(s);
 
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>("New text question created",HttpStatus.CREATED);
     }
 
     @PostMapping("mc")
     @ResponseBody
-    public ResponseEntity createMcQuestion(@RequestBody McQuestionWrapper questionWrapper) throws NoSuchAlgorithmException {
+    public ResponseEntity<String> createMcQuestion(@RequestBody McQuestionWrapper questionWrapper) throws NoSuchAlgorithmException {
         Survey s = this.surveyRepository.findById(questionWrapper.getSurveyId());
         if (s == null) return ResponseEntity.badRequest().build();
 
@@ -72,7 +72,7 @@ public class QuestionController {
             this.mcOptionRepository.save(option);
         }
 
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>("New multiple choice question created",HttpStatus.CREATED);
     }
 
 }

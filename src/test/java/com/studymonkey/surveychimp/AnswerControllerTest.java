@@ -31,7 +31,7 @@ public class AnswerControllerTest {
     public void setup() throws Exception {
         // Create the Survey first
         mockMvc.perform(post("/surveyV2/surveycreation")
-                .param("name","Test Survey #2")
+                .param("name","Test Survey #3")
                 .param("description","This is a test")
                 .param("status", "1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))

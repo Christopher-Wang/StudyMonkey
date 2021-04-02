@@ -52,8 +52,10 @@
         <div class="col" th:each="survey : ${surveyList}">
             <div class="card">
                 <div class="card-header text-muted">
-                    <h6 class="card-text">Survey Id:
+                    <h6 style="display: inline-block" class="card-text">Survey Id:
                         <span class="card-text" th:text="${survey.id}"/></h6>
+                    <a style="float:right" th:href="@{/surveyV2/modifySurvey(surveyId=${survey.id})}"
+                       class="btn btn-secondary btn-sm">Edit</a>
                 </div>
                 <div class="card-body">
                     <h5 class="card-title"><strong>
@@ -61,16 +63,21 @@
                     <p class="card-text">
                         <span class="card-text" th:text="${survey.description}"/></p>
                     <span th:if="${survey.status!=null && survey.status == 0}">
-            </span>
-                    <a th:href="@{/question(surveyId=${survey.id})}" class="btn btn-primary">Add Questions</a>
-                    <a th:href="@{/question/questionList(surveyId=${survey.id})}" class="btn btn-primary">View Questions</a>
+                        <a th:href="@{/question(surveyId=${survey.id})}" class="btn btn-primary">Add Questions</a>
+                    </span>
+
+                    <a th:href="@{/question/questionList(surveyId=${survey.id})}" class="btn btn-primary">View
+                        Questions</a>
                 </div>
                 <div class="card-footer">
                     <div th:if="${survey.status!=null}">
                         <div th:switch="${survey.status}">
-                            <h6 th:case=1 class="text-muted">Survey Status: CLOSED </h6>
+                            <h6 th:case=1 style="display: inline-block" class="text-muted">Survey Status: CLOSED </h6>
                             <h6 th:case=0>Survey Status: OPEN </h6>
                             <h6 th:case="*">Survey Status: Unknown</h6>
+                        </div>
+                        <div th:if="${survey.status==1}">
+
                         </div>
                     </div>
                 </div>

@@ -23,13 +23,12 @@ public class SignupViewController {
         return "signup";
     }
 
-    @ResponseBody
-    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("createAccount")
-    public Account create(@ModelAttribute Account account) {
-        if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals(""))
-            return repository.save(account);
-        else
+    public String create(@ModelAttribute Account account) {
+        if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals("")) {
+            repository.save(account);
+            return "index";
+        } else
             throw new RuntimeException();
     }
 }

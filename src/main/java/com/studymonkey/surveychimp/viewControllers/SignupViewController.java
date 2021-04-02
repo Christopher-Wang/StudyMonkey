@@ -11,12 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "signup")
 public class SignupViewController {
 
-    private final AccountRepository repository;
-
-    SignupViewController(AccountRepository repository) {
-        this.repository = repository;
-    }
-
     @GetMapping
     public String signup(Model model) {
         model.addAttribute("account", new Account()); // pass to the html template

@@ -13,6 +13,8 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -23,7 +25,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @SpringBootTest (webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class SurveyTests {
+public class SurveyControllerTests {
     @LocalServerPort
     private int port;
 
@@ -53,12 +55,16 @@ public class SurveyTests {
 
     @Test
     public void createSurveyTest() throws Exception{
+        int totalSurveys = repository.findAll().size();
+
         mockMvc.perform(post("/surveyV2/surveycreation")
                 .param("name","Test Survey #2")
                 .param("description","This is a test")
                 .param("status", "1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
+        assertEquals(totalSurveys+1,repository.findAll().size());
+
     }
 
     @Test

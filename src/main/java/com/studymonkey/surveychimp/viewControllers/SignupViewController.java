@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "signup")
 public class SignupViewController {
 
+    private final AccountRepository repository;
+
+    SignupViewController(AccountRepository repository) {
+        this.repository = repository;
+    }
+
     @GetMapping
     public String signup(Model model) {
         model.addAttribute("account", new Account()); // pass to the html template
@@ -19,9 +25,10 @@ public class SignupViewController {
 
     @PostMapping("createAccount")
     public String create(@ModelAttribute Account account) {
-        if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals(""))
+        if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals("")) {
+            repository.save(account);
             return "index";
-        else
+        } else
             throw new RuntimeException();
     }
 }

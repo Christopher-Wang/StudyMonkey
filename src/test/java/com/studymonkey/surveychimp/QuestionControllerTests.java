@@ -1,19 +1,14 @@
 package com.studymonkey.surveychimp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.studymonkey.surveychimp.controllers.QuestionController;
-import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.questions.*;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.survey.SurveyStatus;
 import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
-import com.studymonkey.surveychimp.repositories.AccountRepository;
 import com.studymonkey.surveychimp.repositories.McOptionRepository;
 import com.studymonkey.surveychimp.repositories.QuestionRepository;
 import com.studymonkey.surveychimp.repositories.SurveyRepository;
-import org.assertj.core.util.Arrays;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -28,11 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.junit.Assert.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -49,8 +40,6 @@ public class QuestionControllerTests {
     private QuestionRepository questionRepository;
     @Autowired
     private McOptionRepository mcOptionRepository;
-    @Autowired
-    private QuestionController questionController;
 
     @BeforeAll
     public void setup() throws Exception {

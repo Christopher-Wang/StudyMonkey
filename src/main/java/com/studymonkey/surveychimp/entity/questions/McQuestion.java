@@ -34,4 +34,10 @@ public class McQuestion extends Question {
         this.mcOption.add(option);
     }
 
+    @Override
+    public String toString() {
+        return "McQuestion{" +
+                "mcOption=" + mcOption +
+                '}';
+    }
 }

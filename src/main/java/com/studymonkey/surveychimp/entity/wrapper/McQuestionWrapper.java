@@ -1,25 +1,17 @@
 package com.studymonkey.surveychimp.entity.wrapper;
 
+import com.studymonkey.surveychimp.entity.questions.McQuestion;
 import com.studymonkey.surveychimp.entity.questions.Question;
 
-public class QuestionWrapper {
+public class McQuestionWrapper {
 
     private long surveyId;
+    private McQuestion question;
 
-    public Question getQuestion() {
-        return question;
+    public McQuestionWrapper(){
     }
 
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    private Question question;
-
-    public QuestionWrapper(){
-    }
-
-    public QuestionWrapper(long surveyId, Question question){
+    public McQuestionWrapper(long surveyId, McQuestion question){
         this.surveyId = surveyId;
         this.question = question;
     }
@@ -30,6 +22,14 @@ public class QuestionWrapper {
 
     public void setSurveyId(long surveyId) {
         this.surveyId = surveyId;
+    }
+
+    public McQuestion getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(McQuestion question) {
+        this.question = question;
     }
 
     @Override

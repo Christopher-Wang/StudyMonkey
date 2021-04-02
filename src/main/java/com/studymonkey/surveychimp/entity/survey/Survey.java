@@ -86,4 +86,15 @@ public class Survey {
     public void setStatus(SurveyStatus status) {
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Survey{" +
+                "id=" + id +
+                ", questions=" + questions +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

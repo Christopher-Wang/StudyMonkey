@@ -17,13 +17,13 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping(value = "question")
-public class QuestionController {
+public class QuestionViewController {
 
     private final QuestionRepository questionRepository;
     private final SurveyRepository surveyRepository;
 
-    public QuestionController(QuestionRepository questionRepository,
-                              SurveyRepository surveyRepository) {
+    public QuestionViewController(QuestionRepository questionRepository,
+                                  SurveyRepository surveyRepository) {
         this.questionRepository = questionRepository;
         this.surveyRepository = surveyRepository;
     }
@@ -37,7 +37,7 @@ public class QuestionController {
     public String questionForm(@RequestParam(value = "surveyId", required=false) Long surveyId, Model model) {
         if (surveyId == null) surveyId = 0L;
         model.addAttribute("questionWrapper", new QuestionWrapper(surveyId, new Question()));
-        return "questioncreate";
+        return "questioncreateJS";
     }
 
     /**

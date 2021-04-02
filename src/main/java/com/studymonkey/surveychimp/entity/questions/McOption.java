@@ -48,4 +48,12 @@ public class McOption {
     public void setOption(String option) {
         this.option = option;
     }
+
+    @Override
+    public String toString() {
+        return "McOption{" +
+                "id=" + id +
+                ", option='" + option + '\'' +
+                '}';
+    }
 }

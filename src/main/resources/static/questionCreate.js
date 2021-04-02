@@ -1,6 +1,7 @@
 
 var mcOperations = {
     setup: function() {
+        console.log("test");
         $('#questionTypeSelector :radio').change(function() {
             if(this.checked && this.id == "MULTIPLE_CHOICE") {
                 mcOperations.appendNewMcOption();
@@ -94,8 +95,8 @@ var mcOperations = {
                 alert("Invalid Submission - a MC option field is empty");
                 return false;
             }
-            return true;
         }
+        return true;
     }
     ,validateGeneralFields() {
         let questionField = document.getElementById('question');
@@ -108,47 +109,69 @@ var mcOperations = {
     ,createQuestion: function() {
         let surveyId = document.getElementById('surveyId').value;
         let questionText = document.getElementById('question').value;
-        let questionType = document.querySelector('#questionTypeSelector:checked').value;
+        let questionType = mcOperations.getQuestionType();
 
         if(mcOperations.isMultipleChoiceQuestion()) {
-            let questionMCOptions = document.getElementsByClassName('mcOption').value;
-            console.log(questionMCOptions);
+            let questionMCOptions = document.getElementsByClassName('mcOption');
+
+            let mcOptionValues = []
+            for (i = 0; i < questionMCOptions.length - 1; i++) {
+                mcOptionValues.push({option: questionMCOptions[i].value})
+            }
+
+            console.log(mcOptionValues);
+            var questionWrapper = {
+                surveyId: surveyId,
+                question: {
+                    question: questionText,
+                    questionType: questionType,
+                    mcOption: mcOptionValues
+                }
+            };
+            var url = "/questionJson/mc"
+        } else {
+            var questionWrapper = {
+                surveyId: surveyId,
+                question: {
+                    question: questionText,
+                    questionType: questionType
+                }
+            };
+            var url = "/questionJson/text"
         }
 
-        let question = {
-            surveyId: surveyId,
-            question: questionText,
-            questionType: questionType
-        };
-
-        var buddyJson = JSON.stringify(BuddyInfo)
-
-        console.log(`Adding new buddy to address book ${bookID} with the following values ${buddyJson}`);
+        let questionWrapperJson = JSON.stringify(questionWrapper)
+        console.log(`Adding new question to survey ${surveyId} with the following values ${questionWrapperJson}`);
 
         $.ajax({type: 'POST',
             dataType: 'json',
             contentType: 'application/json',
-            data: buddyJson,
-            url: `/addressBooks/${bookID}`,
+            data: questionWrapperJson,
+            url: url,
             timeout: 5000,
             success:function(data, requestStatus, xhrObject){
+                if(xhrObject.status == 200) {
+                    window.location.href = `/question?surveyId=${surveyId}`;
+                }
                 console.log(data);
-                MoviePopup.getAddressBook(bookID);
             },
-            error: function(xhrObj, textStatus, exception) { alert('Error!'); }
+            error: function(xhrObj, textStatus, exception) {
+                alert(`Error!`);
+            }
         });
         return(false);  // prevent default link action
     }
     ,isMultipleChoiceQuestion: function () {
+        return mcOperations.getQuestionType() == "MULTIPLE_CHOICE";
+    }
+    ,getQuestionType: function () {
         let questionTypeRadios = document.getElementsByClassName("form-check-input");
 
         for (i = 0; i < questionTypeRadios.length; i++) {
             if(questionTypeRadios[i].checked) {
-                var questionType = questionTypeRadios[i].value;
+                return questionType = questionTypeRadios[i].value;
             }
         }
-
-        return questionType == "MULTIPLE_CHOICE";
     }
 };
 

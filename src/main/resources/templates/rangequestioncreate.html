@@ -46,18 +46,22 @@
 
 <div class="container">
     <h2 class="m-3">Question Creation - Ranged</h2>
-    <form action="#" th:action="@{quesiton/setRangeQuestion}" th:object="${rangeQuestionWrapper}" method="post" >
+    <form action="#" th:action="@{/question/setRangeQuestion}" th:object="${questionWrapper}" method="post" >
         <div class="form-group m-3">
-            <label for="questionId">Question Id</label>
-            <input th:field="*{surveyId}" type="number" class="form-control" id="questionId" name="questionId" th:placeholder="*{surveyId}">
+            <label for="surveyId">Survey Id</label>
+            <input th:field="*{surveyId}" type="number" class="form-control" id="surveyId" name="surveyId" th:placeholder="*{surveyId}">
+        </div>
+        <div class="form-group m-3">
+            <label for="question">Question Id</label>
+            <input th:field="*{questionId}" type="number" class="form-control" id="question" name="question" th:placeholder="*{questionId}">
         </div>
         <div class="form-group m-3">
             <label for="minRange">Minimum Range</label>
-            <input th:field="*{question.min}" type="number" class="form-control" id="minRange" th:placeholder="*{question.min}">
+            <input th:field="*{min}" type="number" class="form-control" id="minRange" th:placeholder="*{min}">
         </div>
         <div class="form-group m-3">
             <label for="maxRange">Maximum Range</label>
-            <input th:field="*{question.max}" type="number" class="form-control" id="maxRange" th:placeholder="*{question.max}">
+            <input th:field="*{max}" type="number" class="form-control" id="maxRange" th:placeholder="*{max}">
         </div>
         <button type="submit" class="btn btn-primary m-3">Submit</button>
     </form>

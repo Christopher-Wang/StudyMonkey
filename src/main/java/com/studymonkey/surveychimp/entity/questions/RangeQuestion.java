@@ -31,4 +31,6 @@ public class RangeQuestion extends Question {
     public void setMax(int max) {
         this.max = max;
     }
+
+
 }

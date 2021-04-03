@@ -36,8 +36,14 @@ public class QuestionController {
     @GetMapping
     public String questionForm(@RequestParam(value = "surveyId", required=false) Long surveyId, Model model) {
         if (surveyId == null) surveyId = 0L;
-        model.addAttribute("questionWrapper", new QuestionWrapper(surveyId, new Question()));
-        return "questioncreate";
+        model.addAttribute("surveyId", surveyId);
+        return "temp";
+    }
+
+    @PostMapping(value="temp", params={"questionType=TEXT"})
+    public String temp(@RequestParam QuestionType questionType, @RequestBody String questionJSON){
+        System.out.println("\n\n\n\nTEXT\n\n\n\n");
+        return "temp";
     }
 
     /**
@@ -60,32 +66,34 @@ public class QuestionController {
         }
     }
 
+
+
     /**
      * Example Request: http://localhost:8080/question
      * @return the view for creating a question
      */
     @PostMapping
     public String submitQuestion(@ModelAttribute("questionWrapper") QuestionWrapper questionWrapper, Model model) {
-        Survey s = this.surveyRepository.findById(questionWrapper.getSurveyId());
-        Question q = questionWrapper.getQuestion();
-        QuestionType type = q.getQuestionType();
-        switch(type){
-            case TEXT:
-                if (s == null) return "error";
-                q = new TextQuestion(q.getQuestion(), q.getQuestionType());
-                break;
-            case MULTIPLE_CHOICE:
-                if (s == null) return "error";
-                q = new McQuestion(q.getQuestion(), q.getQuestionType());
-                break;
-            default:
-                if (s == null) return "error";
-        }
-        q.setSurvey(s);
-        s.addQuestion(q);
-        this.questionRepository.save(q);
-        this.surveyRepository.save(s);
-        model.addAttribute("questionWrapper", new QuestionWrapper(questionWrapper.getSurveyId(), new Question()));
+//        Survey s = this.surveyRepository.findById(questionWrapper.getSurveyId());
+//        Question q = questionWrapper.getQuestion();
+//        QuestionType type = q.getQuestionType();
+//        switch(type){
+//            case TEXT:
+//                if (s == null) return "error";
+//                q = new TextQuestion(q.getQuestion(), q.getQuestionType());
+//                break;
+//            case MULTIPLE_CHOICE:
+//                if (s == null) return "error";
+//                q = new McQuestion(q.getQuestion(), q.getQuestionType());
+//                break;
+//            default:
+//                if (s == null) return "error";
+//        }
+//        q.setSurvey(s);
+//        s.addQuestion(q);
+//        this.questionRepository.save(q);
+//        this.surveyRepository.save(s);
+//        model.addAttribute("questionWrapper", new QuestionWrapper(questionWrapper.getSurveyId(), new Question()));
         return "questioncreate";
     }
 }

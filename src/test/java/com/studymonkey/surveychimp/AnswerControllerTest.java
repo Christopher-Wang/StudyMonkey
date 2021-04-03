@@ -39,7 +39,14 @@ public class AnswerControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
 
-        TextQuestionWrapper wrapper = new TextQuestionWrapper(1L, "?", QuestionType.TEXT);
+//        mockMvc.perform(post("/question")
+//                .param("surveyId","1")
+//                .param("question.question","?")
+//                .param("question.questionType","TEXT")
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+//                .andExpect(status().isOk());
+
+        TextQuestionWrapper wrapper = new TextQuestionWrapper(1, "?", QuestionType.TEXT);
         String questionJSON = asJsonString(wrapper);
         mockMvc.perform(post("/question")
                 .param("questionType", "TEXT")
@@ -48,10 +55,10 @@ public class AnswerControllerTest {
                 .andExpect(status().isOk());
     }
 
-//    @Test
-//    public void addTextAnswer() throws Exception {
-//        // Keeping this test, in case we want to do SPA instead.
-//
+    @Test
+    public void addTextAnswer() throws Exception {
+        // Keeping this test, in case we want to do SPA instead.
+
 //        TextAnswer ans = new TextAnswer(AnswerType.TEXT, "This is my answer");
 //        this.mockMvc.perform(MockMvcRequestBuilders
 //                .post("/answer/textAnswer/{questionId}", 2)
@@ -60,12 +67,12 @@ public class AnswerControllerTest {
 //                .accept(MediaType.APPLICATION_JSON))
 //                .andDo(print())
 //                .andExpect(status().isOk());
-//
-//        mockMvc.perform(post("/answer/textAnswer/2")
-//                .param("questionAnswer","This is my answer to the question!")
-//                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
-//                .andExpect(status().isOk());
-//    }
+
+        mockMvc.perform(post("/answer/textAnswer/2")
+                .param("questionAnswer","This is my answer to the question!")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk());
+    }
 
 
 // Current test to add MC answer is not viable
@@ -83,14 +90,14 @@ public class AnswerControllerTest {
 //                .andExpect(status().isOk());
 //    }
 
-//    @Test
-//    public void getQuestionAnswers() throws Exception {
-//        // Get answer for text question (id=2)
-//        this.mockMvc.perform(MockMvcRequestBuilders
-//                .get("/answer/questionAnswers/2"))
-//                .andDo(print())
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    public void getQuestionAnswers() throws Exception {
+        // Get answer for text question (id=2)
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/answer/questionAnswers/2"))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
 
 
     public static String asJsonString(final Object obj) {

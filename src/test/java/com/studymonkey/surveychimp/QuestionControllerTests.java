@@ -7,12 +7,15 @@ import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
 import com.studymonkey.surveychimp.viewControllers.SurveyViewController;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.MediaType;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.ui.Model;
 
@@ -27,6 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@DirtiesContext
 public class QuestionControllerTests {
     @LocalServerPort
     private int port;
@@ -44,10 +49,21 @@ public class QuestionControllerTests {
         assertThat(controller).isNotNull();
     }
 
+    @BeforeAll
+    public void setup() throws Exception {
+        // Create the Survey first
+        mockMvc.perform(post("/surveyV2/surveycreation")
+                .param("name", "Test Survey")
+                .param("description", "This is a test")
+                .param("status", "1")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk());
+    }
+
     @Test
     public void getQuestionFormTest() throws Exception{
         mockMvc.perform(get("/question")
-                .param("surveyId", "0")
+                .param("surveyId", "1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(print()).andExpect(status().isOk());
     }
@@ -55,14 +71,14 @@ public class QuestionControllerTests {
     @Test
     public void getQuestionListTest() throws Exception{
         mockMvc.perform(get("/question/questionList")
-                .param("surveyId", "0")
+                .param("surveyId", "1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andDo(print()).andExpect(status().isOk());
     }
 
     @Test
     public void createTextQuestionTest() throws Exception{
-        TextQuestionWrapper wrapper = new TextQuestionWrapper(0L, "Test Question", QuestionType.TEXT);
+        TextQuestionWrapper wrapper = new TextQuestionWrapper(1L, "Test Question", QuestionType.TEXT);
         String questionJSON = objectMapper.writeValueAsString(wrapper);
         mockMvc.perform(post("/question")
                 .param("questionType", "TEXT")

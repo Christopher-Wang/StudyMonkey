@@ -1,7 +1,6 @@
 
 var mcOperations = {
     setup: function() {
-        console.log("test");
         $('#questionTypeSelector :radio').change(function() {
             if(this.checked && this.id == "MULTIPLE_CHOICE") {
                 mcOperations.appendNewMcOption();
@@ -41,18 +40,21 @@ var mcOperations = {
 
                 let mcDeleteButtons = document.getElementsByClassName('mcDeleteButton');
                 mcDeleteButtons[mcDeleteButtons.length - 1].addEventListener("click", function () {
+                    mcOperations.mcOptions--;
+                    mcOperations.mcOptionGroups--;
                     this.parentElement.parentElement.remove();
                 });
             } else {
                 mcOperations.mcOptionGroups++;
-                let trashIcon = 'delete'
-                let deleteButton = `<button type='button' class='btn btn-danger mcDeleteButton'>${trashIcon}</button>`;
+                let deleteButton = `<button type='button' class='btn btn-danger mcDeleteButton'>delete</button>`;
                 let optionGroups = document.getElementsByClassName('mcOptionGroup');
                 optionGroups[optionGroups.length - 1].insertAdjacentHTML("afterend",
                     `<div class="mcOptionGroup">${breakLine}${mcOperations.appendMoreMcOptionLabel()}<div class="input-group" id="mcOptionGroup${mcOperations.mcOptionGroups}">${mcOperations.appendMoreMcOptionInput()}${deleteButton}</div></div>`);
 
                 let mcDeleteButtons = document.getElementsByClassName('mcDeleteButton');
                 mcDeleteButtons[mcDeleteButtons.length - 1].addEventListener("click", function (){
+                    mcOperations.mcOptions--;
+                    mcOperations.mcOptionGroups--;
                     this.parentElement.parentElement.remove();
                 });
             }
@@ -74,28 +76,29 @@ var mcOperations = {
         return `<label htmlFor='mcOption${mcOperations.mcOptions}'>Option ${mcOperations.mcOptions}</label>`;
     }
     ,validateAndSubmit: function() {
-        if(mcOperations.validateMC() && mcOperations.validateGeneralFields()) {
-            mcOperations.createQuestion();
+        let mcValues = null;
+
+        if(!mcOperations.validateGeneralFields()) {
+            return;
         }
-    }
-    ,validateMC: function() {
+
         if(mcOperations.isMultipleChoiceQuestion()) {
-            let options = document.getElementsByClassName('mcOption');
-
-            let numberOfEmptyFields = 0;
-            for (i = 0; i < options.length; i++) {
-                if (!options[i].value.length || !options[i].value.trim().length) {
-                    numberOfEmptyFields++;
-                }
+            mcValues = mcOperations.getMcValues();
+            let mcFieldLength = mcValues.mcText.length + mcValues.numOfEmptyFields;
+            if(!mcOperations.validateMC(mcFieldLength, mcValues.numOfEmptyFields)) {
+                return;
             }
+            mcValues = mcValues.mcText;
+        }
 
-            console.log(numberOfEmptyFields);
-            if (options.length == 2 && numberOfEmptyFields <= 2
-                || options.length > 2 && numberOfEmptyFields - options.length > 1) {
+        mcOperations.createQuestion(mcValues);
+    }
+    ,validateMC: function(numberOfFields, numberOfEmptyFields) {
+        if (numberOfEmptyFields != 0 && (numberOfFields == 2
+                || numberOfFields > 2 && numberOfEmptyFields > 1)) {
                 alert("Invalid Submission - a MC option field is empty");
                 return false;
             }
-        }
         return true;
     }
     ,validateGeneralFields() {
@@ -106,26 +109,35 @@ var mcOperations = {
         }
         return true;
     }
-    ,createQuestion: function() {
+    ,getMcValues: function() {
+        let options = document.getElementsByClassName('mcOption');
+        let values = []
+        let numberOfEmptyFields = 0;
+        for (i = 0; i < options.length; i++) {
+            if (!options[i].value.length || !options[i].value.trim().length) {
+                numberOfEmptyFields++;
+            } else {
+                values.push(options[i].value);
+            }
+        }
+
+        return {
+            mcText: values,
+            numOfEmptyFields: numberOfEmptyFields
+        }
+    }
+    ,createQuestion: function(mcValues) {
         let surveyId = document.getElementById('surveyId').value;
         let questionText = document.getElementById('question').value;
         let questionType = mcOperations.getQuestionType();
 
         if(mcOperations.isMultipleChoiceQuestion()) {
-            let questionMCOptions = document.getElementsByClassName('mcOption');
-
-            let mcOptionValues = []
-            for (i = 0; i < questionMCOptions.length - 1; i++) {
-                mcOptionValues.push({option: questionMCOptions[i].value})
-            }
-
-            console.log(mcOptionValues);
             var questionWrapper = {
                 surveyId: surveyId,
                 question: {
                     question: questionText,
                     questionType: questionType,
-                    mcOption: mcOptionValues
+                    mcOption: mcValues
                 }
             };
             var url = "/questionJson/mc"
@@ -152,7 +164,6 @@ var mcOperations = {
             statusCode: {
                 201: function(data, requestStatus, xhrObject) {
                     window.location.href = `/question?surveyId=${surveyId}`;
-                    console.log(data);
                 },
                 404: function(xhrObj, textStatus, exception) {
                     alert(`Error!`);
@@ -172,7 +183,7 @@ var mcOperations = {
 
         for (i = 0; i < questionTypeRadios.length; i++) {
             if(questionTypeRadios[i].checked) {
-                return questionType = questionTypeRadios[i].value;
+                return questionTypeRadios[i].value;
             }
         }
     }

@@ -9,7 +9,6 @@ var loginRequests = {
         });
     }
     ,getAccountByUsername: function(username,password) {
-        console.log("Calling getAddressBook")
         $.ajax({type: 'GET',
             url: `/accounts?username=${username}&password=${password}`,
             timeout: 5000,

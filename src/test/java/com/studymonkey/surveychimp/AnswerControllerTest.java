@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studymonkey.surveychimp.entity.answers.AnswerType;
 import com.studymonkey.surveychimp.entity.answers.McAnswer;
 import com.studymonkey.surveychimp.entity.answers.TextAnswer;
+import com.studymonkey.surveychimp.entity.questions.QuestionType;
+import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -37,11 +39,19 @@ public class AnswerControllerTest {
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
 
+//        mockMvc.perform(post("/question")
+//                .param("surveyId","1")
+//                .param("question.question","?")
+//                .param("question.questionType","TEXT")
+//                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+//                .andExpect(status().isOk());
+
+        TextQuestionWrapper wrapper = new TextQuestionWrapper(1, "?", QuestionType.TEXT);
+        String questionJSON = asJsonString(wrapper);
         mockMvc.perform(post("/question")
-                .param("surveyId","1")
-                .param("question.question","?")
-                .param("question.questionType","TEXT")
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .param("questionType", "TEXT")
+                .content(questionJSON)
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 

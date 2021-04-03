@@ -8,6 +8,10 @@ import java.util.List;
 public class McQuestionWrapper extends QuestionWrapper{
     private List<String> options;
 
+    public McQuestionWrapper(){
+        super();
+    }
+
     public McQuestionWrapper(long surveyId, String question, QuestionType questionType){
         super(surveyId, question, questionType);
         this.options = new ArrayList<String>();

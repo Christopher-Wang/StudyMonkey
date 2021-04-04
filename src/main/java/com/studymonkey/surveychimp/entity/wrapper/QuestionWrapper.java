@@ -1,26 +1,28 @@
 package com.studymonkey.surveychimp.entity.wrapper;
 
-import com.studymonkey.surveychimp.entity.questions.Question;
+
+import com.studymonkey.surveychimp.entity.questions.QuestionType;
 
 public class QuestionWrapper {
 
     private long surveyId;
-
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
-    private Question question;
+    private String question;
+    private QuestionType questionType;
 
     public QuestionWrapper(){
     }
 
-    public QuestionWrapper(long surveyId, Question question){
+    public QuestionWrapper(long surveyId, String question, QuestionType questionType){
         this.surveyId = surveyId;
+        this.question = question;
+        this.questionType = questionType;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(String question) {
         this.question = question;
     }
 
@@ -30,5 +32,13 @@ public class QuestionWrapper {
 
     public void setSurveyId(long surveyId) {
         this.surveyId = surveyId;
+    }
+
+    public QuestionType getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(QuestionType questionType) {
+        this.questionType = questionType;
     }
 }

@@ -1,33 +1,19 @@
 package com.studymonkey.surveychimp.entity.wrapper;
 
-public class RangeQuestionWrapper{
+import com.studymonkey.surveychimp.entity.questions.QuestionType;
 
-    public long surveyId;
-    public long questionId;
+public class RangeQuestionWrapper extends QuestionWrapper {
     private int min;
     private int max;
 
-    public RangeQuestionWrapper(int min, int max, Long surveyId, Long questionId){
-        this.surveyId = surveyId;
-        this.questionId = questionId;
+    public RangeQuestionWrapper(){
+        super();
+    }
+
+    public RangeQuestionWrapper(int min, int max, Long surveyId, String question, QuestionType questionType){
+        super(surveyId,question,questionType);
         this.min = min;
         this.max = max;
-    }
-
-    public long getSurveyId() {
-        return surveyId;
-    }
-
-    public void setSurveyId(long surveyId) {
-        this.surveyId = surveyId;
-    }
-
-    public long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(long questionId) {
-        this.questionId = questionId;
     }
 
     public int getMin() {

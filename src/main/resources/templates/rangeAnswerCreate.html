@@ -49,9 +49,11 @@
     <h2 class="m-3">
         <p th:text="${question.question}"></p>
     </h2>
-    <form action="#" th:action="@{/answer/textAnswer/{questionId}(questionId=${question.id})}" method="post" >
+    <p th:text="'Please pick a range between '+ ${question.min} + '-' + ${question.max}"></p>
+
+    <form action="#" th:action="@{/answer/rangeAnswer/{questionId}(questionId=${question.id})}" method="post" >
         <div class="form-group m-3">
-            <textarea class="form-control" rows="5" name="questionAnswer" maxlength="255"></textarea>
+            <input type="number" name="rangeAnswer" th:value="${question.min}" th:min="${question.min}" th:max="${question.max}">
         </div>
         <button type="submit" class="btn btn-primary m-3">Submit</button>
     </form>

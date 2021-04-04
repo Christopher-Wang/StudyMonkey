@@ -1,15 +1,20 @@
 package com.studymonkey.surveychimp.viewControllers;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.studymonkey.surveychimp.entity.questions.*;
 import com.studymonkey.surveychimp.entity.survey.Survey;
+import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.RangeQuestionWrapper;
+import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
+import com.studymonkey.surveychimp.repositories.McOptionRepository;
 import com.studymonkey.surveychimp.repositories.QuestionRepository;
 import com.studymonkey.surveychimp.repositories.SurveyRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,11 +24,16 @@ public class QuestionController {
 
     private final QuestionRepository questionRepository;
     private final SurveyRepository surveyRepository;
+    private final McOptionRepository mcOptionRepository;
+    private final ObjectMapper objectMapper;
 
     public QuestionController(QuestionRepository questionRepository,
-                              SurveyRepository surveyRepository) {
+                              SurveyRepository surveyRepository,
+                              McOptionRepository mcOptionRepository) {
         this.questionRepository = questionRepository;
         this.surveyRepository = surveyRepository;
+        this.mcOptionRepository = mcOptionRepository;
+        this.objectMapper = new ObjectMapper();
     }
 
     /**
@@ -34,9 +44,84 @@ public class QuestionController {
     @GetMapping
     public String questionForm(@RequestParam(value = "surveyId", required=false) Long surveyId, Model model) {
         if (surveyId == null) surveyId = 0L;
-        model.addAttribute("questionWrapper", new QuestionWrapper(surveyId, new Question()));
+        model.addAttribute("surveyId", surveyId);
         return "questioncreate";
     }
+
+    @PostMapping(params={"questionType=TEXT"})
+    public String textQuestionSubmit(@RequestParam QuestionType questionType,
+                       @RequestBody String questionJSON,
+                       Model model){
+        try{
+            TextQuestionWrapper wrapper = objectMapper.readValue(questionJSON, TextQuestionWrapper.class);
+            Survey s = this.surveyRepository.findById(wrapper.getSurveyId());
+            TextQuestion q = new TextQuestion(wrapper.getQuestion(), wrapper.getQuestionType());
+            if (s == null) return "error";
+            q.setSurvey(s);
+            s.addQuestion(q);
+            this.questionRepository.save(q);
+            this.surveyRepository.save(s);
+            model.addAttribute("surveyId", wrapper.getSurveyId());
+            return "questioncreate";
+        } catch (Exception e) {
+            System.out.println("Exception raised: " + e);
+        }
+
+        return "error";
+    }
+
+    @PostMapping(params={"questionType=MULTIPLE_CHOICE"})
+    public String mcQuestionSubmit(@RequestParam QuestionType questionType,
+                        @RequestBody String questionJSON,
+                        Model model){
+        try{
+            McQuestionWrapper wrapper = objectMapper.readValue(questionJSON, McQuestionWrapper.class);
+            Survey s = this.surveyRepository.findById(wrapper.getSurveyId());
+            McQuestion q = new McQuestion(wrapper.getQuestion(), wrapper.getQuestionType());
+            if (s == null) return "error";
+
+            ArrayList<McOption> mcOptions = new ArrayList<McOption>();
+            for (String option: wrapper.getOptions()) {
+                McOption o = new McOption(option);
+                o.setQuestion(q);
+                mcOptions.add(o);
+            }
+            q.setMcOption(mcOptions);
+            q.setSurvey(s);
+            s.addQuestion(q);
+            this.questionRepository.save(q);
+            mcOptions.forEach(o -> this.mcOptionRepository.save(o));
+            this.surveyRepository.save(s);
+            model.addAttribute("surveyId", wrapper.getSurveyId());
+            return "questioncreate";
+        } catch (Exception e) {
+            System.out.println("Exception raised: " + e);
+        }
+        return "error";
+    }
+
+    @PostMapping(params={"questionType=RANGE"})
+    public String rangeQuestionSubmit(@RequestParam QuestionType questionType,
+                                     @RequestBody String questionJSON,
+                                     Model model){
+        try{
+            RangeQuestionWrapper wrapper = objectMapper.readValue(questionJSON, RangeQuestionWrapper.class);
+            System.out.println(wrapper.getMax() + "" + wrapper.getMin());
+            Survey s = this.surveyRepository.findById(wrapper.getSurveyId());
+            RangeQuestion q = new RangeQuestion(wrapper.getMin(), wrapper.getMax(), wrapper.getQuestion(), wrapper.getQuestionType());
+            if (s == null) return "error";
+            q.setSurvey(s);
+            s.addQuestion(q);
+            this.questionRepository.save(q);
+            this.surveyRepository.save(s);
+            model.addAttribute("surveyId", wrapper.getSurveyId());
+            return "questioncreate";
+        } catch (Exception e) {
+            System.out.println("Exception raised: " + e);
+        }
+        return "error";
+    }
+
 
     /**
      * Example Request: http://localhost:8080/question
@@ -56,49 +141,5 @@ public class QuestionController {
         else {
             return "error";
         }
-    }
-
-    /**
-     * Example Request: http://localhost:8080/question
-     * @return the view for creating a question
-     */
-    @PostMapping
-    public String submitQuestion(@ModelAttribute("questionWrapper") QuestionWrapper questionWrapper, Model model) {
-        Survey s = this.surveyRepository.findById(questionWrapper.getSurveyId());
-        Question q = questionWrapper.getQuestion();
-        QuestionType type = q.getQuestionType();
-        switch(type){
-            case TEXT:
-                if (s == null) return "error";
-                q = new TextQuestion(q.getQuestion(), q.getQuestionType());
-                break;
-            case MULTIPLE_CHOICE:
-                if (s == null) return "error";
-                q = new McQuestion(q.getQuestion(), q.getQuestionType());
-                break;
-            case RANGE:
-                if (s == null) return "error";
-                q = new RangeQuestion(q.getQuestion(), 0, 10, q.getQuestionType());
-            default:
-                if (s == null) return "error";
-        }
-        q.setSurvey(s);
-        s.addQuestion(q);
-        Question result = this.questionRepository.save(q);
-        this.surveyRepository.save(s);
-        if (type == QuestionType.RANGE) {
-            model.addAttribute("rangeQuestionWrapper", new RangeQuestionWrapper(0, 10, questionWrapper.getSurveyId(), result.getId()));
-            return "rangequestioncreate";
-        }
-        model.addAttribute("questionWrapper", new QuestionWrapper(questionWrapper.getSurveyId(), new Question()));
-        return "questioncreate";
-    }
-
-    @PostMapping("setRangeQuestion")
-    public String setRangeQuestion(@ModelAttribute("rangeQuestionWrapper") RangeQuestionWrapper rangeQuestionWrapper, Model model) {
-        Question q = this.questionRepository.findById(rangeQuestionWrapper.getQuestionId());
-        q = new RangeQuestion(q.getQuestion(), rangeQuestionWrapper.getMin(), rangeQuestionWrapper.getMax(), q.getQuestionType());
-        this.questionRepository.updateRangedQuestion(rangeQuestionWrapper.getMin(), rangeQuestionWrapper.getMax(), rangeQuestionWrapper.getQuestionId());
-        return "index";
     }
 }

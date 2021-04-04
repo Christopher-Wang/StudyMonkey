@@ -2,9 +2,12 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Question Creation - StudyMonkey</title>
+    <title>Questions - StudyMonkey</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="login.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="questions.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -18,20 +21,18 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
                         Survey
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
-                        <li><a class="dropdown-item" href="surveyV2">Survey Creation</a></li>
+                        <li><a class="dropdown-item" href="/surveyV2">Survey Creation</a></li>
                         <li><a class="dropdown-item" href="surveyV2/surveyList">View Survey</a></li>
-                        <li><a class="dropdown-item" href="#">Add Questions</a></li>
+                        <li><a class="dropdown-item" href="/question">Add Questions</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="signup">Sign up</a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="https://github.com/Christopher-Wang/StudyMonkey">Github</a>
@@ -46,27 +47,29 @@
 
 <div class="container">
     <h2 class="m-3">Question Creation</h2>
-    <form action="#" th:action="@{/question}" th:object="${questionWrapper}" method="post" >
+    <form id="question-form">
         <div class="form-group m-3">
-            <label for="surveyId">Survey Id</label>
-            <input th:field="*{surveyId}" type="number" class="form-control" id="surveyId" name="surveyId" th:placeholder="*{surveyId}">
+            <label>Survey Id</label>
+            <input type="number" id="surveyId" th:placeholder="${surveyId}" th:value="${surveyId}">
         </div>
-
         <div class="form-group m-3">
             <label for="question">Question</label>
-            <input th:field="*{question.question}" type="text" class="form-control" id="question" placeholder="Enter your Question name">
+            <input type="text" class="form-control" id="question" placeholder="Enter your Question name" required>
         </div>
-
         <div class="form-group m-3">
             <label for="TEXT" class="form-check-label">Text</label>
-            <input th:field="*{question.questionType}" type="radio" class="form-check-input" id="TEXT" value="TEXT">
+            <input type="radio" class="form-check-input" id="TEXT" name="questionType"  value="TEXT">
             <label for="MULTIPLE_CHOICE" class="form-check-label">Multiple Choice</label>
-            <input th:field="*{question.questionType}" type="radio" class="form-check-input" id="MULTIPLE_CHOICE" value="MULTIPLE_CHOICE">
+            <input type="radio" class="form-check-input" id="MULTIPLE_CHOICE" name="questionType"  value="MULTIPLE_CHOICE">
             <label for="RANGE" class="form-check-label">Range</label>
-            <input th:field="*{question.questionType}" type="radio" class="form-check-input" id="RANGE" value="RANGE">
+            <input type="radio" class="form-check-input" id="RANGE" name="questionType"  value="RANGE">
         </div>
-
-        <button type="submit" class="btn btn-primary m-3">Submit</button>
+        <div class="form-group m-3">
+            <div id="questionTypeSpecific"></div>
+        </div>
+        <div id="questionButtons">
+            <button type="submit" class="btn btn-primary m-3" id="submit">Submit</button>
+        </div>
     </form>
 </div>
 

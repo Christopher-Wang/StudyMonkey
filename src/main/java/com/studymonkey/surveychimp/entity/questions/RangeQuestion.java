@@ -10,7 +10,7 @@ public class RangeQuestion extends Question {
     public RangeQuestion() {
     }
 
-    public RangeQuestion(String question, int min, int max, QuestionType questionType) {
+    public RangeQuestion(int min, int max, String question, QuestionType questionType) {
         super(question, questionType);
         this.min = min;
         this.max = max;

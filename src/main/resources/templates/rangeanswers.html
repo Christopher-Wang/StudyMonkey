@@ -2,9 +2,13 @@
 <html lang="en" xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Answer Creation - StudyMonkey</title>
+    <title>Text Answers - StudyMonkey</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+            crossorigin="anonymous"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -31,42 +35,39 @@
                     <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="signup">Sign up</a>
+                    <a class="nav-link" href="/signup">Sign up</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="https://github.com/Christopher-Wang/StudyMonkey">Github</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about">About</a>
+                    <a class="nav-link" href="/about">About</a>
                 </li>
             </ul>
         </div>
     </div>
 </nav>
 
+<h2 th:text="${question.question} + ' (' + ${question.min} + '-' + ${question.max} + ')'"></h2>
 
-<div class="container">
-    <h2 class="m-3">
-        <p th:text="${question.question}"></p>
-    </h2>
-    <form action="#" th:action="@{/answer/textAnswer/{questionId}(questionId=${question.id})}" method="post" >
-        <div class="form-group m-3">
-            <textarea class="form-control" rows="5" name="questionAnswer" maxlength="255"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary m-3">Submit</button>
-    </form>
-</div>
+<table class="table">
+    <thead>
+    <tr>
+        <th>Answer Id</th>
+        <th>Answer</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${answers.size() == 0}">
+        <td colspan="3"> No answers available </td>
+    </tr>
+    <tr th:each="answer : ${answers}">
+        <td><span th:text="${answer.id}">Answer Id</span></td>
+        <td><span th:text="${answer.numAnswer}">Answer</span></td>
+    </tr>
+    </tbody>
+</table>
 
-
-
-
-
-
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
-        crossorigin="anonymous"></script>
 
 </body>
 </html>

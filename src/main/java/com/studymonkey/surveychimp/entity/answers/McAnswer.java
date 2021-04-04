@@ -1,26 +1,29 @@
 package com.studymonkey.surveychimp.entity.answers;
 
 import com.studymonkey.surveychimp.entity.Account;
+import com.studymonkey.surveychimp.entity.questions.McOption;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class McAnswer extends Answer {
 
-    private int mcOptionIdAnswer;
+    @ManyToOne
+    private McOption mcOption;
 
     public McAnswer(){}
 
-    public McAnswer(AnswerType answerType, int mcOptionIdAnswer) {
+    public McAnswer(AnswerType answerType, McOption mcOption) {
         super(answerType);
-        this.mcOptionIdAnswer = mcOptionIdAnswer;
+        this.mcOption = mcOption;
     }
 
-    public int getMcOptionIdAnswer() {
-        return mcOptionIdAnswer;
+    public McOption getMcOption() {
+        return mcOption;
     }
 
-    public void setMcOptionIdAnswer(int mcOptionIdAnswer) {
-        this.mcOptionIdAnswer = mcOptionIdAnswer;
+    public void setMcOption(McOption mcOption) {
+        this.mcOption = mcOption;
     }
 }

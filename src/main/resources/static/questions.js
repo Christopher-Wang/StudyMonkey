@@ -1,6 +1,8 @@
 function setUp(){
     $('#MULTIPLE_CHOICE').on('change', function() {
         let option = 0;
+        $("#addRange").off().remove();
+        $("#questionTypeSpecific").empty();
         $("#questionButtons").prepend("<button type=\"button\" class=\"btn btn-primary m-3\" id=\"addOption\">Add Option</button>");
         $("#addOption").on("click", function () {
             $("#questionTypeSpecific").append(`<input type=\"text\" class=\"form-control\" name=\"option\" placeholder=\"Option ${option}\"> <br/>`);
@@ -10,7 +12,17 @@ function setUp(){
 
     $('#TEXT').on('change', function() {
       $("#addOption").off().remove();
+      $("#addRange").off().remove();
       $("#questionTypeSpecific").empty();
+    });
+
+    $('#RANGE').on('change', function() {
+        $("#addOption").off().remove();
+        $("#questionTypeSpecific").empty();
+        $("#questionTypeSpecific").append(`<label for=\"Minimum\">Range Minimum</label> <br/>`);
+        $("#questionTypeSpecific").append(`<input type=\"number\" class=\"form-control\" id=\"Minimum\" name=\"Minimum\" placeholder=\"0\" value=\"0\"> <br/>`);
+        $("#questionTypeSpecific").append(`<label for=\"Maximum\">Range Maximum</label> <br/>`);
+        $("#questionTypeSpecific").append(`<input type=\"number\" class=\"form-control\" id=\"Maximum\" name=\"Maximum\" placeholder=\"10\" value=\"10\"> <br/>`);
     });
 }
 
@@ -24,6 +36,9 @@ $(document).ready(function () {
 
         if (body["questionType"] == "MULTIPLE_CHOICE"){
             body["options"] = $("input[name=\"option\"]").map(function () { return $(this).val()}).get();
+        } else if (body["questionType"] == "RANGE"){
+            body["min"] = $("input[name=\"Minimum\"]").val();
+            body["max"] = $("input[name=\"Maximum\"]").val();
         }
 
         $.ajax({

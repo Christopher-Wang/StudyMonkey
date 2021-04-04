@@ -5,6 +5,7 @@ import com.studymonkey.surveychimp.entity.questions.*;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
+import com.studymonkey.surveychimp.entity.wrapper.RangeQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
 import com.studymonkey.surveychimp.repositories.McOptionRepository;
 import com.studymonkey.surveychimp.repositories.QuestionRepository;
@@ -98,6 +99,29 @@ public class QuestionController {
         }
         return "error";
     }
+
+    @PostMapping(params={"questionType=RANGE"})
+    public String rangeQuestionSubmit(@RequestParam QuestionType questionType,
+                                     @RequestBody String questionJSON,
+                                     Model model){
+        try{
+            RangeQuestionWrapper wrapper = objectMapper.readValue(questionJSON, RangeQuestionWrapper.class);
+            System.out.println(wrapper.getMax() + "" + wrapper.getMin());
+            Survey s = this.surveyRepository.findById(wrapper.getSurveyId());
+            RangeQuestion q = new RangeQuestion(wrapper.getMax(), wrapper.getMin(),wrapper.getQuestion(), wrapper.getQuestionType());
+            if (s == null) return "error";
+            q.setSurvey(s);
+            s.addQuestion(q);
+            this.questionRepository.save(q);
+            this.surveyRepository.save(s);
+            model.addAttribute("surveyId", wrapper.getSurveyId());
+            return "questioncreate";
+        } catch (Exception e) {
+            System.out.println("Exception raised: " + e);
+        }
+        return "error";
+    }
+
 
     /**
      * Example Request: http://localhost:8080/question

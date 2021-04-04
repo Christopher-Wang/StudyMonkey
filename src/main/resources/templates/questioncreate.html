@@ -20,8 +20,19 @@
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Survey
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDarkDropdownMenuLink">
+                        <li><a class="dropdown-item" href="/surveyV2">Survey Creation</a></li>
+                        <li><a class="dropdown-item" href="surveyV2/surveyList">View Survey</a></li>
+                        <li><a class="dropdown-item" href="/question">Add Questions</a></li>
+                    </ul>
+                </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/signup">Sign up</a>
+                    <a class="nav-link" href="/login">Login</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="https://github.com/Christopher-Wang/StudyMonkey">Github</a>
@@ -43,13 +54,15 @@
         </div>
         <div class="form-group m-3">
             <label for="question">Question</label>
-            <input type="text" class="form-control" id="question" placeholder="Enter your Question name">
+            <input type="text" class="form-control" id="question" placeholder="Enter your Question name" required>
         </div>
         <div class="form-group m-3">
             <label for="TEXT" class="form-check-label">Text</label>
             <input type="radio" class="form-check-input" id="TEXT" name="questionType"  value="TEXT">
             <label for="MULTIPLE_CHOICE" class="form-check-label">Multiple Choice</label>
             <input type="radio" class="form-check-input" id="MULTIPLE_CHOICE" name="questionType"  value="MULTIPLE_CHOICE">
+            <label for="RANGE" class="form-check-label">Range</label>
+            <input type="radio" class="form-check-input" id="RANGE" name="questionType"  value="RANGE">
         </div>
         <div class="form-group m-3">
             <div id="questionTypeSpecific"></div>

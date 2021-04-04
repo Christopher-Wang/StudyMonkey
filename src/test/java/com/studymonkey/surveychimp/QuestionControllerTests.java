@@ -5,6 +5,7 @@ import com.studymonkey.surveychimp.entity.questions.Question;
 import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
+import com.studymonkey.surveychimp.entity.wrapper.RangeQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
 import com.studymonkey.surveychimp.viewControllers.SurveyViewController;
 import org.junit.jupiter.api.BeforeAll;
@@ -97,6 +98,17 @@ public class QuestionControllerTests {
         String questionJSON = objectMapper.writeValueAsString(wrapper);
         mockMvc.perform(post("/question")
                 .param("questionType", "MULTIPLE_CHOICE")
+                .content(questionJSON)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void createRangeQuestionTest() throws Exception{
+        RangeQuestionWrapper wrapper = new RangeQuestionWrapper(0,10,0L, "Test Range Question", QuestionType.RANGE);
+        String questionJSON = objectMapper.writeValueAsString(wrapper);
+        mockMvc.perform(post("/question")
+                .param("questionType", "RANGE")
                 .content(questionJSON)
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());

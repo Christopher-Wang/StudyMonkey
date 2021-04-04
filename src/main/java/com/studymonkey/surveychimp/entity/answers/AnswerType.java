@@ -4,7 +4,8 @@ import com.studymonkey.surveychimp.entity.questions.QuestionType;
 
 public enum AnswerType {
     MULTIPLE_CHOICE(1),
-    TEXT(2);
+    TEXT(2),
+    RANGE(3);
 
     private final int value;
 
@@ -22,6 +23,8 @@ public enum AnswerType {
                 return AnswerType.MULTIPLE_CHOICE;
             case 2:
                 return AnswerType.TEXT;
+            case 3:
+                return AnswerType.RANGE;
         }
 
         return null;

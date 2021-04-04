@@ -1,10 +1,7 @@
 package com.studymonkey.surveychimp.viewControllers;
 
 import com.studymonkey.surveychimp.entity.Account;
-import com.studymonkey.surveychimp.entity.answers.Answer;
-import com.studymonkey.surveychimp.entity.answers.AnswerType;
-import com.studymonkey.surveychimp.entity.answers.McAnswer;
-import com.studymonkey.surveychimp.entity.answers.TextAnswer;
+import com.studymonkey.surveychimp.entity.answers.*;
 import com.studymonkey.surveychimp.entity.questions.McOption;
 import com.studymonkey.surveychimp.entity.questions.McQuestion;
 import com.studymonkey.surveychimp.entity.questions.Question;
@@ -73,19 +70,19 @@ public class AnswerController {
             return null;
         }
 
-        if (q.getQuestionType() == QuestionType.TEXT) {
-            List<Answer> answers = q.getAnswers();
+        List<Answer> answers = q.getAnswers();
+        model.addAttribute("question", q);
+        model.addAttribute("answers", answers);
 
-            model.addAttribute("question", q);
-            model.addAttribute("answers", answers);
+        if (q.getQuestionType() == QuestionType.TEXT) {
+
             return "textanswers";
         }
         else if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
-            List<Answer> answers = q.getAnswers();
-
-            model.addAttribute("question", q);
-            model.addAttribute("answers", answers);
             return "mcanswers";
+        }
+        else if (q.getQuestionType() == QuestionType.RANGE) {
+            return "rangeanswers";
         }
 
         return "error";
@@ -107,6 +104,10 @@ public class AnswerController {
             model.addAttribute("mcOptions", ((McQuestion) question).getMcOption());
 
             return "mcAnswerCreate";
+        }
+        else if (q.getQuestionType() == QuestionType.RANGE) {
+            model.addAttribute("question", q);
+            return "rangeAnswerCreate";
         }
 
         return "The question type couldn't be identified";
@@ -158,6 +159,29 @@ public class AnswerController {
             return "questioncatalogue";
         }
         else {
+            return "error";
+        }
+    }
+
+    @PostMapping("/rangeAnswer/{questionId}")
+    public String postTextAnswer(@PathVariable long questionId, @RequestParam(value = "rangeAnswer") int answerNum, Model model) {
+        Question q = this.questionRepository.findById(questionId);
+
+        RangeAnswer rangeAns = new RangeAnswer(AnswerType.RANGE, answerNum);
+
+        rangeAns.setQuestion(q);
+        q.addAnswer(rangeAns);
+
+        this.answerRepository.save(rangeAns);
+        this.questionRepository.save(q);
+
+        Survey survey = q.getSurvey();
+        if (survey != null) {
+            List<Question> questionList = survey.getQuestions();
+            model.addAttribute("surveyId", survey.getId());
+            model.addAttribute("questionList", questionList);
+            return "questioncatalogue";
+        } else {
             return "error";
         }
     }

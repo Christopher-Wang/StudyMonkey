@@ -108,7 +108,7 @@ public class QuestionController {
             RangeQuestionWrapper wrapper = objectMapper.readValue(questionJSON, RangeQuestionWrapper.class);
             System.out.println(wrapper.getMax() + "" + wrapper.getMin());
             Survey s = this.surveyRepository.findById(wrapper.getSurveyId());
-            RangeQuestion q = new RangeQuestion(wrapper.getMax(), wrapper.getMin(),wrapper.getQuestion(), wrapper.getQuestionType());
+            RangeQuestion q = new RangeQuestion(wrapper.getMin(), wrapper.getMax(), wrapper.getQuestion(), wrapper.getQuestionType());
             if (s == null) return "error";
             q.setSurvey(s);
             s.addQuestion(q);

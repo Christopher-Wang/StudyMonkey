@@ -38,13 +38,6 @@ public class AnswerController {
         this.mcOptionRepository = mcOptionRepository;
     }
 
-    @GetMapping("/question/{id}")
-    @ResponseBody
-    public Question getQuestion(@PathVariable long id) {
-        Question q = this.questionRepository.findById(id);
-        return q;
-    }
-
     /*
     Example: curl -i -X GET -H "Content-Type:application/json" http://localhost:8080/answer/3
      */

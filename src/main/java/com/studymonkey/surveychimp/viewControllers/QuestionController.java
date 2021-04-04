@@ -105,7 +105,6 @@ public class QuestionController {
                                      @RequestBody String questionJSON,
                                      Model model){
         try{
-            System.out.println(questionJSON);
             RangeQuestionWrapper wrapper = objectMapper.readValue(questionJSON, RangeQuestionWrapper.class);
             System.out.println(wrapper.getMax() + "" + wrapper.getMin());
             Survey s = this.surveyRepository.findById(wrapper.getSurveyId());

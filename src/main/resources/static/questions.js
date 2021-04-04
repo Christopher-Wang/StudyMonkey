@@ -20,7 +20,7 @@ function setUp(){
         $("#addOption").off().remove();
         $("#questionTypeSpecific").empty();
         $("#questionTypeSpecific").append(`<label for=\"Minimum\">Range Minimum</label> <br/>`);
-        $("#questionTypeSpecific").append(`<input type=\"number\" class=\"form-control\" min=\"0\" id=\"Minimum\" name=\"Minimum\" placeholder=\"0\" value=\"0\"> <br/>`);
+        $("#questionTypeSpecific").append(`<input type=\"number\" class=\"form-control\" id=\"Minimum\" name=\"Minimum\" placeholder=\"0\" value=\"0\"> <br/>`);
         $("#questionTypeSpecific").append(`<label for=\"Maximum\">Range Maximum</label> <br/>`);
         $("#questionTypeSpecific").append(`<input type=\"number\" class=\"form-control\" id=\"Maximum\" name=\"Maximum\" placeholder=\"10\" value=\"10\"> <br/>`);
     });

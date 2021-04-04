@@ -70,19 +70,19 @@ public class AnswerController {
             return null;
         }
 
-        if (q.getQuestionType() == QuestionType.TEXT) {
-            List<Answer> answers = q.getAnswers();
+        List<Answer> answers = q.getAnswers();
+        model.addAttribute("question", q);
+        model.addAttribute("answers", answers);
 
-            model.addAttribute("question", q);
-            model.addAttribute("answers", answers);
+        if (q.getQuestionType() == QuestionType.TEXT) {
+
             return "textanswers";
         }
         else if (q.getQuestionType() == QuestionType.MULTIPLE_CHOICE) {
-            List<Answer> answers = q.getAnswers();
-
-            model.addAttribute("question", q);
-            model.addAttribute("answers", answers);
             return "mcanswers";
+        }
+        else if (q.getQuestionType() == QuestionType.RANGE) {
+            return "rangeanswers";
         }
 
         return "error";

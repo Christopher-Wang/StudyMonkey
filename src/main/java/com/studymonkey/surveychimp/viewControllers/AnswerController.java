@@ -1,17 +1,14 @@
 package com.studymonkey.surveychimp.viewControllers;
 
-import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.answers.*;
 import com.studymonkey.surveychimp.entity.questions.McOption;
 import com.studymonkey.surveychimp.entity.questions.McQuestion;
 import com.studymonkey.surveychimp.entity.questions.Question;
 import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import com.studymonkey.surveychimp.entity.survey.Survey;
-import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.repositories.AnswerRepository;
 import com.studymonkey.surveychimp.repositories.McOptionRepository;
 import com.studymonkey.surveychimp.repositories.QuestionRepository;
-import com.studymonkey.surveychimp.repositories.SurveyRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -71,6 +68,7 @@ public class AnswerController {
         }
 
         List<Answer> answers = q.getAnswers();
+        model.addAttribute("questionId", questionId);
         model.addAttribute("question", q);
         model.addAttribute("answers", answers);
 
@@ -88,6 +86,18 @@ public class AnswerController {
         return "error";
     }
 
+    @ResponseBody
+    @GetMapping("/rangeAnswer/barchart/{questionId}")
+    public List<Answer> getQuestionAnswersRangeBarchart(@PathVariable long questionId, Model model) {
+        Question q = this.questionRepository.findById(questionId);
+
+        if (q == null) {
+            System.out.println("Question does not exist");
+            return null;
+        }
+
+        return q.getAnswers();
+    }
 
     @GetMapping
     public String answerForm(@RequestParam(value = "questionId") Long questionId, Model model) {

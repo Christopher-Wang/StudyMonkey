@@ -1,4 +1,4 @@
-var showMetrics = {
+const showMetrics = {
     setup: function () {
         $(document).on('click', '#showRangeBarchartBtn', function (e) {
             e.preventDefault();
@@ -12,8 +12,8 @@ var showMetrics = {
             url: `/answer/rangeAnswer/barchart/${questionId}`,
             timeout: 5000,
             success: function (data, requestStatus, xhrObject) {
-                if (xhrObject.status == 200) {
-                    $("#showRangeBarchart").empty().append(`<div style="position: relative;margin: auto;width: 80vw;"><canvas id="myChart"></canvas></div>`);
+                if (xhrObject.status === 200) {
+                    $("#showRangeBarchart").empty().append(`<div style="position: relative;margin: auto;width: 90vw;"><canvas id="myChart"></canvas></div>`);
                     analyseData(data);
                 } else {
                     alert("Something went wrong.");
@@ -23,7 +23,7 @@ var showMetrics = {
                 alert('Error!');
             }
         });
-        return (false);  // prevent default link action
+        return false;  // prevent default link action
     }
 };
 
@@ -43,12 +43,11 @@ function analyseData(data) {
 }
 
 function setupBarChart(labels, barchartData) {
-    var ctx = document.getElementById('myChart');
-
+    const ctx = document.getElementById('myChart');
     const data = {
         labels: labels,
         datasets: [{
-            label: 'Number of vote',
+            label: 'No. of answers',
             data: barchartData,
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
@@ -75,7 +74,7 @@ function setupBarChart(labels, barchartData) {
         plugins: {
             title: {
                 display: true,
-                text: 'Metrics in barchart',
+                text: document.getElementById("questionTitle").innerText,
                 font: {
                     family: 'Comic Sans MS',
                     size: 20,
@@ -117,7 +116,7 @@ function setupBarChart(labels, barchartData) {
         }
     };
 
-    var myBarChart = new Chart(ctx, {
+    const myBarChart = new Chart(ctx, {
         type: 'bar',
         data: data,
         options: options

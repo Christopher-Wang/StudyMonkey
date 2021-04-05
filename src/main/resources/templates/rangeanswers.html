@@ -53,7 +53,7 @@
 </nav>
 
 <div style="padding: 8px">
-    <h2 th:text="${question.question} + ' (' + ${question.min} + '-' + ${question.max} + ')'"></h2>
+    <h2 id="questionTitle" th:text="${question.question} + ' (' + ${question.min} + '-' + ${question.max} + ')'"></h2>
     <!--<a th:field="*{questionId}" th:href="@{/answer/rangeAnswer/barchart/{questionId}(questionId=${question.id})}" class="btn btn-primary">See metrics</a>-->
     <p>Question ID: <span id="rangeQuestionId" th:text="${questionId}"></span></p>
     <button id="showRangeBarchartBtn" class="btn btn-primary">See metrics</button>

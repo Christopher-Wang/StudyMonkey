@@ -86,6 +86,9 @@ public class AnswerController {
         return "error";
     }
 
+    /*
+    Example: curl -i -X GET -H "Content-Type:application/json" http://localhost:8080/answer/rangeAnswer/barchart/2
+    */
     @ResponseBody
     @GetMapping("/rangeAnswer/barchart/{questionId}")
     public List<Answer> getQuestionAnswersRangeBarchart(@PathVariable long questionId, Model model) {

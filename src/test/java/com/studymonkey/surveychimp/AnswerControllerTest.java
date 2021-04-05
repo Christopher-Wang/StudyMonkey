@@ -96,7 +96,6 @@ public class AnswerControllerTest {
 
     @Test
     public void addRangeAnswer() throws Exception {
-
         mockMvc.perform(post("/answer/rangeAnswer/6")
                 .param("rangeAnswer","5")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
@@ -122,6 +121,26 @@ public class AnswerControllerTest {
                 .get("/answer/questionAnswers/6"))
                 .andDo(print())
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void shouldReturnAllRangeAnswersForASpecificQuestion() throws Exception {
+        // Answer a range question
+        mockMvc.perform(post("/answer/rangeAnswer/6")
+                .param("rangeAnswer","7")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk());
+        mockMvc.perform(post("/answer/rangeAnswer/6")
+                .param("rangeAnswer","8")
+                .contentType(MediaType.APPLICATION_FORM_URLENCODED))
+                .andExpect(status().isOk());
+        // Get answer for range question (id=6)
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/answer/rangeAnswer/barchart/6"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("7")))
+                .andExpect(content().string(containsString("8")));
     }
 
     @Test

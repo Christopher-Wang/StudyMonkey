@@ -17,7 +17,7 @@ const showMetrics = {
                     if(data.length != 0) {
                         analyseData(data);
                     } else{
-                        $("#myChart").html("<h2 class=\"m-3\">No Answers Available</h2>");
+                        $("#showPieChart").empty().append("<div style=\"text-align:center;\"><h2 class=\"m-3\">No Answers Available</h2></div>");
                     }
                 } else {
                     alert("Something went wrong.");

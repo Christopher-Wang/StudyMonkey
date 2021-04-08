@@ -130,6 +130,7 @@ public class AnswerController {
             List<Question> questionList = survey.getQuestions();
             model.addAttribute("surveyId", survey.getId());
             model.addAttribute("questionList", questionList);
+            model.addAttribute("surveyStatus", survey.getStatus());
             return "questioncatalogue";
         }
         else {
@@ -156,6 +157,7 @@ public class AnswerController {
             List<Question> questionList = survey.getQuestions();
             model.addAttribute("surveyId", survey.getId());
             model.addAttribute("questionList", questionList);
+            model.addAttribute("surveyStatus", survey.getStatus());
             return "questioncatalogue";
         }
         else {
@@ -180,6 +182,7 @@ public class AnswerController {
             List<Question> questionList = survey.getQuestions();
             model.addAttribute("surveyId", survey.getId());
             model.addAttribute("questionList", questionList);
+            model.addAttribute("surveyStatus", survey.getStatus());
             return "questioncatalogue";
         } else {
             return "error";

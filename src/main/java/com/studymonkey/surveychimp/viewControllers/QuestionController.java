@@ -136,6 +136,7 @@ public class QuestionController {
             List<Question> questionList = s.getQuestions();
             model.addAttribute("surveyId", surveyId);
             model.addAttribute("questionList", questionList);
+            model.addAttribute("surveyStatus", s.getStatus());
             return "questioncatalogue";
         }
         else {

@@ -136,7 +136,7 @@ public class AnswerControllerTest {
                 .andExpect(status().isOk());
         // Get answer for range question (id=6)
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/answer/rangeAnswer/barchart/6"))
+                .get("/answer/questionAnswersJSON/6"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("7")))
@@ -151,7 +151,6 @@ public class AnswerControllerTest {
                 .andDo(print())
                 .andExpect(status().isOk());
     }
-
 
     public static String asJsonString(final Object obj) {
         try {

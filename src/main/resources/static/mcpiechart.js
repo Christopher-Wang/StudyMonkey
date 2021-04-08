@@ -30,7 +30,6 @@ const showMetrics = {
 };
 
 function analyseData(data) {
-    //let allNum = data.map(item => item.mcOption.id);
     let allLabel = data.map(item => item.mcOption.option);
 
     let occurrences = allLabel.reduce(function (option, counter) {
@@ -48,10 +47,8 @@ function analyseData(data) {
 }
 
 
-
 function setupPieChart(labels, barchartData) {
-    let backgroundColor = ['green', 'blue', 'yellow', 'orange', 'red'];
-    let backgroundColor2 = ['rgba(255, 99, 132, 0.2)',
+    let backgroundColor = ['rgba(255, 99, 132, 0.2)',
         'rgba(255, 159, 64, 0.2)',
         'rgba(255, 205, 86, 0.2)',
         'rgba(75, 192, 192, 0.2)',
@@ -70,7 +67,7 @@ function setupPieChart(labels, barchartData) {
     let data = {
         datasets: [{
             fill: true,
-            backgroundColor: backgroundColor2,
+            backgroundColor: backgroundColor,
             borderColor: borderColor,
             data: barchartData
         }],
@@ -87,7 +84,8 @@ function setupPieChart(labels, barchartData) {
             responsive: true,
             plugins: {
                 legend: {
-                    position: 'top',
+                    position: 'bottom',
+                    align: 'vertical'
                 },
                 title: {
                     display: true,

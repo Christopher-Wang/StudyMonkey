@@ -50,35 +50,35 @@
         </div>
     </div>
 </nav>
-
-<div style="padding: 8px">
-    <h2 id="questionTitle" th:text="${question.question}"></h2>
-    <p>Question ID: <span id="mcQuestionId" th:text="${questionId}"></span></p>
-    <button id="showPieChartBtn" class="btn btn-primary">See metrics</button>
-    <div style="padding: 8px" id="showPieChart">
+<div class="container">
+    <div style="padding: 8px">
+        <h2 id="questionTitle" th:text="${question.question}"></h2>
+        <p>Question ID: <span id="mcQuestionId" th:text="${questionId}"></span></p>
+        <button id="showPieChartBtn" class="btn btn-primary">See metrics</button>
+        <div style="padding: 8px" id="showPieChart">
+        </div>
     </div>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Answer Id</th>
+            <th>Option Id</th>
+            <th>Option</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${answers.size() == 0}">
+            <td colspan="3"> No answers available </td>
+        </tr>
+        <tr th:each="answer : ${answers}">
+            <td><span th:text="${answer.id}">Answer Id</span></td>
+            <td><span th:text="${answer.getMcOption().getId()}">Option Id</span></td>
+            <td><span th:text="${answer.getMcOption().getOption()}">Option</span></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
-
-<table class="table">
-    <thead>
-    <tr>
-        <th>Answer Id</th>
-        <th>Option Id</th>
-        <th>Option</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:if="${answers.size() == 0}">
-        <td colspan="3"> No answers available </td>
-    </tr>
-    <tr th:each="answer : ${answers}">
-        <td><span th:text="${answer.id}">Answer Id</span></td>
-        <td><span th:text="${answer.getMcOption().getId()}">Option Id</span></td>
-        <td><span th:text="${answer.getMcOption().getOption()}">Option</span></td>
-    </tr>
-    </tbody>
-</table>
-
 
 </body>
 </html>

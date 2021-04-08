@@ -16,6 +16,8 @@ const showMetrics = {
                     $("#showPieChart").empty().append(`<div style="position: relative;display:block;margin: auto;width: 40vw;"><canvas id="myChart"></canvas></div>`);
                     if(data.length != 0) {
                         analyseData(data);
+                    } else{
+                        $("#myChart").html("<h2 class=\"m-3\">No Answers Available</h2>");
                     }
                 } else {
                     alert("Something went wrong.");

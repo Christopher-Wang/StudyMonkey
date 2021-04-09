@@ -1,12 +1,13 @@
 package com.studymonkey.surveychimp.viewControllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.questions.*;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
-import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.RangeQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
+import com.studymonkey.surveychimp.repositories.AccountRepository;
 import com.studymonkey.surveychimp.repositories.McOptionRepository;
 import com.studymonkey.surveychimp.repositories.QuestionRepository;
 import com.studymonkey.surveychimp.repositories.SurveyRepository;
@@ -25,14 +26,17 @@ public class QuestionController {
     private final QuestionRepository questionRepository;
     private final SurveyRepository surveyRepository;
     private final McOptionRepository mcOptionRepository;
+    private final AccountRepository accountRepository;
     private final ObjectMapper objectMapper;
 
     public QuestionController(QuestionRepository questionRepository,
                               SurveyRepository surveyRepository,
-                              McOptionRepository mcOptionRepository) {
+                              McOptionRepository mcOptionRepository,
+                              AccountRepository accountRepository) {
         this.questionRepository = questionRepository;
         this.surveyRepository = surveyRepository;
         this.mcOptionRepository = mcOptionRepository;
+        this.accountRepository = accountRepository;
         this.objectMapper = new ObjectMapper();
     }
 
@@ -42,10 +46,21 @@ public class QuestionController {
      * @return the view for creating a question
      */
     @GetMapping
-    public String questionForm(@RequestParam(value = "surveyId", required=false) Long surveyId, Model model) {
-        if (surveyId == null) surveyId = 0L;
-        model.addAttribute("surveyId", surveyId);
-        return "questioncreate";
+    public String questionForm(@RequestParam(value = "surveyId", required = true) Long surveyId, Model model,
+                               @CookieValue(value = "accountId", defaultValue = "0") String accountId) {
+        Optional<Survey> survey = this.surveyRepository.findById(surveyId);
+        if (survey.isPresent()){
+            Account creator = this.accountRepository.findById(Long.parseLong(accountId));
+            if (creator != null) {
+                Survey s = survey.get();
+                if (s.getCreator().getId().equals(Long.parseLong(accountId))) {
+                    if (surveyId == null) surveyId = 0L;
+                    model.addAttribute("surveyId", surveyId);
+                    return "questioncreate";
+                }
+            }
+        }
+    return "invalidpermission";
     }
 
     @PostMapping(params={"questionType=TEXT"})

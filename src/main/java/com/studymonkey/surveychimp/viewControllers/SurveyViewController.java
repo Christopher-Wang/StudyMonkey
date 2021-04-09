@@ -1,5 +1,6 @@
 package com.studymonkey.surveychimp.viewControllers;
 
+import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.answers.Answer;
 import com.studymonkey.surveychimp.entity.questions.McOption;
 import com.studymonkey.surveychimp.entity.questions.Question;
@@ -11,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,10 +21,12 @@ import java.util.Optional;
 @RequestMapping(value = "surveyV2")
 public class SurveyViewController {
 
-    private final SurveyRepository repository;
+    private final SurveyRepository surveyRepository;
+    private final AccountRepository accountRepository;
 
-    public SurveyViewController(SurveyRepository repository) {
-        this.repository = repository;
+    public SurveyViewController(SurveyRepository repository, AccountRepository accountRepository) {
+        this.surveyRepository = repository;
+        this.accountRepository = accountRepository;
     }
 
     /**
@@ -41,14 +46,20 @@ public class SurveyViewController {
      * @return the view to the home page if successful or the view to the error page otherwise
      */
     @GetMapping("modifySurvey")
-    public String surveyEdit (@RequestParam(value = "surveyId") Long surveyId, Model model) {
-        Optional<Survey> survey = repository.findById(surveyId);
+    public String surveyEdit (@RequestParam(value = "surveyId") Long surveyId,
+                              @CookieValue(value = "accountId", defaultValue = "0") String accountId,
+                              Model model) {
+        Optional<Survey> survey = surveyRepository.findById(surveyId);
         if(survey.isPresent()) {
-            model.addAttribute("survey", survey.get());
-            return "surveyedit";
-        } else {
-            return "error";
+            Survey s = survey.get();
+            if (s.getCreator() != null){
+                if (s.getCreator().getId().equals(Long.parseLong(accountId))){
+                    model.addAttribute("survey", s);
+                    return "surveyedit";
+                }
+            }
         }
+        return "invalidpermission";
     }
 
     /**
@@ -59,7 +70,7 @@ public class SurveyViewController {
     @PostMapping("survey")
     public String surveyEdit (@ModelAttribute("survey") Survey survey, Model model) {
         if (!survey.getName().equals("") && !survey.getDescription().equals("")) {
-            repository.updateSurvey(survey.getName(),survey.getDescription(),survey.getStatusEnum(), survey.getId());
+            surveyRepository.updateSurvey(survey.getName(),survey.getDescription(),survey.getStatusEnum(), survey.getId());
             return getSurveyList(model);
         } else {
             return "error";
@@ -73,7 +84,7 @@ public class SurveyViewController {
      */
     @GetMapping(value = "surveyList")
     public String getSurveyList(Model model) {
-        List<Survey> surveyList = repository.findAll();
+        List<Survey> surveyList = surveyRepository.findAll();
         model.addAttribute("surveyList", surveyList);
         return "surveycatalogue";
     }
@@ -85,12 +96,15 @@ public class SurveyViewController {
      * @return the view to the home page if successful or the view to the error page otherwise
      */
     @PostMapping("surveycreation")
-    public String surveyCreation (@ModelAttribute("survey") Survey survey) {
+    public String surveyCreation (@ModelAttribute("survey") Survey survey,
+                                  @CookieValue(value = "accountId", defaultValue = "0") String accountId) {
         if (!survey.getName().equals("") && !survey.getDescription().equals("")) {
-            repository.save(survey);
+            Account creator = accountRepository.findById(Long.parseLong(accountId));
+            survey.setCreator(creator);
+            surveyRepository.save(survey);
             return "index";
         } else {
-            return "error";
+            return "invalidpermission";
         }
     }
 }

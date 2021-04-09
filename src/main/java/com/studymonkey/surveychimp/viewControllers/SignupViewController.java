@@ -24,11 +24,12 @@ public class SignupViewController {
     }
 
     @PostMapping("createAccount")
-    public String create(@ModelAttribute Account account) {
+    public String create(@ModelAttribute Account account, Model model) {
         if (!account.getUsername().equals("") && !account.getEmail().equals("") && !account.getHexPassword().equals("")) {
             repository.save(account);
-            return "index";
-        } else
+            return "redirect:/login";
+        } else {
             throw new RuntimeException();
+        }
     }
 }

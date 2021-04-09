@@ -1,6 +1,7 @@
 package com.studymonkey.surveychimp.entity.survey;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.questions.Question;
 import com.studymonkey.surveychimp.viewControllers.SurveyViewController;
 
@@ -23,12 +24,22 @@ public class Survey {
     @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL, mappedBy = "survey")
     private List<Question> questions;
+    @OneToOne
+    private Account creator;
     private String name;
     private String description;
     private SurveyStatus status;
 
     public Survey() {
         this.questions = new ArrayList<Question>();
+    }
+
+    public Survey(String name, String description, SurveyStatus status, Account creator) {
+        this.questions = new ArrayList<Question>();
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.creator = creator;
     }
 
     public Survey(String name, String description, SurveyStatus status) {
@@ -107,5 +118,13 @@ public class Survey {
                 ", description='" + description + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    public Account getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Account creator) {
+        this.creator = creator;
     }
 }

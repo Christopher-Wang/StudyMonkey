@@ -39,7 +39,6 @@ public class SignupViewControllerTest {
                 .param("email", "test1@gmail.com")
                 .param("password", "test1").accept(MediaType.APPLICATION_JSON)
         )
-                .andExpect(status().isOk())
-                .andExpect(content().string(containsString("Create Survey")));
+                .andExpect(status().is3xxRedirection());
     }
 }

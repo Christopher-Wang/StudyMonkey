@@ -60,8 +60,11 @@
                         <span class="card-title" th:text="${question.question}"/></strong></h5>
                     <p class="card-text">
                         <span class="card-text" th:text="${question.questionType}"/></p>
-                <a th:href="@{/answer(questionId=${question.id})}" class="btn btn-primary">Answer Question</a>
-                <a th:href="@{/answer/questionAnswers/{questionId}(questionId=${question.id})}" class="btn btn-primary">View all answers</a>
+                        <a th:href="@{/answer(questionId=${question.id})}" th:if="${surveyStatus == 1}" class="btn btn-primary disabled">Answer Question</a>
+                        <a th:href="@{/answer(questionId=${question.id})}" th:unless="${surveyStatus == 1}" class="btn btn-primary">Answer Question</a>
+
+                        <a th:href="@{/answer/questionAnswers/{questionId}(questionId=${question.id})}" th:if="${surveyStatus == 0}" class="btn btn-primary disabled">View all answers</a>
+                        <a th:href="@{/answer/questionAnswers/{questionId}(questionId=${question.id})}" th:unless="${surveyStatus == 0}" class="btn btn-primary">View all answers</a>
                 </div>
             </div>
         </div>

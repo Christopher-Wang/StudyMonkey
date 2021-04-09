@@ -10,11 +10,7 @@ Team:
 
 ## About
 Current Progress:
-- Users can create accounts
-- Users can login to a created account
-- Users can create and view surveys
-- Users can add and answer questions to created surveys (only text based answer option is currently implemented)
-
+All of the expected features are completed.
 
 All expected features by the end of the project are as follows:
 
@@ -22,6 +18,11 @@ Surveyor can create a survey with a list of Questions. Questions can be open-end
 Users fill out a survey that is a form generated based on the type of questions in the survey.
  Surveyor can close the survey whenever they want (thus not letting in new users to fill out the survey), and at that point a survey result is generated, compiling the answers: for open-ended questions, the answers are just listed as-is, for number questions a histogram of the answers is generated, for choice questions a pie chart is generated
 
+##Usage Notes
+- Users must first sign up for an account before they can create a survey
+- Survey questions, titles, descriptions and status can only be edited by the user that created the survey.
+- In order to view answers, the survey must first be closed.
+- Metrics are only available for closed surveys
 
 ## Class Diagram
 ![](SurveyMonkeyClassDiagram.png)

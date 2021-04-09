@@ -5,7 +5,7 @@ function setUp(){
         $("#questionTypeSpecific").empty();
         $("#questionButtons").prepend("<button type=\"button\" class=\"btn btn-primary m-3\" id=\"addOption\">Add Option</button>");
         $("#addOption").on("click", function () {
-            $("#questionTypeSpecific").append(`<input type=\"text\" class=\"form-control\" name=\"option\" placeholder=\"Option ${option}\"> <br/>`);
+            $("#questionTypeSpecific").append(`<input type=\"text\" class=\"form-control\" name=\"option\" required placeholder=\"Option ${option}\"> <br/>`);
             option++;
         });
     });

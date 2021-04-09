@@ -100,11 +100,13 @@ public class SurveyViewController {
                                   @CookieValue(value = "accountId", defaultValue = "0") String accountId) {
         if (!survey.getName().equals("") && !survey.getDescription().equals("")) {
             Account creator = accountRepository.findById(Long.parseLong(accountId));
-            survey.setCreator(creator);
-            surveyRepository.save(survey);
-            return "index";
-        } else {
-            return "invalidpermission";
+            if (creator != null) {
+                survey.setCreator(creator);
+                surveyRepository.save(survey);
+                return "index";
+            }
         }
+        return "invalidpermission";
+
     }
 }

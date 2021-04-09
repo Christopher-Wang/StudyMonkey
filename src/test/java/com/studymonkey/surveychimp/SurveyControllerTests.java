@@ -57,16 +57,12 @@ public class SurveyControllerTests {
 
     @Test
     public void createSurveyTest() throws Exception{
-        int totalSurveys = repository.findAll().size();
-
         mockMvc.perform(post("/surveyV2/surveycreation")
                 .param("name","Test Survey #2")
                 .param("description","This is a test")
                 .param("status", "1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
-        assertEquals(totalSurveys+1,repository.findAll().size());
-
     }
 
     @Test

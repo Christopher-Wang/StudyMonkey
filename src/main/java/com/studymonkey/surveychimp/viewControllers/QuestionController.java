@@ -5,7 +5,6 @@ import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.questions.*;
 import com.studymonkey.surveychimp.entity.survey.Survey;
 import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
-import com.studymonkey.surveychimp.entity.wrapper.QuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.RangeQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
 import com.studymonkey.surveychimp.repositories.AccountRepository;

@@ -9,7 +9,7 @@ const showMetrics = {
     , getBarchart: function (questionId) {
         $.ajax({
             type: 'GET',
-            url: `/answer/rangeAnswer/barchart/${questionId}`,
+            url: `/answer/questionAnswersJSON/${questionId}`,
             timeout: 5000,
             success: function (data, requestStatus, xhrObject) {
                 if (xhrObject.status === 200) {

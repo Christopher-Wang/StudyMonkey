@@ -1,6 +1,7 @@
 package com.studymonkey.surveychimp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.entity.answers.AnswerType;
 import com.studymonkey.surveychimp.entity.answers.McAnswer;
 import com.studymonkey.surveychimp.entity.answers.TextAnswer;
@@ -8,6 +9,7 @@ import com.studymonkey.surveychimp.entity.questions.QuestionType;
 import com.studymonkey.surveychimp.entity.wrapper.McQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.RangeQuestionWrapper;
 import com.studymonkey.surveychimp.entity.wrapper.TextQuestionWrapper;
+import com.studymonkey.surveychimp.repositories.AccountRepository;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -18,6 +20,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import javax.servlet.http.Cookie;
 import java.util.ArrayList;
 
 import static org.hamcrest.Matchers.containsString;
@@ -33,19 +36,29 @@ public class AnswerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private AccountRepository accountRepository;
+
     @BeforeAll
     public void setup() throws Exception {
-        // Create the Survey first
-        // Survey will have id = 1
+        // Create the Account first
+        // Account will have id = 1
+        Account account = new Account("test", "test.email.com", "test");
+        account = accountRepository.save(account);
+        Cookie cookie = new Cookie("accountId", Long.toString(account.getId()));
+
+        // Create the Survey next
+        // Survey will have id = 2
         mockMvc.perform(post("/surveyV2/surveycreation")
+                .cookie(cookie)
                 .param("name","Test Survey #3")
                 .param("description","This is a test")
                 .param("status", "1")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
 
-        // Text question will have id = 2
-        TextQuestionWrapper wrapper = new TextQuestionWrapper(1, "What is your name?", QuestionType.TEXT);
+        // Text question will have id = 3
+        TextQuestionWrapper wrapper = new TextQuestionWrapper(2, "What is your name?", QuestionType.TEXT);
         String questionJSON = asJsonString(wrapper);
         mockMvc.perform(post("/question")
                 .param("questionType", "TEXT")
@@ -53,11 +66,11 @@ public class AnswerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        // Mc question will have id = 3
+        // Mc question will have id = 4
         ArrayList<String> options = new ArrayList<String>();
-        options.add("Option 1"); // McOption will have id = 4
-        options.add("Option 2"); // McOption will have id = 5
-        McQuestionWrapper wrapperMc = new McQuestionWrapper(1, "Test MC Question", QuestionType.MULTIPLE_CHOICE);
+        options.add("Option 1"); // McOption will have id = 5
+        options.add("Option 2"); // McOption will have id = 6
+        McQuestionWrapper wrapperMc = new McQuestionWrapper(2, "Test MC Question", QuestionType.MULTIPLE_CHOICE);
         wrapperMc.setOptions(options);
         String questionMcJSON = asJsonString(wrapperMc);
         mockMvc.perform(post("/question")
@@ -66,8 +79,8 @@ public class AnswerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        // Range question will have id = 6
-        RangeQuestionWrapper wrapperRange = new RangeQuestionWrapper(0,10,1L, "Test Range Question", QuestionType.RANGE);
+        // Range question will have id = 7
+        RangeQuestionWrapper wrapperRange = new RangeQuestionWrapper(0,10,2L, "Test Range Question", QuestionType.RANGE);
         String questionRangeJSON = asJsonString(wrapperRange);
         mockMvc.perform(post("/question")
                 .param("questionType", "RANGE")
@@ -79,7 +92,7 @@ public class AnswerControllerTest {
     @Test
     public void addTextAnswer() throws Exception {
 
-        mockMvc.perform(post("/answer/textAnswer/2")
+        mockMvc.perform(post("/answer/textAnswer/3")
                 .param("questionAnswer","This is my answer to the question!")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
@@ -88,37 +101,37 @@ public class AnswerControllerTest {
     @Test
     public void addMcAnswer() throws Exception {
 
-        mockMvc.perform(post("/answer/mcAnswer/3")
-                .param("mcOptionId","4")
+        mockMvc.perform(post("/answer/mcAnswer/4")
+                .param("mcOptionId","5")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void addRangeAnswer() throws Exception {
-        mockMvc.perform(post("/answer/rangeAnswer/6")
-                .param("rangeAnswer","5")
+        mockMvc.perform(post("/answer/rangeAnswer/7")
+                .param("rangeAnswer","7")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void getQuestionAnswers() throws Exception {
-        // Get answer for text question (id=2)
-        this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/answer/questionAnswers/2"))
-                .andDo(print())
-                .andExpect(status().isOk());
-
-        // Get answer for mc question (id=3)
+        // Get answer for text question (id=3)
         this.mockMvc.perform(MockMvcRequestBuilders
                 .get("/answer/questionAnswers/3"))
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        // Get answer for range question (id=6)
+        // Get answer for mc question (id=4)
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/answer/questionAnswers/6"))
+                .get("/answer/questionAnswers/4"))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        // Get answer for range question (id=7)
+        this.mockMvc.perform(MockMvcRequestBuilders
+                .get("/answer/questionAnswers/7"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }
@@ -126,17 +139,17 @@ public class AnswerControllerTest {
     @Test
     public void shouldReturnAllRangeAnswersForASpecificQuestion() throws Exception {
         // Answer a range question
-        mockMvc.perform(post("/answer/rangeAnswer/6")
+        mockMvc.perform(post("/answer/rangeAnswer/7")
                 .param("rangeAnswer","7")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
-        mockMvc.perform(post("/answer/rangeAnswer/6")
+        mockMvc.perform(post("/answer/rangeAnswer/7")
                 .param("rangeAnswer","8")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED))
                 .andExpect(status().isOk());
         // Get answer for range question (id=6)
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/answer/questionAnswersJSON/6"))
+                .get("/answer/questionAnswersJSON/7"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("7")))
@@ -145,9 +158,9 @@ public class AnswerControllerTest {
 
     @Test
     public void getSpecificAnswer() throws Exception {
-        // Get answer for text question (id=2)
+        // Get answer for text question (id=3)
         this.mockMvc.perform(MockMvcRequestBuilders
-                .get("/answer/6"))
+                .get("/answer/3"))
                 .andDo(print())
                 .andExpect(status().isOk());
     }

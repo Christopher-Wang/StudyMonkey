@@ -21,15 +21,11 @@ public abstract class Answer {
     @JoinColumn(name = "questionId")
     private Question question;
 
-//    @OneToOne
-//    private Account account;
-
     private AnswerType answerType;
 
     public Answer() {}
 
     public Answer(AnswerType answerType) {
-//        this.account = account;
         this.answerType = answerType;
     }
 
@@ -48,14 +44,6 @@ public abstract class Answer {
     public void setQuestion(Question question) {
         this.question = question;
     }
-
-//    public Account getAccount() {
-//        return account;
-//    }
-//
-//    public void setAccount(Account account) {
-//        this.account = account;
-//    }
 
     public AnswerType getAnswerType() {
         return answerType;

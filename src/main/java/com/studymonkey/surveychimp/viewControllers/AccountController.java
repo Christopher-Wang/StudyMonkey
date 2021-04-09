@@ -1,4 +1,4 @@
-package com.studymonkey.surveychimp.controllers;
+package com.studymonkey.surveychimp.viewControllers;
 
 import com.studymonkey.surveychimp.entity.Account;
 import com.studymonkey.surveychimp.repositories.AccountRepository;
@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.security.NoSuchAlgorithmException;
 
 
@@ -23,8 +25,9 @@ public class AccountController {
 
     @GetMapping()
     @ResponseBody
-    public ResponseEntity authenticate(@RequestParam(name="username") String username, @RequestParam(name="password") String password) throws NoSuchAlgorithmException {
-        System.out.println(username + " " + Security.toHexString(Security.getSHA(password)));
+    public ResponseEntity authenticate(@RequestParam(name="username") String username,
+                                       @RequestParam(name="password") String password,
+                                       HttpServletResponse response) throws NoSuchAlgorithmException {
         if(username == null || password == null) {
             return ResponseEntity.badRequest().build();
         }
@@ -39,6 +42,8 @@ public class AccountController {
         if(account == null) {
             return new ResponseEntity<>("Authentication Failed", HttpStatus.NO_CONTENT);
         }
+        Cookie accountCookie = new Cookie("accountId", Long.toString(account.getId()));
+        response.addCookie(accountCookie);
         return ResponseEntity.ok(HttpStatus.OK);
 
     }

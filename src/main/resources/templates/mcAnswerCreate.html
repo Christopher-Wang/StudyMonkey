@@ -47,16 +47,16 @@
         </div>
     </div>
 </nav>
+<div class="container">
+    <h2 th:text="${question.question}"> </h2>
 
-<h2 th:text="${question.question}"> </h2>
-
-<form action="#" th:action="@{/answer/mcAnswer/{questionId}(questionId=${question.id})}" method="post">
-    <div th:each="option : ${mcOptions}">
-        <input type="radio" th:id="${option.id}" th:value="${option.id}" name="mcOptionId">
-        <label th:for="${option.id}" th:text="${option.option}">model</label>
-    </div>
-    <input type="submit" value="Submit answer" />
-</form>
-
+    <form action="#" th:action="@{/answer/mcAnswer/{questionId}(questionId=${question.id})}" method="post">
+        <div th:each="option : ${mcOptions}">
+            <input type="radio" th:id="${option.id}" th:value="${option.id}" name="mcOptionId">
+            <label th:for="${option.id}" th:text="${option.option}">model</label>
+        </div>
+        <button type="submit" class="btn btn-primary m-3" id="submit">Submit</button>
+    </form>
+</div>
 </body>
 </html>
